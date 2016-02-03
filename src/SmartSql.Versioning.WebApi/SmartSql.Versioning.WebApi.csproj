@@ -7,7 +7,7 @@
     <ProjectGuid>{FF9F820B-E901-441B-81DA-27AC45B09771}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmartSql.Versioning.WebApi</RootNamespace>
+    <RootNamespace>SmartSql.Versioning</RootNamespace>
     <AssemblyName>SmartSql.Versioning.WebApi</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

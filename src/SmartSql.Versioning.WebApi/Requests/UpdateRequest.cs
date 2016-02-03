@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartSql.Versioning.WebApi {
+namespace SmartSql.Versioning {
 
     public class UpdateRequest {
         public Guid InstanceId { get; set; }

@@ -16,7 +16,7 @@ using System.Data.Entity;
 
 using System.Collections;
 
-namespace SmartSql.Versioning.WebApi {
+namespace SmartSql.Versioning {
 
     public class ApiController<
         TDbContext, TController,

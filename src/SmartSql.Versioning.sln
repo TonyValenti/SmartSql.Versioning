@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.SmartSql.Versioning", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSql.Versioning.WebApi", "SmartSql.Versioning.WebApi\SmartSql.Versioning.WebApi.csproj", "{FF9F820B-E901-441B-81DA-27AC45B09771}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.SmartSql.Versioning.WebApi", "SmartSql.Versioning.WebApi.Tests\Test.SmartSql.Versioning.WebApi.csproj", "{25E752EC-D396-4A70-813A-491A2ACFACA5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.SmartSql.Versioning.WebApi.Host", "SmartSql.Versioning.WebApi.Testing\Test.SmartSql.Versioning.WebApi.Host.csproj", "{8811BC19-201C-4487-A264-C6704D245010}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1A343338-7DFA-424E-8DF5-FF8B342F96BE}"
@@ -33,10 +31,6 @@ Global
 		{FF9F820B-E901-441B-81DA-27AC45B09771}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF9F820B-E901-441B-81DA-27AC45B09771}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF9F820B-E901-441B-81DA-27AC45B09771}.Release|Any CPU.Build.0 = Release|Any CPU
-		{25E752EC-D396-4A70-813A-491A2ACFACA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25E752EC-D396-4A70-813A-491A2ACFACA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25E752EC-D396-4A70-813A-491A2ACFACA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25E752EC-D396-4A70-813A-491A2ACFACA5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8811BC19-201C-4487-A264-C6704D245010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8811BC19-201C-4487-A264-C6704D245010}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8811BC19-201C-4487-A264-C6704D245010}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,7 +41,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{64D25A5B-CFA6-4421-959F-80E503D8862A} = {1A343338-7DFA-424E-8DF5-FF8B342F96BE}
-		{25E752EC-D396-4A70-813A-491A2ACFACA5} = {1A343338-7DFA-424E-8DF5-FF8B342F96BE}
 		{8811BC19-201C-4487-A264-C6704D245010} = {1A343338-7DFA-424E-8DF5-FF8B342F96BE}
 	EndGlobalSection
 EndGlobal

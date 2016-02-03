@@ -16,7 +16,7 @@ using System.Data.Entity;
 using System.Collections;
 using System.Web.Http.Results;
 
-namespace SmartSql.Versioning.WebApi {
+namespace SmartSql.Versioning {
 
 
     public abstract class ApiControllerBase <
@@ -78,80 +78,86 @@ namespace SmartSql.Versioning.WebApi {
 
         [HttpPost]
         [ActionName("Add")]
-        public virtual IHttpActionResult AddWebMethod(TAddRequest Operation) {
-            object ret = null;
+        public virtual IHttpActionResult AddWebMethod([FromBody] TAddRequest Operation) {
+            IHttpActionResult ret = Unauthorized();
 
             if (CanAdd(Operation)) {
                 var Value = Add(Operation);
-                ret = Mapper.Instance.Map<TAddResponse>(Value);
-            }
+                var mapped = Mapper.Instance.Map<TAddResponse>(Value);
+                ret = Ok(mapped);
+            } 
 
-            return Json(ret);
+            return ret;
         }
 
         [HttpPost]
         [ActionName("Update")]
         public virtual IHttpActionResult UpdateWebMethod(TUpdateRequest Operation) {
-            object ret = null;
+            IHttpActionResult ret = Unauthorized();
 
             if (CanUpdate(Operation)) {
                 var Value = Update(Operation);
-                ret = Mapper.Instance.Map<TUpdateResponse>(Value);
+                var mapped = Mapper.Instance.Map<TUpdateResponse>(Value);
+                ret = Ok(mapped);
             }
 
-            return Json(ret);
+            return ret;
         }
 
         [HttpPost]
         [ActionName("Get")]
         public virtual IHttpActionResult GetWebMethod(TGetRequest Operation) {
-            object ret = null;
+            IHttpActionResult ret = Unauthorized();
 
             if (CanGet(Operation)) {
                 var Value = Get(Operation);
-                ret = Mapper.Instance.Map<TGetResponse>(Value);
+                var mapped = Mapper.Instance.Map<TGetResponse>(Value);
+                ret = Ok(mapped);
             }
 
-            return Json(ret);
+            return ret;
         }
 
         [HttpPost]
         [ActionName("List")]
         public virtual IHttpActionResult ListWebMethod(TListRequest Operation) {
-            object ret = null;
+            IHttpActionResult ret = Unauthorized();
 
             if (CanList(Operation)) {
                 var Value = List(Operation);
-                ret = Mapper.Instance.MapList<TListResponse>(Value);
+                var mapped = Mapper.Instance.MapList<TListResponse>(Value);
+                ret = Ok(mapped);
             }
 
-            return Json(ret);
+            return ret;
         }
 
         [HttpPost]
         [ActionName("Archive")]
         public virtual IHttpActionResult ArchiveWebMethod(TArchiveRequest Operation) {
-            object ret = null;
+            IHttpActionResult ret = Unauthorized();
 
             if (CanArchive(Operation)) {
                 var Value = Archive(Operation);
-                ret = Mapper.Instance.Map<TArchiveResponse>(Value);
+                var mapped = Mapper.Instance.Map<TArchiveResponse>(Value);
+                ret = Ok(mapped);
             }
 
-            return Json(ret);
+            return ret;
         }
 
         [HttpPost]
         [ActionName("Restore")]
         public virtual IHttpActionResult RestoreWebMethod(TRestoreRequest Operation) {
-            object ret = null;
+            IHttpActionResult ret = Unauthorized();
 
             if (CanRestore(Operation)) {
                 var Value = Restore(Operation);
-                ret = Mapper.Instance.Map<TRestoreResponse>(Value);
+                var mapped = Mapper.Instance.Map<TRestoreResponse>(Value);
+                ret = Ok(mapped);
             }
 
-            return Json(ret);
+            return ret;
         }
 
 

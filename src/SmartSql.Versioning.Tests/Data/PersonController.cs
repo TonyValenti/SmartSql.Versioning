@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using SmartSql.Versioning.Test;
-using SmartSql.Versioning.WebApi;
+using SmartSql.Versioning;
 using System.Web.Http;
 
 namespace SmartSql.Versioning.Test {
