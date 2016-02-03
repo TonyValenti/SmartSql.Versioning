@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 using System.Linq;
-using System.Web.Mvc;
+using System.Web.Http;
 
 using Newtonsoft.Json;
 using System.Text;
@@ -14,6 +14,7 @@ using SmartSql.Versioning;
 
 using System.Data.Entity;
 using System.Collections;
+using System.Web.Http.Results;
 
 namespace SmartSql.Versioning.WebApi {
 
@@ -25,7 +26,7 @@ namespace SmartSql.Versioning.WebApi {
         TListRequest,       TListResponse,
         TArchiveRequest,    TArchiveResponse,
         TRestoreRequest,    TRestoreResponse
-        > : Controller
+        > : ApiController
         
         where TAddResponse : new()
         where TUpdateResponse : new()
@@ -35,52 +36,53 @@ namespace SmartSql.Versioning.WebApi {
         where TRestoreResponse : new()
         {
 
-        protected virtual bool Add_HasPermission(TAddRequest Operation) {
+        protected virtual bool CanAdd(TAddRequest Operation) {
             return true;
         }
-        protected virtual bool Update_HasPermission(TUpdateRequest Operation) {
+        protected virtual bool CanUpdate(TUpdateRequest Operation) {
             return true;
         }
-        protected virtual bool Get_HasPermission(TGetRequest Operation) {
+        protected virtual bool CanGet(TGetRequest Operation) {
             return true;
         }
-        protected virtual bool List_HasPermission(TListRequest Operation) {
+        protected virtual bool CanList(TListRequest Operation) {
             return true;
         }
-        protected virtual bool Archive_HasPermission(TArchiveRequest Operation) {
+        protected virtual bool CanArchive(TArchiveRequest Operation) {
             return true;
         }
-        protected virtual bool Restore_HasPermission(TRestoreRequest Operation) {
+        protected virtual bool CanRestore(TRestoreRequest Operation) {
             return true;
         }
 
-        protected virtual Object Add_Execute(TAddRequest Operation) {
+        protected virtual Object Add(TAddRequest Operation) {
             return true;
         }
-        protected virtual Object Update_Execute(TUpdateRequest Operation) {
+        protected virtual Object Update(TUpdateRequest Operation) {
             return true;
         }
-        protected virtual Object Get_Execute(TGetRequest Operation) {
+        protected virtual Object Get(TGetRequest Operation) {
             return true;
         }
-        protected virtual IList List_Execute(TListRequest Operation) {
+        protected virtual IList List(TListRequest Operation) {
             return null;
         }
-        protected virtual Object Archive_Execute(TArchiveRequest Operation) {
+        protected virtual Object Archive(TArchiveRequest Operation) {
             return true;
         }
-        protected virtual Object Restore_Execute(TRestoreRequest Operation) {
+        protected virtual Object Restore(TRestoreRequest Operation) {
             return true;
         }
 
 
 
         [HttpPost]
-        public virtual ActionResult Add(TAddRequest Operation) {
+        [ActionName("Add")]
+        public virtual IHttpActionResult AddWebMethod(TAddRequest Operation) {
             object ret = null;
 
-            if (Add_HasPermission(Operation)) {
-                var Value = Add_Execute(Operation);
+            if (CanAdd(Operation)) {
+                var Value = Add(Operation);
                 ret = Mapper.Instance.Map<TAddResponse>(Value);
             }
 
@@ -88,11 +90,12 @@ namespace SmartSql.Versioning.WebApi {
         }
 
         [HttpPost]
-        public virtual ActionResult Update(TUpdateRequest Operation) {
+        [ActionName("Update")]
+        public virtual IHttpActionResult UpdateWebMethod(TUpdateRequest Operation) {
             object ret = null;
 
-            if (Update_HasPermission(Operation)) {
-                var Value = Update_Execute(Operation);
+            if (CanUpdate(Operation)) {
+                var Value = Update(Operation);
                 ret = Mapper.Instance.Map<TUpdateResponse>(Value);
             }
 
@@ -100,11 +103,12 @@ namespace SmartSql.Versioning.WebApi {
         }
 
         [HttpPost]
-        public virtual ActionResult Get(TGetRequest Operation) {
+        [ActionName("Get")]
+        public virtual IHttpActionResult GetWebMethod(TGetRequest Operation) {
             object ret = null;
 
-            if (Get_HasPermission(Operation)) {
-                var Value = Get_Execute(Operation);
+            if (CanGet(Operation)) {
+                var Value = Get(Operation);
                 ret = Mapper.Instance.Map<TGetResponse>(Value);
             }
 
@@ -112,11 +116,12 @@ namespace SmartSql.Versioning.WebApi {
         }
 
         [HttpPost]
-        public virtual ActionResult List(TListRequest Operation) {
+        [ActionName("List")]
+        public virtual IHttpActionResult ListWebMethod(TListRequest Operation) {
             object ret = null;
 
-            if (List_HasPermission(Operation)) {
-                var Value = List_Execute(Operation);
+            if (CanList(Operation)) {
+                var Value = List(Operation);
                 ret = Mapper.Instance.MapList<TListResponse>(Value);
             }
 
@@ -124,11 +129,12 @@ namespace SmartSql.Versioning.WebApi {
         }
 
         [HttpPost]
-        public virtual ActionResult Archive(TArchiveRequest Operation) {
+        [ActionName("Archive")]
+        public virtual IHttpActionResult ArchiveWebMethod(TArchiveRequest Operation) {
             object ret = null;
 
-            if (Archive_HasPermission(Operation)) {
-                var Value = Archive_Execute(Operation);
+            if (CanArchive(Operation)) {
+                var Value = Archive(Operation);
                 ret = Mapper.Instance.Map<TArchiveResponse>(Value);
             }
 
@@ -136,25 +142,39 @@ namespace SmartSql.Versioning.WebApi {
         }
 
         [HttpPost]
-        public virtual ActionResult Restore(TRestoreRequest Operation) {
+        [ActionName("Restore")]
+        public virtual IHttpActionResult RestoreWebMethod(TRestoreRequest Operation) {
             object ret = null;
 
-            if (Restore_HasPermission(Operation)) {
-                var Value = Restore_Execute(Operation);
+            if (CanRestore(Operation)) {
+                var Value = Restore(Operation);
                 ret = Mapper.Instance.Map<TRestoreResponse>(Value);
             }
 
             return Json(ret);
         }
 
-        protected override JsonResult Json(object data, string contentType, Encoding contentEncoding, JsonRequestBehavior behavior) {
-            return new JsonNetResult {
-                Data = data,
+
+
+        protected override JsonResult<T> Json<T>(T content, JsonSerializerSettings serializerSettings, Encoding encoding) {
+            serializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            serializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+
+            return new JsonResult<T>(content, serializerSettings, encoding, this);
+            
+            /*
+            return new JsonNetResult<T> { 
+                Content = content,
                 ContentType = contentType,
                 ContentEncoding = contentEncoding,
                 JsonRequestBehavior = behavior
             };
+
+            return base.Json<T>(content, serializerSettings, encoding);
+            */
         }
+
+     
 
     }
 

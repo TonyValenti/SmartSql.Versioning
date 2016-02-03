@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using SmartSql.Versioning;
 
-namespace SmartSql.Versioning.Tests {
+namespace SmartSql.Versioning.Test {
     [TestClass]
     public class UnitTest1 {
         [TestMethod]

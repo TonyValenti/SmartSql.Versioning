@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using SmartSql.Versioning;
 
-namespace SmartSql.Versioning.Tests {
+namespace SmartSql.Versioning.Test {
 
     public partial class PersonInstance : Instance<Person> { }
 

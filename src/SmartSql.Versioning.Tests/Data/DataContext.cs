@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace SmartSql.Versioning.Tests.Data {
+namespace SmartSql.Versioning.Test {
     public partial class DataContext : DbContext {
 
         public DataContext() : base("DefaultConnection") {

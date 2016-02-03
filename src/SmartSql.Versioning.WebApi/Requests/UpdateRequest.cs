@@ -8,7 +8,6 @@ namespace SmartSql.Versioning.WebApi {
 
     public class UpdateRequest {
         public Guid InstanceId { get; set; }
-
     }
 
     public class UpdateRequest<TValue> : UpdateRequest {

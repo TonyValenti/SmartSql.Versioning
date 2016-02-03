@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SmartSql.Versioning.WebApi.Tests {
+namespace SmartSql.Versioning.Test {
     [TestClass]
     public class UnitTest1 {
         [TestMethod]

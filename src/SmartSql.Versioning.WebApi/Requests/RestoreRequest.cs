@@ -10,7 +10,6 @@ namespace SmartSql.Versioning.WebApi {
         public Guid InstanceId { get; set; }
     }
 
-
     public class RestoreResponse : GetResponse {
 
     }

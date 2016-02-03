@@ -5,23 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
-using System.Web.Mvc;
+using System.Web.Http;
+using System.Web.Http.Results;
+using System.Net.Http;
+using System.Threading;
 
 namespace SmartSql.Versioning.WebApi {
 
-    public class JsonNetResult : JsonResult {
-        public JsonNetResult() {
-            Settings = new JsonSerializerSettings {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-            };
+    public class JsonNetResult<T> : JsonResult<T> {
+        public JsonNetResult(T content, JsonSerializerSettings serializerSettings, Encoding encoding, ApiController controller) : base(content, serializerSettings, encoding, controller) {
+            SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            serializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+
+            
         }
+        public override Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken) {
+            var response = new HttpResponseMessage();
 
-        public JsonSerializerSettings Settings { get; private set; }
-
-        public override void ExecuteResult(ControllerContext context) {
-
-            var response = context.HttpContext.Response;
+            
             response.ContentType = string.IsNullOrEmpty(this.ContentType) ? "application/json" : this.ContentType;
 
             if (this.ContentEncoding != null)
@@ -35,6 +36,13 @@ namespace SmartSql.Versioning.WebApi {
                 scriptSerializer.Serialize(sw, this.Data);
                 response.Write(sw.ToString());
             }
+        }
+
+
+
+        public override void aExecuteResult(ControllerContext context) {
+
+          
         }
     }
 }
