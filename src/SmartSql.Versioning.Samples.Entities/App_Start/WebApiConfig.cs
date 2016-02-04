@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-using WebApiProxy.Server;
-
 namespace SmartSql.Versioning.Samples.Entities {
     public static class WebApiConfig
     {
@@ -21,7 +19,6 @@ namespace SmartSql.Versioning.Samples.Entities {
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.RegisterProxyRoutes();
         }
     }
 }
