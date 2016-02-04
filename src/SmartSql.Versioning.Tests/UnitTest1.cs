@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 using SmartSql.Versioning;
+
 
 namespace SmartSql.Versioning.Test {
     [TestClass]
@@ -13,16 +15,16 @@ namespace SmartSql.Versioning.Test {
 
             var PersonController = new PersonController();
 
-            var ItemsAtStart = PersonController.List().Count;
+            var ItemsAtStart = PersonController.Current().Count();
 
             var Person = PersonController.Add(new Person() {
                 Name = Name_Original,
                 DateOfBirth = DateTime.Now,
             });
 
-            var ItemsAtEnd = PersonController.List().Count;
+            var ItemsAtEnd = PersonController.Current().Count();
 
-            Person = PersonController.Item(Person.InstanceId);
+            Person = PersonController.Get(Person.InstanceId);
 
             //The items in our list should have increased by 1.
             Assert.AreEqual(ItemsAtStart + 1, ItemsAtEnd);
@@ -36,7 +38,7 @@ namespace SmartSql.Versioning.Test {
 
             var PersonController = new PersonController();
 
-            var ItemsAtStart = PersonController.List().Count;
+            var ItemsAtStart = PersonController.Current().Count();
 
             var Person = PersonController.Add(new Person() {
                 Name = Name_Original,
@@ -46,9 +48,9 @@ namespace SmartSql.Versioning.Test {
             Person.Name = Name_Updated;
             PersonController.Update(Person);
 
-            Person = PersonController.Item(Person.InstanceId);
+            Person = PersonController.Get(Person.InstanceId);
 
-            var ItemsAtEnd = PersonController.List().Count;
+            var ItemsAtEnd = PersonController.Current().Count();
 
             //Make sure our count increased by 1.
             Assert.AreEqual(ItemsAtStart + 1, ItemsAtEnd);
@@ -64,7 +66,7 @@ namespace SmartSql.Versioning.Test {
 
             var PersonController = new PersonController();
 
-            var ItemsAtStart = PersonController.List().Count;
+            var ItemsAtStart = PersonController.Current().Count();
 
             var Person = PersonController.Add(new Person() {
                 Name = Name_Original,
@@ -74,9 +76,9 @@ namespace SmartSql.Versioning.Test {
             Person.Name = Name_Updated;
             PersonController.Update(Person);
             PersonController.Archive(Person);
-            Person = PersonController.Item(Person.InstanceId);
+            Person = PersonController.Get(Person.InstanceId);
 
-            var ItemsAtEnd = PersonController.List().Count;
+            var ItemsAtEnd = PersonController.Current().Count();
 
             //Make sure our count hasn't changed since the item was archived.
             Assert.AreEqual(ItemsAtStart, ItemsAtEnd);

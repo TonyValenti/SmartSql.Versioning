@@ -54,4 +54,32 @@ namespace SmartSql.Versioning.Test {
         public DbSet<Person> PersonRevisions { get; set; }
     }
 
+
+    public class PersonParameters {
+        public string Name { get; set; }
+        public DateTime DateOfBirth { get; set; }
+    }
+
+    public class PersonResponse : CommonResponse {
+        public string Name { get; set; }
+        public DateTime DateOfBirth { get; set; }
+    }
+
+
+    public class PersonApiController : ApiController<
+            DataContext, PersonController,
+
+            PersonInstance, Person,
+            PersonParameters, PersonParameters,
+            PersonResponse
+        > {
+        
+   
+    }
+
+
+
+
+
+
 }

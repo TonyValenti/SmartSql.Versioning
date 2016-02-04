@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.SmartSql.Versioning.We
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1A343338-7DFA-424E-8DF5-FF8B342F96BE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{8C264D15-0901-424D-B84F-0324818D0CBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSql.Versioning.Samples.Entities", "SmartSql.Versioning.Samples.Entities\SmartSql.Versioning.Samples.Entities.csproj", "{8D66F31D-38CB-4BB5-A838-E371B9967472}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,10 @@ Global
 		{8811BC19-201C-4487-A264-C6704D245010}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8811BC19-201C-4487-A264-C6704D245010}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8811BC19-201C-4487-A264-C6704D245010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D66F31D-38CB-4BB5-A838-E371B9967472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D66F31D-38CB-4BB5-A838-E371B9967472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D66F31D-38CB-4BB5-A838-E371B9967472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D66F31D-38CB-4BB5-A838-E371B9967472}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +50,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{64D25A5B-CFA6-4421-959F-80E503D8862A} = {1A343338-7DFA-424E-8DF5-FF8B342F96BE}
 		{8811BC19-201C-4487-A264-C6704D245010} = {1A343338-7DFA-424E-8DF5-FF8B342F96BE}
+		{8D66F31D-38CB-4BB5-A838-E371B9967472} = {8C264D15-0901-424D-B84F-0324818D0CBF}
 	EndGlobalSection
 EndGlobal

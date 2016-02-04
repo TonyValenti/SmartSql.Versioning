@@ -1,0 +1,30 @@
+﻿var Factory = new MyServiceHostFactory();
+var Route = new ServiceRoute("", Factory, typeof(Service2));
+RouteTable.Routes.Add(Route);
+    
+    
+    public class MyServiceHostFactory : ServiceHostFactory {
+        protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses) {
+            var host = new ServiceHost(serviceType, baseAddresses);
+
+            {
+                // Check to see if the service host already has a ServiceMetadataBehavior
+                var smb = host.Description.Behaviors.Find<ServiceMetadataBehavior>();
+                // If not, add one
+                if (smb == null) { 
+                    smb = new ServiceMetadataBehavior();
+                    smb.HttpGetEnabled = true;
+                    smb.MetadataExporter.PolicyVersion = PolicyVersion.Policy15;
+                    host.Description.Behaviors.Add(smb);
+                }
+            }
+
+            host.AddServiceEndpoint(serviceType, new WSHttpBinding(), "");
+            host.AddServiceEndpoint(ServiceMetadataBehavior.MexContractName, MetadataExchangeBindings.CreateMexHttpBinding(), "mex");
+
+
+            return host;
+            return base.CreateServiceHost(serviceType, baseAddresses);
+        }
+
+    }
