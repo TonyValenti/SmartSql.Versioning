@@ -1,0 +1,12 @@
+﻿With this code, I have generalized our versioning operations and procedures.
+
+These are the common operations:
+Add         -   Adds a new Item
+Update      -   Updates an existing item
+Get         -   Gets a single item
+List        -   Gets a list of items
+Archive     -   Marks an item as deleted
+Restore     -   Un-marks an item as deleted.
+History     -   Gets the change history for an item
+
+See the "Testing.ps1" file for examples.
