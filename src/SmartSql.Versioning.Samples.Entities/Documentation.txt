@@ -10,3 +10,8 @@ Restore     -   Un-marks an item as deleted.
 History     -   Gets the change history for an item
 
 See the "Testing.ps1" file for examples.
+
+The EntityApi class has one extra method:
+Details
+
+that gets all of the information surrounding the entity.
