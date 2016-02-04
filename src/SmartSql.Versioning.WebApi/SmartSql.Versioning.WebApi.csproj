@@ -70,16 +70,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiController-03.cs" />
+    <Compile Include="2.0\Operations.cs" />
     <Compile Include="ApiController-02.cs" />
     <None Include="JsonNetResult.cs" />
+    <Compile Include="ApiController-03.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requests\AddRequest.cs" />
-    <Compile Include="Requests\ArchiveRequest.cs" />
-    <Compile Include="Requests\RestoreRequest.cs" />
-    <Compile Include="Requests\GetRequest.cs" />
-    <Compile Include="Requests\ListRequest.cs" />
-    <Compile Include="Requests\UpdateRequest.cs" />
     <Compile Include="ApiControllerBase.cs" />
     <Compile Include="ApiController-01.cs" />
   </ItemGroup>

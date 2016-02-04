@@ -18,47 +18,47 @@ using System.Collections;
 
 namespace SmartSql.Versioning {
 
+    //Take all parameters.
     public class ApiController<
         TDbContext, TController,
 
         TInstance, TValue,
 
-        TAddRequest, TAddResponse,
-        TUpdateRequest, TUpdateResponse,
-        TGetRequest, TGetResponse,
-        TListRequest, TListResponse,
-        TArchiveRequest, TArchiveResponse,
-        TRestoreRequest, TRestoreResponse
+        TAddParentKey,      TAddValues,         TAddResponse,
+        TUpdateKey,         TUpdateValues,      TUpdateResponse,
+        TGetKey,                                TGetResponse,
+        TListParentKey,                         TListResponse,
+        TArchiveKey,                            TArchiveResponse,
+        TRestoreKey,                            TRestoreResponse,
+        THistoryKey,                            THistoryResponse
+
         > : ApiControllerBase<
-            TAddRequest, TAddResponse,
-            TUpdateRequest, TUpdateResponse,
-            TGetRequest, TGetResponse,
-            TListRequest, TListResponse,
-            TArchiveRequest, TArchiveResponse,
-            TRestoreRequest, TRestoreResponse
+                TAddParentKey,      TAddValues,         TAddResponse,
+                TUpdateKey,         TUpdateValues,      TUpdateResponse,
+                TGetKey,                                TGetResponse,
+                TListParentKey,                         TListResponse,
+                TArchiveKey,                            TArchiveResponse,
+                TRestoreKey,                            TRestoreResponse,
+                THistoryKey,                            THistoryResponse
             >
         where TDbContext : DbContext, new()
         where TController : DataController<TDbContext, TInstance, TValue>, new()
         where TInstance : Instance<TValue>, new()
         where TValue : Revision<TInstance>, new()
 
-        where TAddRequest : new()
         where TAddResponse : new()
 
-        where TUpdateRequest : new()
         where TUpdateResponse : new()
 
-        where TGetRequest : new()
         where TGetResponse : new()
 
-        where TListRequest : new()
         where TListResponse : new()
 
-        where TArchiveRequest : new()
         where TArchiveResponse : new()
 
-        where TRestoreRequest : new()
-        where TRestoreResponse : new() 
+        where TRestoreResponse : new()
+
+        where THistoryResponse : new()
         {
 
         private TController __DataController;
@@ -82,6 +82,35 @@ namespace SmartSql.Versioning {
 
         }
 
+        protected override object Add(AddRequest<TAddParentKey, TAddValues> Operation) {
+            return base.Add(Operation);
+        }
+
+        protected override object Update(UpdateRequest<TUpdateKey, TUpdateValues> Operation) {
+            return base.Update(Operation);
+        }
+
+        protected override object Get(GetRequest<TGetKey> Operation) {
+            return base.Get(Operation);
+        }
+
+        protected override IList List(ListRequest<TListParentKey> Operation) {
+            return base.List(Operation);
+        }
+
+        protected override object Archive(ArchiveRequest<TArchiveKey> Operation) {
+            return base.Archive(Operation);
+        }
+
+        protected override object Restore(RestoreRequest<TRestoreKey> Operation) {
+            return base.Restore(Operation);
+        }
+
+        protected override IList History(HistoryRequest<THistoryKey> Operation) {
+            return base.History(Operation);
+        }
+
+        /*
         protected override object Add(TAddRequest Operation) {
             return DataController.Add(Operation);
         }
@@ -106,6 +135,10 @@ namespace SmartSql.Versioning {
             return DataController.Restore(Operation);
         }
 
+        protected override IList History(THistoryRequest Operation) {
+            return DataController.History(Operation);
+        }
+        */
     }
 
 

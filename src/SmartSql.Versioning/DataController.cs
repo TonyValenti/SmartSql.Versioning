@@ -12,6 +12,7 @@ namespace SmartSql.Versioning {
         where TDbContext : DbContext, new()
         where TInstance : Instance<TValue>, new()
         where TValue : Revision<TInstance>, new() {
+
         private TDbContext __Context;
 
         public TDbContext Context {
@@ -92,7 +93,7 @@ namespace SmartSql.Versioning {
         /// <param name="Status"></param>
         /// <returns></returns>
         public virtual TValue Archive(Guid InstanceId, bool Status) {
-            var ret = Item(InstanceId);
+            var ret = Get(InstanceId);
             if (ret != null && ret.IsArchived != Status) {
                 ret.IsArchived = Status;
                 ret = Update(ret);
@@ -101,10 +102,6 @@ namespace SmartSql.Versioning {
             return Detatch(ret);
         }
 
-        public List<TValue> History(object ObjectWithInstanceId) {
-            var InstanceId = Mapper.Instance.Map<TInstance>(ObjectWithInstanceId).InstanceId;
-            return History(InstanceId);
-        }
 
         /// <summary>
         /// Retrieves the complete revision history of an instance.
@@ -112,20 +109,15 @@ namespace SmartSql.Versioning {
         /// </summary>
         /// <param name="InstanceId"></param>
         /// <returns></returns>
-        public virtual List<TValue> History(Guid InstanceId) {
-            var ret = ItemQuery(InstanceId)
+        public virtual IQueryable<TValue> History(Guid InstanceId) {
+            var ret = GetQuery(InstanceId)
                 .AsNoTracking()
                 .IncludeHistory(true)
                 .IncludeArchived(true)
                 .OrderByRevisionDateDescending()
                 ;
 
-            return ret.ToList();
-        }
-
-        public virtual TValue Item(object ObjectWithInstanceId) {
-            var InstanceId = Mapper.Instance.Map<TInstance>(ObjectWithInstanceId).InstanceId;
-            return Item(InstanceId);
+            return ret;
         }
 
         /// <summary>
@@ -133,8 +125,8 @@ namespace SmartSql.Versioning {
         /// </summary>
         /// <param name="InstanceId"></param>
         /// <returns></returns>
-        public virtual TValue Item(Guid InstanceId) {
-            return ItemQuery(InstanceId)
+        public virtual TValue Get(Guid InstanceId) {
+            return GetQuery(InstanceId)
                 .AsNoTracking()
                 .WhereIsCurrent()
                 .FirstOrDefault()
@@ -145,43 +137,30 @@ namespace SmartSql.Versioning {
         /// Returns all current items that are not archived.
         /// </summary>
         /// <returns></returns>
-        public List<TValue> List() {
+        public IQueryable<TValue> Current() {
             var Query = AllQuery
                 .AsNoTracking()
                 .IncludeHistory(false)
                 .IncludeArchived(false)
                 ;
 
-            return Query.ToList();
+            return Query;
         }
 
         /// <summary>
         /// Returns all current items including items that have been archived.
         /// </summary>
         /// <returns></returns>
-        public List<TValue> ListAll() {
+        public IQueryable<TValue> All() {
             var Query = AllQuery
                 .AsNoTracking()
                 .IncludeHistory(false)
                 .IncludeArchived(true)
                 ;
 
-            return Query.ToList();
+            return Query;
         }
 
-        public TValue Restore(Object ObjectWithInstanceId) {
-            var InstanceId = Mapper.Instance.Map<TInstance>(ObjectWithInstanceId).InstanceId;
-            return Restore(InstanceId);
-        }
-
-        /// <summary>
-        /// Restores the specified instance.  All values other than the InstanceId are ignored.
-        /// </summary>
-        /// <param name="Value"></param>
-        /// <returns></returns>
-        public TValue Restore(TValue Value) {
-            return Restore(Value.InstanceId);
-        }
 
         /// <summary>
         /// Restores the specified instance.
@@ -217,16 +196,15 @@ namespace SmartSql.Versioning {
             return Query;
         }
 
-        public virtual TValue Update(object ObjectWithInstanceId) {
-            var InstanceId = Mapper.Instance.Map<TInstance>(ObjectWithInstanceId).InstanceId;
-            return Update(InstanceId, ObjectWithInstanceId);
-        }
-
         public virtual TValue Update(Guid InstanceId, object NewValues) {
-            var Original = Context.Set<TValue>()
+            var Originals = Context.Set<TValue>()
                 .HasInstanceId(InstanceId)
                 .WhereIsOriginal()
-                .FirstOrDefault();
+                .OrderBy(x => x.CreatedDateUtc)
+                .ThenBy(x => x.RevisionDateUtc)
+                .ToList();
+
+            var Original = Originals.FirstOrDefault();
 
             var Currents = Context.Set<TValue>()
                 .HasInstanceId(InstanceId)
@@ -255,11 +233,21 @@ namespace SmartSql.Versioning {
             if (Original == null) {
                 NewValue.IsOriginal = true;
                 NewValue.CreatedDateUtc = NewValue.RevisionDateUtc;
+            } else {
+                //This has to be specifically set because when we do the mapping, we might copy it over.
+                NewValue.IsOriginal = false;
             }
 
+            //The current items are no longer current.
             foreach (var item in Currents) {
                 item.IsCurrent = false;
             }
+
+            //If somehow we have multiple originals, fix them.
+            for (int i = 1; i < Originals.Count; i++) {
+                Originals[i].IsOriginal = false;
+            }
+
 
             Context.Set<TValue>().Add(NewValue);
 
@@ -289,7 +277,7 @@ namespace SmartSql.Versioning {
             return Item;
         }
 
-        protected virtual IQueryable<TValue> ItemQuery(Guid InstanceId) {
+        protected virtual IQueryable<TValue> GetQuery(Guid InstanceId) {
             var ret = AllQuery
                 .HasInstanceId(InstanceId)
                 ;

@@ -20,12 +20,13 @@ namespace SmartSql.Versioning {
 
 
     public abstract class ApiControllerBase <
-        TAddRequest,        TAddResponse,
-        TUpdateRequest,     TUpdateResponse,
-        TGetRequest,        TGetResponse,
-        TListRequest,       TListResponse,
-        TArchiveRequest,    TArchiveResponse,
-        TRestoreRequest,    TRestoreResponse
+        TAddParentKey,      TAddValues,         TAddResponse,
+        TUpdateKey,         TUpdateValues,      TUpdateResponse,
+        TGetKey,                                TGetResponse,
+        TListParentKey,                         TListResponse,
+        TArchiveKey,                            TArchiveResponse,
+        TRestoreKey,                            TRestoreResponse,
+        THistoryKey,                            THistoryResponse
         > : ApiController
         
         where TAddResponse : new()
@@ -34,51 +35,58 @@ namespace SmartSql.Versioning {
         where TListResponse : new()
         where TArchiveResponse : new()
         where TRestoreResponse : new()
+        where THistoryResponse : new()
         {
 
-        protected virtual bool CanAdd(TAddRequest Operation) {
+        protected virtual bool CanAdd(AddRequest<TAddParentKey, TAddValues> Operation) {
             return true;
         }
-        protected virtual bool CanUpdate(TUpdateRequest Operation) {
+        protected virtual bool CanUpdate(UpdateRequest<TUpdateKey, TUpdateValues> Operation) {
             return true;
         }
-        protected virtual bool CanGet(TGetRequest Operation) {
+        protected virtual bool CanGet(GetRequest<TGetKey> Operation) {
             return true;
         }
-        protected virtual bool CanList(TListRequest Operation) {
+        protected virtual bool CanList(ListRequest<TListParentKey> Operation) {
             return true;
         }
-        protected virtual bool CanArchive(TArchiveRequest Operation) {
+        protected virtual bool CanArchive(ArchiveRequest<TArchiveKey> Operation) {
             return true;
         }
-        protected virtual bool CanRestore(TRestoreRequest Operation) {
+        protected virtual bool CanRestore(RestoreRequest<TRestoreKey> Operation) {
+            return true;
+        }
+        protected virtual bool CanHistory(HistoryRequest<THistoryKey> Operation) {
             return true;
         }
 
-        protected virtual Object Add(TAddRequest Operation) {
+
+        protected virtual Object Add(AddRequest<TAddParentKey, TAddValues> Operation) {
             return true;
         }
-        protected virtual Object Update(TUpdateRequest Operation) {
+        protected virtual Object Update(UpdateRequest<TUpdateKey, TUpdateValues> Operation) {
             return true;
         }
-        protected virtual Object Get(TGetRequest Operation) {
+        protected virtual Object Get(GetRequest<TGetKey> Operation) {
             return true;
         }
-        protected virtual IList List(TListRequest Operation) {
+        protected virtual IList List(ListRequest<TListParentKey> Operation) {
             return null;
         }
-        protected virtual Object Archive(TArchiveRequest Operation) {
+        protected virtual Object Archive(ArchiveRequest<TArchiveKey> Operation) {
             return true;
         }
-        protected virtual Object Restore(TRestoreRequest Operation) {
+        protected virtual Object Restore(RestoreRequest<TRestoreKey> Operation) {
             return true;
         }
-
+        protected virtual IList History(HistoryRequest<THistoryKey> Operation) {
+            return null;
+        }
 
 
         [HttpPost]
         [ActionName("Add")]
-        public virtual IHttpActionResult AddWebMethod([FromBody] TAddRequest Operation) {
+        public virtual IHttpActionResult AddWebMethod(AddRequest<TAddParentKey, TAddValues> Operation) {
             IHttpActionResult ret = Unauthorized();
 
             if (CanAdd(Operation)) {
@@ -92,7 +100,7 @@ namespace SmartSql.Versioning {
 
         [HttpPost]
         [ActionName("Update")]
-        public virtual IHttpActionResult UpdateWebMethod(TUpdateRequest Operation) {
+        public virtual IHttpActionResult UpdateWebMethod(UpdateRequest<TUpdateKey, TUpdateValues> Operation) {
             IHttpActionResult ret = Unauthorized();
 
             if (CanUpdate(Operation)) {
@@ -106,7 +114,7 @@ namespace SmartSql.Versioning {
 
         [HttpPost]
         [ActionName("Get")]
-        public virtual IHttpActionResult GetWebMethod(TGetRequest Operation) {
+        public virtual IHttpActionResult GetWebMethod(GetRequest<TGetKey> Operation) {
             IHttpActionResult ret = Unauthorized();
 
             if (CanGet(Operation)) {
@@ -120,7 +128,7 @@ namespace SmartSql.Versioning {
 
         [HttpPost]
         [ActionName("List")]
-        public virtual IHttpActionResult ListWebMethod(TListRequest Operation) {
+        public virtual IHttpActionResult ListWebMethod(ListRequest<TListParentKey> Operation) {
             IHttpActionResult ret = Unauthorized();
 
             if (CanList(Operation)) {
@@ -134,7 +142,7 @@ namespace SmartSql.Versioning {
 
         [HttpPost]
         [ActionName("Archive")]
-        public virtual IHttpActionResult ArchiveWebMethod(TArchiveRequest Operation) {
+        public virtual IHttpActionResult ArchiveWebMethod(ArchiveRequest<TArchiveKey> Operation) {
             IHttpActionResult ret = Unauthorized();
 
             if (CanArchive(Operation)) {
@@ -148,7 +156,7 @@ namespace SmartSql.Versioning {
 
         [HttpPost]
         [ActionName("Restore")]
-        public virtual IHttpActionResult RestoreWebMethod(TRestoreRequest Operation) {
+        public virtual IHttpActionResult RestoreWebMethod(RestoreRequest<TRestoreKey> Operation) {
             IHttpActionResult ret = Unauthorized();
 
             if (CanRestore(Operation)) {
@@ -160,6 +168,19 @@ namespace SmartSql.Versioning {
             return ret;
         }
 
+        [HttpPost]
+        [ActionName("History")]
+        public virtual IHttpActionResult HistoryWebMethod(HistoryRequest<THistoryKey> Operation) {
+            IHttpActionResult ret = Unauthorized();
+
+            if (CanHistory(Operation)) {
+                var Value = History(Operation);
+                var mapped = Mapper.Instance.MapList<TListResponse>(Value);
+                ret = Ok(mapped);
+            }
+
+            return ret;
+        }
 
 
         protected override JsonResult<T> Json<T>(T content, JsonSerializerSettings serializerSettings, Encoding encoding) {

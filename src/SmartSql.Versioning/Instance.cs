@@ -13,6 +13,9 @@ namespace SmartSql.Versioning {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid InstanceId { get; set; }
 
+        
+        [InverseProperty("Instance")]
+        public virtual ICollection<TRevision> Revisions { get; set; }
     }
     
 }

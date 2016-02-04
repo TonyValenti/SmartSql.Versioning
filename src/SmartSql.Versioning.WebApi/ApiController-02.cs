@@ -18,43 +18,37 @@ using System.Collections;
 
 namespace SmartSql.Versioning {
 
+    //We have a common response with separate add/update parameters.
     public class ApiController<
         TDbContext, TController,
 
         TInstance, TValue,
         
-        TAddRequest,
-        TUpdateRequest, 
-        TGetRequest,
-        TListRequest,
-        TArchiveRequest, 
-        TRestoreRequest,
+        TItemKey,
+        TParentKey,
+
+        TAddParameters,
+        TUpdateParameters,
         TCommonResponse
         > : ApiController<
             TDbContext, TController,
 
             TInstance, TValue,
 
-            TAddRequest, TCommonResponse,
-            TUpdateRequest, TCommonResponse,
-            TGetRequest, TCommonResponse,
-            TListRequest, TCommonResponse,
-            TArchiveRequest, TCommonResponse,
-            TRestoreRequest, TCommonResponse
+            TParentKey,         TAddParameters,         TCommonResponse,
+            TItemKey,           TUpdateParameters,      TCommonResponse,
+            TItemKey,                                   TCommonResponse,
+            TParentKey,                                 TCommonResponse,
+            TItemKey,                                   TCommonResponse,
+            TItemKey,                                   TCommonResponse,
+            TItemKey,                                   TCommonResponse
             >
         where TDbContext : DbContext, new()
         where TController : DataController<TDbContext, TInstance, TValue>, new()
         where TInstance : Instance<TValue>, new()
         where TValue : Revision<TInstance>, new()
-
-        where TAddRequest : new()
-        where TUpdateRequest : new()
-        where TGetRequest : new()
-        where TListRequest : new()
-        where TArchiveRequest : new()
-        where TRestoreRequest : new()
-
         where TCommonResponse : new()
+
         {
 
        

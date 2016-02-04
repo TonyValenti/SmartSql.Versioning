@@ -23,4 +23,5 @@ namespace SmartSql.Versioning {
         }
 
     }
+
 }
