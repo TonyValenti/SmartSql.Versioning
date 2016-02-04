@@ -35,7 +35,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
             TUpdateParameters,
             TCommonResponse
         >
-            where TController : DataController<DataContext, TInstance, TValue>, new()
+            where TController : EntityListMemberController<TInstance, TValue>, new()
             where TInstance : Instance<TValue>, new()
             where TValue : EntityRevision<TInstance>, new() 
             where TCommonResponse : new()
@@ -94,12 +94,38 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
             return ret;
         }
 
+        protected override object Add(AddRequest<EntityIdParameters, TAddParameters> Operation) {
+            DataController.Default_EntityId = Operation.Key.EntityId;
+
+            return DataController.Add(Operation.Values);
+        }
+
+        protected override object Update(UpdateRequest<InstanceIdParameters, TUpdateParameters> Operation) {
+            return DataController.Update(Operation.Key.InstanceId, Operation.Values);
+        }
+
+        protected override object Get(GetRequest<InstanceIdParameters> Operation) {
+            return DataController.Get(Operation.Key.InstanceId);
+        }
+
         protected override IList List(ListRequest<EntityIdParameters> Operation) {
             var EntityId = Operation.Key.EntityId;
 
             return DataController.All()
                 .Where(x => x.EntityId == EntityId)
                 .ToList();
+        }
+
+        protected override object Archive(ArchiveRequest<InstanceIdParameters> Operation) {
+            return DataController.Archive(Operation.Key.InstanceId);
+        }
+
+        protected override object Restore(RestoreRequest<InstanceIdParameters> Operation) {
+            return DataController.Restore(Operation.Key.InstanceId);
+        }
+
+        protected override IList History(HistoryRequest<InstanceIdParameters> Operation) {
+            return DataController.History(Operation.Key.InstanceId).ToList();
         }
 
         public EntityListMemberApiController() {

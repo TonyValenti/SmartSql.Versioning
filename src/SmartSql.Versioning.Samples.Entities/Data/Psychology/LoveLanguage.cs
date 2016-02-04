@@ -42,7 +42,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public bool HasPhysicalTouch { get; set; }
     }
 
-    public class LoveLanguageResponse : CommonResponse {
+    public class LoveLanguageResponse : EntityMemberResponse {
         public bool HasWordsOfAffirmation { get; set; }
         public bool HasActsOfService { get; set; }
         public bool HasReceivingGifts { get; set; }
@@ -51,7 +51,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
     }
 
 
-    public class LoveLanguageApiController : EntityListMemberApiController<
+    public class LoveLanguageApiController : EntityValueMemberApiController<
       LoveLanguageController,
       LoveLanguageInstance, LoveLanguage,
       LoveLanguageParameters, LoveLanguageParameters,

@@ -40,7 +40,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         bool EnableNotifications { get; set; }
     }
 
-    public class PhoneNumberResponse : CommonResponse {
+    public class PhoneNumberResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Value { get; set; }
         bool IsMobile { get; set; }

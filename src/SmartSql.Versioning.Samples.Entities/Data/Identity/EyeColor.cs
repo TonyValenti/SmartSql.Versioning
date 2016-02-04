@@ -34,7 +34,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
     }
 
-    public class EyeColorResponse : CommonResponse<String> {
+    public class EyeColorResponse : EntityMemberResponse<String> {
 
     }
 

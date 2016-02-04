@@ -36,7 +36,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public string Treatment { get; set; }
     }
 
-    public class AllergyResponse : CommonResponse {
+    public class AllergyResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Treatment { get; set; }
     }

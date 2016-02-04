@@ -9,18 +9,18 @@ using System.Collections;
 namespace SmartSql.Versioning {
     //We are assuming that things will be fetched by their InstanceId
     public class ApiController<
-        TDbContext, TController,
-        TInstance, TValue,
+        TDbContext,                 TController,
+        TInstance,                  TValue,
+        
         TAddParameters,
         TUpdateParameters,
         TCommonResponse
 
         > : ApiController<
-           TDbContext, TController,
+           TDbContext,              TController,
+           TInstance,               TValue,
+           InstanceIdParameters,    EmptyParameters,
 
-           TInstance, TValue,
-           InstanceIdParameters,
-           EmptyParameters,
            TAddParameters,
            TAddParameters,
            TCommonResponse

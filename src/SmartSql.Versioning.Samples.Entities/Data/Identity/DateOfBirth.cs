@@ -34,7 +34,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
     }
 
-    public class DateOfBirthResponse : CommonResponse<DateTime> {
+    public class DateOfBirthResponse : EntityMemberResponse<DateTime> {
 
     }
 

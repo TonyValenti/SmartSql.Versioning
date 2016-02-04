@@ -36,7 +36,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         //TODO
     }
 
-    public class EmergencyContactResponse : CommonResponse {
+    public class EmergencyContactResponse : EntityMemberResponse {
         //TODO
     }
 

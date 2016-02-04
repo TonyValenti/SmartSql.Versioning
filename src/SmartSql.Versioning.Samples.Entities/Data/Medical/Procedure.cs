@@ -39,7 +39,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public DateTime Date { get; set; }
     }
 
-    public class ProcedureResponse : CommonResponse {
+    public class ProcedureResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }

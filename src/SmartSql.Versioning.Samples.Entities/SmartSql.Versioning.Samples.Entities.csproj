@@ -98,6 +98,7 @@
     <Compile Include="Data\ContactInformation\Email.cs" />
     <Compile Include="Data\ContactInformation\Address.cs" />
     <Compile Include="Data\Education\Certification.cs" />
+    <Compile Include="Data\Entity\EntityMemberResponse.cs" />
     <Compile Include="Data\Entity\EntityApiController.cs" />
     <Compile Include="Data\Entity\EntityExtensions.cs" />
     <Compile Include="Data\Entity\EntityIdParameters.cs" />

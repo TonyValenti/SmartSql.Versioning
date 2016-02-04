@@ -19,7 +19,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public string Value { get; set; }
     }
 
-    public class LikeResponse : CommonResponse {
+    public class LikeResponse : EntityMemberResponse {
         public LikeStatus Status { get; set; }
         public LikeCategory Category { get; set; }
         public string Value { get; set; }

@@ -19,7 +19,7 @@ using System.Collections;
 namespace SmartSql.Versioning {
 
     //We have a common response with separate add/update parameters.
-    public class ApiController<
+    public abstract class ApiController<
         TDbContext, TController,
 
         TInstance, TValue,

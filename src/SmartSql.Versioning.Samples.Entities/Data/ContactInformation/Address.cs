@@ -44,7 +44,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public string PostalCode { get; set; }
     }
 
-    public class AddressResponse : CommonResponse {
+    public class AddressResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }

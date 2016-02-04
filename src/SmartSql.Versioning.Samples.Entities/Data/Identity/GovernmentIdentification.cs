@@ -36,7 +36,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public string Value { get; set; }
     }
 
-    public class GovernmentIdentificationResponse : CommonResponse {
+    public class GovernmentIdentificationResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Value { get; set; }
     }

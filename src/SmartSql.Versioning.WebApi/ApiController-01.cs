@@ -19,7 +19,7 @@ using System.Collections;
 namespace SmartSql.Versioning {
 
     //Take all parameters.
-    public class ApiController<
+    public abstract class ApiController<
         TDbContext, TController,
 
         TInstance, TValue,
@@ -77,70 +77,8 @@ namespace SmartSql.Versioning {
         }
 
 
-        public ApiController() {
-            DataController = new TController();
 
-        }
-
-        protected override object Add(AddRequest<TAddParentKey, TAddValues> Operation) {
-            return base.Add(Operation);
-        }
-
-        protected override object Update(UpdateRequest<TUpdateKey, TUpdateValues> Operation) {
-            return base.Update(Operation);
-        }
-
-        protected override object Get(GetRequest<TGetKey> Operation) {
-            return base.Get(Operation);
-        }
-
-        protected override IList List(ListRequest<TListParentKey> Operation) {
-            return base.List(Operation);
-        }
-
-        protected override object Archive(ArchiveRequest<TArchiveKey> Operation) {
-            return base.Archive(Operation);
-        }
-
-        protected override object Restore(RestoreRequest<TRestoreKey> Operation) {
-            return base.Restore(Operation);
-        }
-
-        protected override IList History(HistoryRequest<THistoryKey> Operation) {
-            return base.History(Operation);
-        }
-
-        /*
-        protected override object Add(TAddRequest Operation) {
-            return DataController.Add(Operation);
-        }
-
-        protected override object Update(TUpdateRequest Operation) {
-            return DataController.Update(Operation);
-        }
-
-        protected override object Get(TGetRequest Operation) {
-            return DataController.Item(Operation);
-        }
-
-        protected override IList List(TListRequest Operation) {
-            return DataController.ListAll();
-        }
-
-        protected override object Archive(TArchiveRequest Operation) {
-            return DataController.Archive(Operation);
-        }
-
-        protected override object Restore(TRestoreRequest Operation) {
-            return DataController.Restore(Operation);
-        }
-
-        protected override IList History(THistoryRequest Operation) {
-            return DataController.History(Operation);
-        }
-        */
     }
-
 
 
 }

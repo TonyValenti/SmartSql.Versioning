@@ -38,7 +38,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public bool EnableNotifications { get; set; }
     }
 
-    public class EmailResponse : CommonResponse {
+    public class EmailResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Value { get; set; }
         public bool EnableNotifications { get; set; }

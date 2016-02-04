@@ -40,7 +40,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public bool HasReactive { get; set; }
     }
 
-    public class AngerLanguageResponse : CommonResponse {
+    public class AngerLanguageResponse : EntityMemberResponse {
         public bool HasAvoidant { get; set; }
         public bool HasDirect { get; set; }
         public bool HasPassiveAggressive { get; set; }
@@ -48,7 +48,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
     }
 
 
-    public class AngerLanguageApiController : EntityListMemberApiController<
+    public class AngerLanguageApiController : EntityValueMemberApiController<
       AngerLanguageController,
       AngerLanguageInstance, AngerLanguage,
       AngerLanguageParameters, AngerLanguageParameters,

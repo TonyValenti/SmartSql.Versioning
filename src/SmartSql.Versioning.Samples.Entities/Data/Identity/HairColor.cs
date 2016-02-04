@@ -33,7 +33,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
     }
 
-    public class HairColorResponse : CommonResponse<String> {
+    public class HairColorResponse : EntityMemberResponse<String> {
 
     }
 

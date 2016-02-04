@@ -68,7 +68,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public BriggsMyers4 Value4 { get; set; }
     }
 
-    public class BriggsMyersResponse : CommonResponse {
+    public class BriggsMyersResponse : EntityMemberResponse {
         public BriggsMyers1 Value1 { get; set; }
         public BriggsMyers2 Value2 { get; set; }
         public BriggsMyers3 Value3 { get; set; }
@@ -76,7 +76,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
     }
 
 
-    public class BriggsMyersApiController : EntityListMemberApiController<
+    public class BriggsMyersApiController : EntityValueMemberApiController<
       BriggsMyersController,
       BriggsMyersInstance, BriggsMyers,
       BriggsMyersParameters, BriggsMyersParameters,

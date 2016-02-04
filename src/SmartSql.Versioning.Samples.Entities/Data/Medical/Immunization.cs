@@ -37,7 +37,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public DateTime Date { get; set; }
     }
 
-    public class ImmunizationResponse : CommonResponse {
+    public class ImmunizationResponse : EntityMemberResponse {
         public string Name { get; set; }
         public DateTime Date { get; set; }
     }

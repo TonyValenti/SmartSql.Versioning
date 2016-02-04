@@ -34,7 +34,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
     }
 
-    public class PantSizeResponse : CommonResponse<String> {
+    public class PantSizeResponse : EntityMemberResponse<String> {
 
     }
 

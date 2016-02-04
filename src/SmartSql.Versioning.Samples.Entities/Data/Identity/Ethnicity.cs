@@ -34,7 +34,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
     }
 
-    public class EthnicityResponse : CommonResponse<String> {
+    public class EthnicityResponse : EntityMemberResponse<String> {
 
     }
 

@@ -145,6 +145,10 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
             return ret;
         }
 
+        protected override IList History(HistoryRequest<EntityIdParameters> Operation) {
+            return DataController.History(Operation.Key.EntityId).ToList();
+        }
+
         private bool HasEntityPermission(Guid EntityId) {
             var ret = false;
 

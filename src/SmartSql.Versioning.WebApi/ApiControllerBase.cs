@@ -61,38 +61,30 @@ namespace SmartSql.Versioning {
         }
 
 
-        protected virtual Object Add(AddRequest<TAddParentKey, TAddValues> Operation) {
-            return true;
-        }
-        protected virtual Object Update(UpdateRequest<TUpdateKey, TUpdateValues> Operation) {
-            return true;
-        }
-        protected virtual Object Get(GetRequest<TGetKey> Operation) {
-            return true;
-        }
-        protected virtual IList List(ListRequest<TListParentKey> Operation) {
-            return null;
-        }
-        protected virtual Object Archive(ArchiveRequest<TArchiveKey> Operation) {
-            return true;
-        }
-        protected virtual Object Restore(RestoreRequest<TRestoreKey> Operation) {
-            return true;
-        }
-        protected virtual IList History(HistoryRequest<THistoryKey> Operation) {
-            return null;
-        }
+        protected abstract Object Add(AddRequest<TAddParentKey, TAddValues> Operation);
 
+        protected abstract Object Update(UpdateRequest<TUpdateKey, TUpdateValues> Operation);
+
+        protected abstract Object Get(GetRequest<TGetKey> Operation);
+
+        protected abstract IList List(ListRequest<TListParentKey> Operation);
+
+        protected abstract Object Archive(ArchiveRequest<TArchiveKey> Operation);
+
+        protected abstract Object Restore(RestoreRequest<TRestoreKey> Operation);
+
+        protected abstract IList History(HistoryRequest<THistoryKey> Operation);
+        
 
         [HttpPost]
         [ActionName("Add")]
-        public virtual IHttpActionResult AddWebMethod(AddRequest<TAddParentKey, TAddValues> Operation) {
-            IHttpActionResult ret = Unauthorized();
+        public virtual TAddResponse AddWebMethod(AddRequest<TAddParentKey, TAddValues> Operation) {
+            var ret = default(TAddResponse);
 
             if (CanAdd(Operation)) {
                 var Value = Add(Operation);
                 var mapped = Mapper.Instance.Map<TAddResponse>(Value);
-                ret = Ok(mapped);
+                ret = mapped;
             } 
 
             return ret;
@@ -100,13 +92,13 @@ namespace SmartSql.Versioning {
 
         [HttpPost]
         [ActionName("Update")]
-        public virtual IHttpActionResult UpdateWebMethod(UpdateRequest<TUpdateKey, TUpdateValues> Operation) {
-            IHttpActionResult ret = Unauthorized();
+        public virtual TUpdateResponse UpdateWebMethod(UpdateRequest<TUpdateKey, TUpdateValues> Operation) {
+            var ret = default(TUpdateResponse);
 
             if (CanUpdate(Operation)) {
                 var Value = Update(Operation);
                 var mapped = Mapper.Instance.Map<TUpdateResponse>(Value);
-                ret = Ok(mapped);
+                ret = mapped;
             }
 
             return ret;
@@ -114,13 +106,13 @@ namespace SmartSql.Versioning {
 
         [HttpPost]
         [ActionName("Get")]
-        public virtual IHttpActionResult GetWebMethod(GetRequest<TGetKey> Operation) {
-            IHttpActionResult ret = Unauthorized();
+        public virtual TGetResponse GetWebMethod(GetRequest<TGetKey> Operation) {
+            var ret = default(TGetResponse);
 
             if (CanGet(Operation)) {
                 var Value = Get(Operation);
                 var mapped = Mapper.Instance.Map<TGetResponse>(Value);
-                ret = Ok(mapped);
+                ret = mapped;
             }
 
             return ret;
@@ -128,13 +120,13 @@ namespace SmartSql.Versioning {
 
         [HttpPost]
         [ActionName("List")]
-        public virtual IHttpActionResult ListWebMethod(ListRequest<TListParentKey> Operation) {
-            IHttpActionResult ret = Unauthorized();
+        public virtual List<TListResponse> ListWebMethod(ListRequest<TListParentKey> Operation) {
+            var ret = default(List<TListResponse>);
 
             if (CanList(Operation)) {
                 var Value = List(Operation);
                 var mapped = Mapper.Instance.MapList<TListResponse>(Value);
-                ret = Ok(mapped);
+                ret = mapped;
             }
 
             return ret;
@@ -142,13 +134,13 @@ namespace SmartSql.Versioning {
 
         [HttpPost]
         [ActionName("Archive")]
-        public virtual IHttpActionResult ArchiveWebMethod(ArchiveRequest<TArchiveKey> Operation) {
-            IHttpActionResult ret = Unauthorized();
+        public virtual TArchiveResponse ArchiveWebMethod(ArchiveRequest<TArchiveKey> Operation) {
+            var ret = default(TArchiveResponse);
 
             if (CanArchive(Operation)) {
                 var Value = Archive(Operation);
                 var mapped = Mapper.Instance.Map<TArchiveResponse>(Value);
-                ret = Ok(mapped);
+                ret = mapped;
             }
 
             return ret;
@@ -156,13 +148,13 @@ namespace SmartSql.Versioning {
 
         [HttpPost]
         [ActionName("Restore")]
-        public virtual IHttpActionResult RestoreWebMethod(RestoreRequest<TRestoreKey> Operation) {
-            IHttpActionResult ret = Unauthorized();
+        public virtual TRestoreResponse RestoreWebMethod(RestoreRequest<TRestoreKey> Operation) {
+            var ret = default(TRestoreResponse);
 
             if (CanRestore(Operation)) {
                 var Value = Restore(Operation);
                 var mapped = Mapper.Instance.Map<TRestoreResponse>(Value);
-                ret = Ok(mapped);
+                ret = mapped;
             }
 
             return ret;
@@ -170,13 +162,13 @@ namespace SmartSql.Versioning {
 
         [HttpPost]
         [ActionName("History")]
-        public virtual IHttpActionResult HistoryWebMethod(HistoryRequest<THistoryKey> Operation) {
-            IHttpActionResult ret = Unauthorized();
+        public virtual List<THistoryResponse> HistoryWebMethod(HistoryRequest<THistoryKey> Operation) {
+            var ret = default(List<THistoryResponse>);
 
             if (CanHistory(Operation)) {
                 var Value = History(Operation);
-                var mapped = Mapper.Instance.MapList<TListResponse>(Value);
-                ret = Ok(mapped);
+                var mapped = Mapper.Instance.MapList<THistoryResponse>(Value);
+                ret = mapped;
             }
 
             return ret;

@@ -71,8 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="2.0\Operations.cs" />
-    <Compile Include="ApiController-02.cs" />
     <None Include="JsonNetResult.cs" />
+    <Compile Include="ApiController-02.cs" />
     <Compile Include="ApiController-03.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApiControllerBase.cs" />

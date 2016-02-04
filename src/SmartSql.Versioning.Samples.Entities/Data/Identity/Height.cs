@@ -41,13 +41,13 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public float Value { get; set; }
     }
 
-    public class HeightResponse : CommonResponse {
+    public class HeightResponse : EntityMemberResponse {
         public HeightUnit Unit { get; set; }
         public float Value { get; set; }
     }
 
 
-    public class HeightApiController : EntityListMemberApiController<
+    public class HeightApiController : EntityValueMemberApiController<
       HeightController,
       HeightInstance, Height,
       HeightParameters, HeightParameters,

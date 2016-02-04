@@ -34,7 +34,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
     }
 
-    public class HeadSizeResponse : CommonResponse<String> {
+    public class HeadSizeResponse : EntityMemberResponse<String> {
 
     }
 

@@ -40,7 +40,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public string Institution { get; set; }
     }
 
-    public class BankAccountResponse : CommonResponse {
+    public class BankAccountResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string AccountNumber { get; set; }
         public string Description { get; set; }

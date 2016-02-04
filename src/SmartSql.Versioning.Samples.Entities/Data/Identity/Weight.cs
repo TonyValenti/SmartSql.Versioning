@@ -41,13 +41,13 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public float Value { get; set; }
     }
 
-    public class WeightResponse : CommonResponse {
+    public class WeightResponse : EntityMemberResponse {
         public WeightUnit Unit { get; set; }
         public float Value { get; set; }
     }
 
 
-    public class WeightApiController : EntityListMemberApiController<
+    public class WeightApiController : EntityValueMemberApiController<
       WeightController,
       WeightInstance, Weight,
       WeightParameters, WeightParameters,
