@@ -18,7 +18,7 @@ namespace SmartSql.Versioning {
         public static void RegisterTypes(DbModelBuilder modelBuilder) {
             modelBuilder.Entity<Author>();
             modelBuilder.Entity<EmailAuthor>();
-            modelBuilder.Entity<UserAuthor>();
+            modelBuilder.Entity<GuidUserAuthor>();
             modelBuilder.Entity<AnonymousAuthor>();
         }
 

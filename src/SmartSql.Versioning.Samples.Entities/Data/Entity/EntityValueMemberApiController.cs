@@ -166,7 +166,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public EntityValueMemberApiController() {
             var UserId = Framework.Shell.UserId;
 
-            DataController.Default_Author = new UserAuthor(UserId);
+            DataController.Default_Author = new GuidUserAuthor(UserId);
 
         }
 

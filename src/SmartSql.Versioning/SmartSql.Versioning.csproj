@@ -70,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Author.cs" />
-    <Compile Include="AuthorHelper.cs" />
+    <Compile Include="AuthorController.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Instance.cs" />
     <Compile Include="Mapper.cs" />

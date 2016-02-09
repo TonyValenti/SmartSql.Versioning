@@ -74,7 +74,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
         public EntityApiController() {
             var UserId = SmartSql.Versioning.Samples.Entities.Framework.Shell.UserId;
-            DataController.Default_Author = new UserAuthor(UserId);
+            DataController.Default_Author = new GuidUserAuthor(UserId);
             DataController.Default_OwnerUserId = UserId;
         }
 

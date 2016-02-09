@@ -224,7 +224,7 @@ namespace SmartSql.Versioning {
 
             NewValue.InstanceId = InstanceId;
             NewValue.RevisionId = Guid.Empty;
-            NewValue.Author = new AuthorHelper(Context).FindCreateAuthor(Default_Author);
+            NewValue.Author = new AuthorController(Context).FindCreateAuthor(Default_Author);
             NewValue.RevisionDateUtc = DateTime.UtcNow;
             NewValue.IsCurrent = true;
 
