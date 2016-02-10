@@ -19,7 +19,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public string Name { get; set; }
     }
 
-    public class EntityResponse : EntityMemberResponse {
+    public class EntityResponse : CommonResponse {
         public string Name { get; set; }
     }
 

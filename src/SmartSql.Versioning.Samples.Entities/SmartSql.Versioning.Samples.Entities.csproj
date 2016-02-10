@@ -156,11 +156,11 @@
     <Content Include="Documentation.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GitHubVisualStudio\SmartSql.Versioning\src\SmartSql.Versioning.WebApi\SmartSql.Versioning.WebApi.csproj">
+    <ProjectReference Include="..\SmartSql.Versioning.WebApi\SmartSql.Versioning.WebApi.csproj">
       <Project>{ff9f820b-e901-441b-81da-27ac45b09771}</Project>
       <Name>SmartSql.Versioning.WebApi</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GitHubVisualStudio\SmartSql.Versioning\src\SmartSql.Versioning\SmartSql.Versioning.csproj">
+    <ProjectReference Include="..\SmartSql.Versioning\SmartSql.Versioning.csproj">
       <Project>{ee8e20ca-c859-4448-ab53-9daec5bb7a07}</Project>
       <Name>SmartSql.Versioning</Name>
     </ProjectReference>
