@@ -119,6 +119,8 @@
     <Compile Include="Data\Medical\Procedure.cs" />
     <Compile Include="Data\Medical\Medication.cs" />
     <Compile Include="Data\Medical\Allergy.cs" />
+    <Compile Include="Data\Medical\BloodType.cs" />
+    <Compile Include="Data\Medical\Sex.cs" />
     <Compile Include="Data\Psychology\ReligiousFrequency.cs" />
     <Compile Include="Data\Psychology\Religion.cs" />
     <Compile Include="Data\Psychology\BriggsMyers.cs" />
