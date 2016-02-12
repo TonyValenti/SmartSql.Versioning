@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Data\Education\EducationLevel.cs" />
     <Compile Include="Data\EntityValueMemberController.cs" />
     <Compile Include="Data\EntityListMemberController.cs" />
     <Compile Include="Data\Clothing\ShirtSize.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Data\Medical\Procedure.cs" />
     <Compile Include="Data\Medical\Medication.cs" />
     <Compile Include="Data\Medical\Allergy.cs" />
+    <Compile Include="Data\Psychology\ReligiousFrequency.cs" />
     <Compile Include="Data\Psychology\Religion.cs" />
     <Compile Include="Data\Psychology\BriggsMyers.cs" />
     <Compile Include="Data\Psychology\LoveLanguage.cs" />

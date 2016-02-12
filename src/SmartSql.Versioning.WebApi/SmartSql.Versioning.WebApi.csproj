@@ -74,6 +74,8 @@
     <None Include="JsonNetResult.cs" />
     <Compile Include="ApiController-02.cs" />
     <Compile Include="ApiController-03.cs" />
+    <Compile Include="AuthorNameResolver.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApiControllerBase.cs" />
     <Compile Include="ApiController-01.cs" />
