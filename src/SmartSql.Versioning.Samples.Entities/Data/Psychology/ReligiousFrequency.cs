@@ -32,8 +32,8 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
     }
 
     public partial class DataContext : DbContext  {
-        public DbSet<ReligionInstance> ReligiousFrequency { get; set; }
-        public DbSet<Religion> ReligiousFrequencyRevisions { get; set; }
+        public DbSet<ReligiousFrequencyInstance> ReligiousFrequency { get; set; }
+        public DbSet<ReligiousFrequency> ReligiousFrequencyRevisions { get; set; }
     }
 
     //WebApi Access--------------------------------------------
