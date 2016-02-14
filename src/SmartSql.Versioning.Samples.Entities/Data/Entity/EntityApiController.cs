@@ -135,6 +135,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
             ret.PhoneNumber = new PhoneNumberApiController().ListWebMethod(ChildListRequest);
 
             ret.Certification = new CertificationApiController().ListWebMethod(ChildListRequest);
+            ret.EducationLevel = new EducationLevelApiController().GetWebMethod(ChildItemRequest);
 
             ret.BankAccount = new BankAccountApiController().ListWebMethod(ChildListRequest);
 
@@ -161,7 +162,8 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
             ret.BriggsMyers = new BriggsMyersApiController().GetWebMethod(ChildItemRequest);
             ret.LoveLanguage = new LoveLanguageApiController().GetWebMethod(ChildItemRequest);
             ret.Religion = new ReligionApiController().GetWebMethod(ChildItemRequest);
-
+            ret.ReligiousFrequency = new ReligiousFrequencyApiController().GetWebMethod(ChildItemRequest);
+            ret.PoliticalAffiliation = new PoliticalAffiliationApiController().GetWebMethod(ChildItemRequest);
 
             return ret;
 
@@ -181,6 +183,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public List<PhoneNumberResponse> PhoneNumber { get; set; }
 
         public List<CertificationResponse> Certification { get; set; }
+        public EducationLevelResponse EducationLevel { get; set; }
 
         public EntityResponse Entity { get; set; }
 
@@ -209,6 +212,8 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public BriggsMyersResponse BriggsMyers { get; set; }
         public LoveLanguageResponse LoveLanguage { get; set; }
         public ReligionResponse Religion { get; set; }
+        public ReligiousFrequencyResponse ReligiousFrequency { get; set; }
+        public PoliticalAffiliationResponse PoliticalAffiliation { get; set; }
     }
 
 
