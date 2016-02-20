@@ -4,6 +4,20 @@ $Headers = @{"Content-Type" = "application/json"}
 $EntityName = "Original Person"
 
 $AllPeople = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/EntityApi/List"
+
+foreach($Person in $AllPeople){
+
+    $Details = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/EntityApi/Details" -Headers $Headers -Body (ConvertTo-Json @{
+        Key = @{
+            InstanceId = $Person.InstanceId;
+        }
+    })
+    $Details
+
+}
+
+
+
 $Person = $AllPeople | Where-Object {$_.Name -eq $EntityName }
 
 $Person = $AllPeople | Select-Object -Last 1
@@ -17,6 +31,7 @@ if (!$Person) {
     }) 
 }
 $Person
+
 
 
 

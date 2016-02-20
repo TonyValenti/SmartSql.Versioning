@@ -102,6 +102,31 @@ namespace SmartSql.Versioning {
             return Detatch(ret);
         }
 
+        /// <summary>
+        /// Permanently removes an instance from the database as well as all revisions.  The removed item is not recoverable.
+        /// </summary>
+        /// <param name="Value"></param>
+        public virtual void Destroy(TValue Value)
+        {
+            Destroy(Value.InstanceId);
+        }
+
+        /// <summary>
+        /// Permanently removes an instance from the database as well as all revisions.  The removed item is not recoverable.
+        /// </summary>
+        /// <param name="InstanceId"></param>
+        public virtual void Destroy (Guid InstanceId)
+        {
+            var ToDelete = from x in Context.Set<TInstance>()
+                           where x.InstanceId == InstanceId
+                           select x;
+
+            Context.Set<TInstance>().RemoveRange(ToDelete);
+
+            Context.SaveChanges();
+                
+        }
+
 
         /// <summary>
         /// Retrieves the complete revision history of an instance.

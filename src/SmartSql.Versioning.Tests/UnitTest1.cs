@@ -84,6 +84,35 @@ namespace SmartSql.Versioning.Test {
             Assert.AreEqual(ItemsAtStart, ItemsAtEnd);
         }
 
+        [TestMethod]
+        public void PersonController_Add_Update_Destroy()
+        {
+            var Name_Original = "Added Person";
+            var Name_Updated = "Updated Person";
+
+            var PersonController = new PersonController();
+
+            var ItemsAtStart = PersonController.Current().Count();
+
+            var Person = PersonController.Add(new Person()
+            {
+                Name = Name_Original,
+                DateOfBirth = DateTime.Now
+            });
+
+            Person.Name = Name_Updated;
+            PersonController.Update(Person);
+            PersonController.Destroy(Person);
+            Person = PersonController.Get(Person.InstanceId);
+
+            var ItemsAtEnd = PersonController.Current().Count();
+
+            //Make sure our count hasn't changed since the item was archived.
+            Assert.AreEqual(ItemsAtStart, ItemsAtEnd);
+
+            //Make sure that our Person is null since it shouldn't exist.
+            Assert.IsNull(Person);
+        }
 
     }
 }
