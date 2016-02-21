@@ -70,15 +70,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="2.0\Operations.cs" />
-    <None Include="JsonNetResult.cs" />
-    <Compile Include="ApiController-02.cs" />
-    <Compile Include="ApiController-03.cs" />
-    <Compile Include="AuthorNameResolver.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Source\Operations.cs" />
+    <None Include="App.nuspec" />
+    <Compile Include="Source\ApiController-02.cs" />
+    <Compile Include="Source\ApiController-03.cs" />
+    <Compile Include="Source\AuthorNameResolver.cs" />
+    <Compile Include="Source\Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ApiControllerBase.cs" />
-    <Compile Include="ApiController-01.cs" />
+    <Compile Include="Source\ApiControllerBase.cs" />
+    <Compile Include="Source\ApiController-01.cs" />
+    <None Include="_CreateNewNuGetPackage\Config.ps1" />
+    <None Include="_CreateNewNuGetPackage\DoNotModify\CreateNuGetPackage.ps1" />
+    <None Include="_CreateNewNuGetPackage\DoNotModify\New-NuGetPackage.ps1" />
+    <None Include="_CreateNewNuGetPackage\DoNotModify\UploadNuGetPackage.ps1" />
+    <None Include="_CreateNewNuGetPackage\RunMeToUploadNuGetPackage.cmd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartSql.Versioning\SmartSql.Versioning.csproj">
@@ -90,7 +95,16 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="_CreateNewNuGetPackage\DoNotModify\NuGet.exe" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>REM Create a NuGet package for this project and place the .nupkg file in the project's output directory.
+REM If you see this in Visual Studio's Error List window, check the Output window's Build tab for the actual error.
+ECHO Creating NuGet package in Post-Build event...
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(ProjectDir)_CreateNewNuGetPackage\DoNotModify\CreateNuGetPackage.ps1' -ProjectFilePath '$(ProjectPath)' -OutputDirectory '$(TargetDir)' -BuildConfiguration '$(ConfigurationName)' -BuildPlatform '$(PlatformName)'"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

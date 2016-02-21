@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  For more info on this file format visit http://docs.nuget.org/docs/reference/nuspec-reference.
+-->
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">  
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>Tony Valenti</authors>
+    <description>
+      SmartSql.Versioning is an insanely fast library for row-level versioning and 
+      auditing built in C# on top of the Entity Framework.  It supports all the common
+      CRUD operations that you would expect while maintaining a high-performance version
+      history of all the changes.
+    </description>
+    <language>en-US</language>
+    <projectUrl>https://github.com/TonyValenti/SmartSql.Versioning</projectUrl>
+    <licenseUrl>https://github.com/TonyValenti/SmartSql.Versioning</licenseUrl>
+  </metadata>
+</package>
