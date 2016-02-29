@@ -1,0 +1,45 @@
+<selected-person *ngIf="selectedDude" [selectedPerson]="selectedDude"></selected-person>
+
+<div *ngIf="dislikesData">
+  <div class="panel panel-default" style="min-height: 270px;">
+    <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+      <h3 class="panel-title"><i class="fa fa-thumbs-o-down fa-fw"></i> Dislikes</h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div *ngFor="#prop of dislikesProps" class="col-md-6 text-left columnspacing">
+          <div class="btn-group">
+            <a class="btn btn-default" href="#" (click)="editDisLikes($event,prop)"><i class="fa fa-pencil"></i></a>
+            <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+            <a class="btn btn-default" href="#" (click)="deleteDisLikes($event,prop)"><i class="fa fa-trash"></i></a>
+          </div>
+          <strong>{{prop}}: </strong><span>{{dislikesData[prop] || "Empty"}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit dislikes  -->
+  <div id="editDisLikes" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Edit {{editTypeOfDisLike}}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="dropdown clearfix">
+            <strong>{{editTypeOfDisLike}} : </strong>
+            <input placeholder="Enter {{editTypeOfDisLike}}" type="text" #txtDisLike [value]="dislikesData[editTypeOfDisLike]" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeDisLikeModal($event, txtDisLike)">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveDisLike($event, txtDisLike.value)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Edit Likes -->
+
+</div>

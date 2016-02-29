@@ -165,6 +165,10 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
             ret.ReligiousFrequency = new ReligiousFrequencyApiController().GetWebMethod(ChildItemRequest);
             ret.PoliticalAffiliation = new PoliticalAffiliationApiController().GetWebMethod(ChildItemRequest);
 
+            ret.Sex = new SexApiController().GetWebMethod(ChildItemRequest);
+
+            ret.BloodType = new BloodTypeApiController().GetWebMethod(ChildItemRequest);
+
             return ret;
 
         }
@@ -214,6 +218,10 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public ReligionResponse Religion { get; set; }
         public ReligiousFrequencyResponse ReligiousFrequency { get; set; }
         public PoliticalAffiliationResponse PoliticalAffiliation { get; set; }
+
+        public SexResponse Sex { get; set; }
+
+        public BloodTypeResponse BloodType { get; set; }
     }
 
 

@@ -1,0 +1,87 @@
+<selected-person *ngIf="selectedDude" [selectedPerson]="selectedDude"></selected-person>
+<div *ngIf="financialArr">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-money fa-fw"></i> Financials</h3>
+            <a class="btn btn-primary pull-right" href="#" (click)="editFinancial($event, -1, true)"><i class="fa fa-plus"></i></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <div *ngIf="financialArr.length === 0" class="panel-body">No financial data</div>
+            <div [ngClass]="{'bottom-border-gray' : i < financialArr.length-1, 'bottom-buffer' : i < financialArr.length-1}" class="row" *ngFor="#fin of financialArr;#i = index">
+                <div class="col-md-2 text-left columnspacing">
+                    <div class="btn-group">
+                        <a class="btn btn-default" href="#" (click)="editFinancial($event,i,false)"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                        <a class="btn btn-default" href="#" (click)="deleteFinancial($event,i)"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-10 text-left">
+                    <strong>Account Name:</strong>
+                    <span>{{fin.Name}}</span>
+                </div>
+                <div class="col-md-10 col-md-offset-2 text-left bottom-buffer">
+                    <strong>Account Number:</strong>
+                    <span>{{fin.AccountNumber}}</span>
+                </div>
+                <div class="col-md-10 col-md-offset-2 text-left bottom-buffer">
+                    <strong>Account Description:</strong>
+                    <span>{{fin.Description}}</span>
+                </div>
+                <div class="col-md-10 col-md-offset-2 text-left bottom-buffer">
+                    <strong>Account Institution:</strong>
+                    <span>{{fin.Institution}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add/Edit Financial -->
+    <div id="editFinancialModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{isAddFinancial ? "Add" : "Edit"}} Financial</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="control-label" style="text-align:left">Account name: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="tempFinancial.Name" type="text" class="form-control" placeholder="Enter an account name">
+                        </div>
+                    </div>
+                    <div class="row top-buffer">
+                        <div class="col-md-3">
+                            <label class=" control-label" style="text-align:left">Account number: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="tempFinancial.AccountNumber" type="text" class="form-control" placeholder="Enter an account number">
+                        </div>
+                    </div>
+                    <div class="row top-buffer">
+                        <div class="col-md-3">
+                            <label class="control-label" style="text-align:left">Account description: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="tempFinancial.Description" type="text" class="form-control" placeholder="Enter an account description">
+                        </div>
+                    </div>
+                    <div class="row top-buffer">
+                        <div class="col-md-3">
+                            <label class="control-label" style="text-align:left">Account institution: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="tempFinancial.Institution" type="text" class="form-control" placeholder="Enter an account institution">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeFinancialEdit($event) ">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveFinancial($event) ">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

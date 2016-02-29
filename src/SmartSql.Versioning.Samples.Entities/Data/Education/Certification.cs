@@ -40,6 +40,8 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
     public class CertificationResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Value { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
     }
 
 

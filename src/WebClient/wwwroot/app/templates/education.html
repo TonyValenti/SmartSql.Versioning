@@ -1,0 +1,114 @@
+<selected-person *ngIf="selectedDude" [selectedPerson]="selectedDude"></selected-person>
+<div *ngIf="selectedDude">
+    <div class="row bottom-buffer">
+        <div class="col-md-12 bottom-buffer">
+            <div class="btn-group">
+                <a class="btn btn-default" href="#" (click)="editEduLevel($event)"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+            </div>
+            <strong>Education Level: </strong><span>{{(selectedDude.education.EducationLevel | eduLevel) === 'Select'? 'Empty': selectedDude.education.EducationLevel | eduLevel}}</span>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-graduation"></i> Certifications</h3>
+            <a class="btn btn-primary pull-right" (click)="editAddCertification($event, -1)" href="#"><i class="fa fa-plus"></i></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <div *ngIf="certifications.length === 0">No certifications</div>
+            <div class="row bottom-buffer" *ngFor="#cer of certifications;#i = index">
+                <div class="col-md-8 text-left columnspacing">
+                    <div class="btn-group">
+                        <a class="btn btn-default" href="#" (click)="editAddCertification($event, i)"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                        <a class="btn btn-default" href="#" (click)="deleteCertification($event, i)"><i class="fa fa-trash"></i></a>
+                    </div>
+                    <strong>Name: </strong><span>{{cer.Name}}</span>
+                </div>
+                <div class="col-md-2 text-left columnspacing">
+                    <strong>Start: </strong><span>{{cer.StartDate}}</span>
+                </div>
+                <div class="col-md-2 text-left columnspacing">
+                    <strong>End: </strong><span>{{cer.EndDate}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Certification -->
+    <div id="editCertification" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Certificate</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="txtCert" class="col-sm-3 control-label">Name: </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Enter certificate name" #txtCert [value]="selectedCert.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtStart" class="col-sm-3 control-label">Start Date: </label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" #txtStart [value]="selectedCert.StartDate" placeholder="Start Date">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtEnd" class="col-md-3 control-label">End Date: </label>
+                            <div class="col-md-9">
+                                <input type="date" class="form-control" #txtEnd [value]="selectedCert.EndDate" placeholder="End Date">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeCertModal($event,txtCert,txtStart,txtEnd)">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveCertification($event, txtCert, txtStart, txtEnd)">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit Certififcations -->
+
+    <!-- Edit editEduLevel -->
+    <div id="editEduLevelModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit education level</h4>
+                </div>
+                <div class="modal-body">
+                   
+                    <form class="form-horizontal">
+                        <div class="form-group">
+
+                            <div class="row dropdown clearfix">
+                                <label class="col-sm-5 control-label">Education level: </label>
+                                <button class="btn btn-default dropdown-toggle col-sm-5" type="button" id="rftypesdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    {{ elvlv | eduLevel}}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" style="left: 41%;">
+                                    <li *ngFor="#ed of elvlVals" (click)="changeEduLvl($event,ed)">
+                                        <a href="#" [innerHtml]="ed | eduLevel"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEduLevel($event)">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveEduLevel($event)">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit editEduLevel -->
+</div>

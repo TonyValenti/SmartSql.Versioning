@@ -1,0 +1,124 @@
+<selected-person *ngIf="selectedDude" [selectedPerson]="selectedDude"></selected-person>
+
+<div *ngIf="likesData">
+  <div class="panel panel-default" style="min-height: 70px;">
+    <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+      <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-thumbs-o-up fa-fw"></i> Likes</h3>
+      <a class="btn btn-primary pull-right" href="#" (click)="addLike($event,true)"><i class="fa fa-plus"></i></a>
+      <div class="clearfix"></div>
+    </div>
+    <div *ngIf="areLikesEmpty" class="panel-body">
+      No likes
+    </div>
+    <div *ngIf="!areLikesEmpty" class="panel-body">
+      <div class="row">      
+        <div *ngFor="#prop of likesProps" [class.hidden]="likesData[prop.prop].length === 0">
+          <div *ngFor="#likeData of likesData[prop.prop];#i = index" class="col-md-6 text-left columnspacing">
+            <div class="btn-group">
+              <a class="btn btn-default" href="#" (click)="editLikes($event, prop.prop, true, i)"><i class="fa fa-pencil"></i></a>
+              <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+              <a class="btn btn-default" href="#" (click)="deleteLikes($event, prop.prop , true, i)"><i class="fa fa-trash"></i></a>
+            </div>
+            <i style="color:gray;padding-left:5px;padding-right:5px" class="fa {{prop.icon}}"></i><span>{{likeData.value || "Empty"}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default" style="min-height: 70px;">
+    <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+      <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-thumbs-o-down fa-fw"></i> Dislikes</h3>
+      <a class="btn btn-primary pull-right" href="#" (click)="addLike($event,false)"><i class="fa fa-plus"></i></a>
+      <div class="clearfix"></div>
+    </div>
+    <div *ngIf="areDislikesEmpty" class="panel-body">
+      No dislikes
+    </div>
+    <div *ngIf="!areDislikesEmpty" class="panel-body">
+      <div class="row">
+        <div *ngFor="#prop of likesProps" [class.hidden]="dislikesData[prop.prop].length === 0">
+          <div *ngFor="#dislikeData of dislikesData[prop.prop];#i = index" class="col-md-6 text-left columnspacing">
+            <div class="btn-group">
+              <a class="btn btn-default" href="#" (click)="editLikes($event, prop.prop , false, i)"><i class="fa fa-pencil"></i></a>
+              <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+              <a class="btn btn-default" href="#" (click)="deleteLikes($event, prop.prop , false, i)"><i class="fa fa-trash"></i></a>
+            </div>
+            <i style="color:gray;padding-left:5px;padding-right:5px" class="fa {{prop.icon}}"></i><span>{{dislikeData.value || "Empty"}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Likes -->
+  <div *ngIf="likesData[editTypeOfLike]" id="editLikes" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Edit {{isEditLikes ? 'Liked':'Disliked'}} {{editTypeOfLike}}</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="birthday" class="col-sm-2 control-label">{{editTypeOfLike}}: </label>
+              <div class="col-sm-10">
+                <input #txtLike placeholder="Enter {{editTypeOfLike}}" type="text" class="form-control" [value]="isEditLikes ? likesData[editTypeOfLike][likeIndex].value : dislikesData[editTypeOfLike][likeIndex].value" />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeLikeModal($event, txtLike)">Close</button>
+          <button type="button" class="btn btn-primary" (click)="updateLike($event, txtLike.value)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Edit Likes -->
+
+  <!-- Add Likes/Dislikes -->
+  <div *ngIf="addTypeLike" id="addLikesModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width:400px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Add {{isEditLikes ? 'Likes':'Dislikes'}} for {{addTypeLike}}</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="row dropdown clearfix">
+              <strong class="col-xs-5">Type of like: </strong>
+              <button class="btn btn-default dropdown-toggle col-xs-3" type="button" id="liketypesdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                {{addTypeLike}}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" style="left: 41%;">
+                <li *ngFor="#lp of likesProps" (click)="changeAddTypeLike($event,lp.prop)">
+                  <a href="#" [innerHtml]="lp.prop"></a>
+                </li>
+              </ul>
+            </div>
+            <div class="row top-buffer">
+              <strong class="col-xs-5">Toggle like: </strong>
+              <a class="btn col-xs-3" [class.btn-success]="isAddLike" [class.btn-danger]="!isAddLike" href="#" (click)="toggleLikeDislike($event)"><i [class.fa-thumbs-o-up]="isAddLike" [class.fa-thumbs-o-down]="!isAddLike" class="fa"></i> {{isAddLike ? "Like":"Dislike"}} </a>
+            </div>
+
+            <div class="row top-buffer">
+              <strong class="col-xs-5">Description: </strong>
+              <div class="col-xs-7" style="padding-left:0">
+                <input #txtNewLike placeholder="Enter {{addTypeLike}}" type="text" class="form-control" />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeAddLike($event,txtNewLike)">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveNewLike($event,txtNewLike)">Add {{isAddLike ? "Like":"Dislike"}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Add Likes -->
+  </div>

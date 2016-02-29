@@ -1,0 +1,78 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section head {
+    <environment names="Development">
+        <!-- Bootstrap core CSS -->
+        <link href="~/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Font awesome -->
+        <link href="~/css/font-awesome.min.css" rel="stylesheet">
+        <!-- app css -->
+        <link href="~/css/style.css" rel="stylesheet" />
+        <!-- 1. Load libraries -->
+    </environment>
+
+    <environment names="Staging,Production">
+     
+    </environment>
+}
+
+<cache vary-by="@Context.Request.Path">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Company Logo</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#mywork"><strong>MY WORK</strong> <span class="badge">4</span></a></li>
+                    <li class="active"><a href="#families"><strong>FAMILIES</strong></a></li>
+                    <li><a href="#conversation"><strong>CONVERSATION</strong></a></li>
+                    <li><a href="#mitchadvocate"><strong>MITCH ADVOCATE</strong><span class="caret"></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="mainContent">
+            <main></main>
+        </div>
+    </div>
+    <!-- /.container -->
+</cache>
+
+@section scripts {
+
+    <environment names="Development">
+        <script src="~/lib/es6-shim.min.js"></script>
+        <script src="~/lib/system-polyfills.js"></script>
+        <script src="~/lib/angular2-polyfills.js"></script>
+        <script src="~/lib/system.src.js"></script>
+        <script src="~/lib/Rx.js"></script>
+        <script src="~/lib/angular2.dev.js"></script>
+        <script src="~/lib/http.dev.js"></script>
+        <script src="~/lib/router.dev.js"></script>
+
+        <script src="~/lib/jquery.min.js"></script>
+        <script src="~/lib/bootstrap.min.js"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+      
+    </environment> 
+
+    <script>
+        System.config({
+            packages: {
+                app: {
+                    format: 'register',
+                    defaultExtension: 'js'
+                }
+            }
+        });
+
+        System.import('./app/boot')
+          .then(null, console.error.bind(console));
+    </script>
+}

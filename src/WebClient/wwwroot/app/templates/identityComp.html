@@ -1,0 +1,13 @@
+<!--<div class="row" style="margin-bottom: -75px;">
+    <div *ngFor="#person of people" class="col-xs-2	col-sm-2 col-md-2" style="cursor:pointer">
+        <div #elem class="thumbnail" (click)="selectDude(elem , person)" [class.activethumb]="elem === activePersonEl">
+            <img [src]="person.photo" />
+            <div class="caption text-center">
+                <h5>{{person.name}}</h5>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<selected-person  *ngIf="selectedDude" [selectedPerson]="selectedDude"></selected-person>
+<person-detail *ngIf="selectedDude" [selectedPerson]="selectedDude"></person-detail>
