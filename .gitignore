@@ -210,3 +210,8 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+# Bobi custom rule for webclient
+**/wwwroot/css/
+**/wwwroot/lib/
+**/wwwroot/fonts/

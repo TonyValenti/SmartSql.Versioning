@@ -1,0 +1,207 @@
+<selected-person *ngIf="selectedDude" [selectedPerson]="selectedDude"></selected-person>
+
+<div *ngIf="psychology">
+  <div class="row bottom-buffer">
+    <div class="col-md-12 bottom-buffer">
+      <div class="btn-group">
+        <a class="btn btn-default" href="#" (click)="editReligion($event)"><i class="fa fa-pencil"></i></a>
+        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+      </div>
+      <strong>Religion: </strong><span>{{psychology.Religion || "Empty"}}</span>
+    </div>
+    <div class="col-md-12 bottom-buffer">
+      <div class="btn-group">
+        <a class="btn btn-default" href="#" (click)="editPolAff($event)"><i class="fa fa-pencil"></i></a>
+        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+      </div>
+
+      <strong>Political affiliation: </strong><span>{{psychology.PoliticalAffiliation || "Empty"}}</span>
+    </div>
+
+    <div class="col-md-12">
+      <div class="btn-group">
+        <a class="btn btn-default" href="#" (click)="editRelFreq($event)"><i class="fa fa-pencil"></i></a>
+        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+      </div>
+       
+      <strong>Religious frequency: </strong><span>{{(psychology.ReligiousFrequency | religiousFreq) === 'Select'? 'Empty': psychology.ReligiousFrequency | religiousFreq}}</span>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default" style="min-height: 225px;">
+        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+          <h3 class="panel-title"><i class="fa fa-heart-o fa-fw"></i> Love language</h3>
+        </div> 
+          <!--<div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+              <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-credit-card"></i> Love language</h3>
+              <a  class="btn btn-primary pull-right btn-sm" (click)="savell($event)" href="#">Save</a>
+              <div class="clearfix"></div>
+          </div>-->
+
+        <div class="panel-body">
+          <div class="row bottom-buffer">
+            <div class="col-md-10 text-left columnspacing">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" #wordsOfAffCb [(ngModel)]="psychology.LoveLanguage.wof" (change)="changell($event)" /> Words of Affirmation
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" #actsOfServiceCb [(ngModel)]="psychology.LoveLanguage.aos" (change)="changell($event)"> Acts of Service
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" #receivingGiftsCb [(ngModel)]="psychology.LoveLanguage.rg" (change)="changell($event)"> Receiving Gifts
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" #qualityTimeCb [(ngModel)]="psychology.LoveLanguage.qt" (change)="changell($event)"> Quality Time
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" #wphysicakTouchCb [(ngModel)]="psychology.LoveLanguage.pt" (change)="changell($event)"> Physical Touch
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-default" style="min-height: 225px;">
+        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+          <h3 class="panel-title"><i class="fa fa-frown-o fa-fw"></i> Anger Language</h3>
+        </div>
+
+        <div class="panel-body">
+          <div class="row bottom-buffer">
+            <div class="col-md-10 text-left columnspacing">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" #reactiveCb [(ngModel)]="psychology.AngerLanguage.r"  (change)="changeAl($event)"/>Reactive
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" #passiveAgressiveCb [(ngModel)]="psychology.AngerLanguage.pa"  (change)="changeAl($event)"> Passive Aggressive
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" #avoidantCb [(ngModel)]="psychology.AngerLanguage.av"  (change)="changeAl($event)"> Avoidant
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" #directCb [(ngModel)]="psychology.AngerLanguage.d"  (change)="changeAl($event)"> Direct
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Religion -->
+  <div id="editReligionModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Edit religion</h4>
+        </div>
+        <div class="modal-body">
+
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="birthday" class="col-sm-3 control-label">Religion: </label>
+              <div class="col-sm-9">
+                <input type="text" placeholder="Enter religion" class="form-control" #txtReligion [value]="psychology.Religion" />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeRelgionModal($event,txtReligion)">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveReligion($event, txtReligion.value)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Edit Religion -->
+
+  <!-- Edit PolAff -->
+  <div id="editPolAffModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Edit political affiliation</h4>
+        </div>
+        <div class="modal-body">
+
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="birthday" class="col-sm-4 control-label">Political affiliation: </label>
+              <div class="col-sm-8">
+                <input type="text" placeholder="Enter political affiliation" class="form-control" #txtPolAff [value]="psychology.PoliticalAffiliation" />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closePolAff($event,txtPolAff)">Close</button>
+          <button type="button" class="btn btn-primary" (click)="savePolAff($event, txtPolAff.value)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Edit PolAff -->
+
+  <!-- Edit RelFreq -->
+  <div id="editRelFreqModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width:430px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Edit religious frequency</h4>
+        </div>
+        <div class="modal-body">
+
+          <form class="form-horizontal">
+            <div class="form-group">
+              
+                <div class="row dropdown clearfix">
+                    <label class="col-sm-5 control-label">Religious frequency: </label>
+                    <button class="btn btn-default dropdown-toggle col-sm-5" type="button" id="rftypesdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{ rfv | religiousFreq}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" style="left: 41%;">                       
+                        <li *ngFor="#rf of rfVals" (click)="changeRf($event,rf)">
+                            <a href="#" [innerHtml]="rf | religiousFreq"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeRelFreq($event)">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveRelFreq($event)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Edit RelFreq -->
+</div>

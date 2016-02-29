@@ -1,0 +1,85 @@
+<selected-person *ngIf="selectedDude" [selectedPerson]="selectedDude"></selected-person>
+
+<div *ngIf=clothingSizes>
+<div class="panel panel-default">
+    <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+        <h3 class="panel-title"><i class="fa fa-arrows fa-fw"></i> Clothing sizes</h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="row bottom-buffer">
+            <div class="col-md-6 text-left columnspacing">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event,'Shirt')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                </div>
+                <strong>Shirt: </strong><span>{{clothingSizes.Shirt}}</span>
+            </div>
+            <div class="col-md-6 text-left columnspacing">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event,'Pant')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                </div>
+                <strong>Pant: </strong><span>{{clothingSizes.Pant}}</span>
+            </div>
+            <div class="col-md-6 text-left columnspacing">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event, 'Shoe')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                </div>
+                <strong>Shoe: </strong><span>{{clothingSizes.Shoe}}</span>
+            </div>
+            <div class="col-md-6 text-left columnspacing">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event, 'Belt')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                </div>
+                <strong>Belt: </strong><span>{{clothingSizes.Belt}}</span>
+            </div>
+            <div class="col-md-6 text-left columnspacing">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event,'Head')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                </div>
+                <strong>Head: </strong><span>{{clothingSizes.Head}}</span>
+            </div>
+            <div class="col-md-6 text-left columnspacing">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event, 'Dress')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                </div>
+                <strong>Dress: </strong><span>{{clothingSizes.Dress}}</span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Clothing -->
+<div id="editClothingSize" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit {{clothingTypeName}} size</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="birthday" class="col-sm-3 control-label">{{clothingType}}: </label>
+                    <div class="col-sm-9">
+                      <input placeholder="Enter {{clothingType}}" type="text" class="form-control" #txtClothing [value]="clothingSizes[clothingType]"/>
+                    </div>
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeClothingModal($event, txtClothing)">Close</button>
+                <button type="button" class="btn btn-primary" (click)="saveClothing($event, txtClothing.value)">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Edit Clothing -->
+
+</div>
