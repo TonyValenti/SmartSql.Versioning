@@ -75,7 +75,7 @@ export class EducationSvc {
       */
     updateCertificate(insId: string, certificate: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: certificate
         });
 

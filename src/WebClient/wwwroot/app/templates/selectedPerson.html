@@ -6,7 +6,7 @@
             <a class="btn btn-default" href="#" (click)="openChangeName($event,false)"><i class="fa fa-pencil" ></i></a> 
             <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             <a class="btn btn-default" href="#"><i class="fa fa-trash"></i></a>
-            <!--<a class="btn btn-default" href="#" (click)="openChangeName($event,true)">Add person</a>-->
+            <a class="btn btn-default" href="#" (click)="openChangeName($event,true)"><i class="fa fa-plus"></i></a>
         </div>
     </div>
 </div>
@@ -17,21 +17,22 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Edit person name</h4>
+        <h4 class="modal-title">{{ isAdd ? 'Edit person name':'Add person' }}</h4>
       </div>
       <div class="modal-body">
         <form class="form-horizontal">
           <div class="form-group">
             <label for="birthday" class="col-sm-2 control-label">Name: </label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" #txtName [value]="selectedPerson.name" />
+              <input [class.hidden]="!isAdd" type="text" class="form-control" #txtAddName placeholder="Ente Name"/>
+              <input [class.hidden]="isAdd" type="text" class="form-control" #txtName [value]="selectedPerson.name" />
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeChangeName($event,txtName)">Close</button>
-        <button type="button" class="btn btn-primary" (click)="changeName($event, txtName.value)">Save changes</button>
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeChangeName($event, txtName)">Close</button>
+        <button type="button" class="btn btn-primary" (click)="changeName($event, txtName.value, txtAddName.value)">Save changes</button>
       </div>
     </div>
   </div>

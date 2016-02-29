@@ -56,7 +56,7 @@ export class EducationView {
         event.preventDefault();
 
         if (this.isAdd) {
-            var newCertification = { Name: txtName.value, StartDate: txtStart.value, EndDate: txtEnd.value };
+            var newCertification = { Name: txtName.value, StartDate: txtStart.value, EndDate: txtEnd.value, InstanceId: "" };
             this.certifications.push(newCertification);
             txtName.value = "";
             txtStart.value = "";

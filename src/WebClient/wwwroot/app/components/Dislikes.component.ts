@@ -17,7 +17,6 @@ export class Dislikes {
   editTypeOfDisLike;
 
   constructor( @Inject(ServerAPI) private _serverAPI) {
-
     _serverAPI.getAllPeople().subscribe(people => {
       this.selectedDude = people[0];
       this.dislikesData = people[0].dislikes;

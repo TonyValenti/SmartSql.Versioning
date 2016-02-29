@@ -83,7 +83,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx']
                   */
                 EducationSvc.prototype.updateCertificate = function (insId, certificate) {
                     var body = JSON.stringify({
-                        Key: { instanceId: insId },
+                        Key: { InstanceId: insId },
                         Values: certificate
                     });
                     return this.http.post(this.apiUrl + "CertificationApi/Update", body, this.options)
