@@ -16,6 +16,7 @@ export class ServerAPI {
     constructor(private http: Http) { }
 
     static apiUrl = "http://localhost:47503/api/";
+    static localUrl = "http://localhost:3000/";
 
     peopleList: Person[] = [];
     static person: Person;
@@ -92,19 +93,7 @@ export class ServerAPI {
                         this.peopleList.push(Person.createRPerson(personJson));
                     }
 
-                    return Observable.from(this.peopleList).toArray(); 
-
-                    //  return this.http.get('http://localhost:3000/app/db/data.json').map(res => {
-
-                    //  // Create Person instances and add them to the people list
-                    //  for (let personJson of res.json()) {
-                    //    this.peopleList.push(Person.createRPerson(personJson));
-                    //  }
-
-                    //  //localStorage.setItem("people", JSON.stringify(this.peopleList));
-
-                    //  return this.peopleList;
-                    //}).catch(this.logAndPassOn); 
+                    return Observable.from(this.peopleList).toArray();                    
                 };
 
                 return Observable.from(this.peopleList).toArray();
@@ -144,15 +133,11 @@ export class ServerAPI {
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
+     
 
-    /**
- $Person = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/EntityApi/Add" -Headers $Headers -Body (ConvertTo-Json @{
-        Values = @{
-            Name = $EntityName;
-        };
-    }) 
-     */
-
+    getLA() { 
+        return this.http.get(ServerAPI.localUrl + 'app/_db/lalang.json').map(res => res.json());        
+    }
 
     private logAndPassOn(error: Error) {
         // in a real world app, we may send the server to some remote logging infrastructure

@@ -30,6 +30,8 @@ export class PsychologyView {
     isAddLL: boolean = true;
     isAddAL: boolean = true;
 
+    la: Object = null;
+
     constructor( @Inject(ServerAPI) private _serverAPI, private _psychSvc: PsychSvc, private _routeParams: RouteParams) {
         let instanceId = this._routeParams.get('instanceId');
 
@@ -45,6 +47,9 @@ export class PsychologyView {
 
             self.rfv = self.selectedDude.psychology.ReligiousFrequency;
         }, error => alert(`Server error. Try again later`));
+
+        _serverAPI.getLA().subscribe(lajsn => this.la = lajsn, error => alert(`Server error. Try again later`));
+
     }
 
     //---------------------------
@@ -170,6 +175,10 @@ export class PsychologyView {
         $('#editRelFreqModal').modal('hide');
     }
 
+    //---------------------------------------
+    //--------- Love/Anger language ---------
+    //---------------------------------------
+
     changell(event) {
         event.preventDefault();
 
@@ -241,4 +250,16 @@ export class PsychologyView {
 
         setTimeout(sf, 50);
     }
+
+    choosell(event) {
+        event.preventDefault(); 
+        
+        $('#chooseLL').modal('show');
+    }
+
+    chooseal(event) {
+        event.preventDefault();
+
+        $('#chooseAL').modal('show');
+    }    
 }

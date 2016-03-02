@@ -31,80 +31,77 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default" style="min-height: 225px;">
-                <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
-                    <h3 class="panel-title"><i class="fa fa-heart-o fa-fw"></i> Love language</h3>
-                </div>
                 <!--<div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
-                    <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-credit-card"></i> Love language</h3>
-                    <a  class="btn btn-primary pull-right btn-sm" (click)="savell($event)" href="#">Save</a>
-                    <div class="clearfix"></div>
+                    <h3 class="panel-title"><i class="fa fa-heart-o fa-fw"></i> Love language</h3>
                 </div>-->
+                <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+                    <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-heart-o fa-fw"></i> Love language</h3>
+                    <a class="btn btn-primary pull-right btn-sm" (click)="choosell($event)" href="#"><i class="fa fa-plus"></i></a>
+                    <div class="clearfix"></div>
+                </div>
 
                 <div class="panel-body">
                     <div class="row bottom-buffer">
-                        <div class="col-md-10 text-left columnspacing">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" #wordsOfAffCb [(ngModel)]="psychology.LoveLanguage.wof" (change)="changell($event)" /> Words of Affirmation
-                                </label>
+                        <div *ngIf="la" class="col-md-10 text-left columnspacing">
+                            <div [class.hidden]="!psychology.LoveLanguage.aos" class="text-left">
+                                <strong class="text-left">Acts of Service</strong>
+                                <p class="text-left">{{la.Love["Acts of Service"]}}</p>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" #actsOfServiceCb [(ngModel)]="psychology.LoveLanguage.aos" (change)="changell($event)"> Acts of Service
-                                </label>
+                            <div [class.hidden]="!psychology.LoveLanguage.pt" class="text-left">
+                                <strong class="text-left">Physical Touch</strong>
+                                <p class="text-left">{{la.Love["Physical Touch"]}}</p>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" #receivingGiftsCb [(ngModel)]="psychology.LoveLanguage.rg" (change)="changell($event)"> Receiving Gifts
-                                </label>
+                            <div [class.hidden]="!psychology.LoveLanguage.qt" class="text-left">
+                                <strong class="text-left">Quality Tim</strong>
+                                <p class="text-left">{{la.Love["Quality Time"]}}</p>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" #qualityTimeCb [(ngModel)]="psychology.LoveLanguage.qt" (change)="changell($event)"> Quality Time
-                                </label>
+                            <div [class.hidden]="!psychology.LoveLanguage.rg" class="text-left">
+                                <strong class="text-left">Receiving Gifts</strong>
+                                <p class="text-left">{{la.Love["Receiving Gifts"]}}</p>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" #wphysicakTouchCb [(ngModel)]="psychology.LoveLanguage.pt" (change)="changell($event)"> Physical Touch
-                                </label>
+                            <div [class.hidden]="!psychology.LoveLanguage.wof" class="text-left">
+                                <strong class="text-left">Words of Affirmation</strong>
+                                <p class="text-left">{{la.Love["Words of Affirmation"]}}</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default" style="min-height: 225px;">
-                <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+                <!--<div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
                     <h3 class="panel-title"><i class="fa fa-frown-o fa-fw"></i> Anger Language</h3>
+                </div>-->
+
+                <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+                    <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-frown-o fa-fw"></i> Anger language</h3>
+                    <a class="btn btn-primary pull-right btn-sm" (click)="chooseal($event)" href="#"><i class="fa fa-plus"></i></a>
+                    <div class="clearfix"></div>
                 </div>
 
                 <div class="panel-body">
                     <div class="row bottom-buffer">
-                        <div class="col-md-10 text-left columnspacing">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" #reactiveCb [(ngModel)]="psychology.AngerLanguage.r" (change)="changeAl($event)" />Reactive
-                                </label>
+
+                        <div *ngIf="la" class="col-md-10 text-left columnspacing">
+                            <div [class.hidden]="!psychology.AngerLanguage.r" class="text-left">
+                                <strong class="text-left">Reactive</strong>
+                                <p class="text-left">{{la.Anger["Reactive"]}}</p>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" #passiveAgressiveCb [(ngModel)]="psychology.AngerLanguage.pa" (change)="changeAl($event)"> Passive Aggressive
-                                </label>
+                            <div [class.hidden]="!psychology.AngerLanguage.pa" class="text-left">
+                                <strong class="text-left">Passive Aggressive</strong>
+                                <p class="text-left">{{la.Anger["Passive Aggressive"]}}</p>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" #avoidantCb [(ngModel)]="psychology.AngerLanguage.av" (change)="changeAl($event)"> Avoidant
-                                </label>
+                            <div [class.hidden]="!psychology.AngerLanguage.av" class="text-left">
+                                <strong class="text-left">Avoidant</strong>
+                                <p class="text-left">{{la.Anger["Avoidant"]}}</p>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" #directCb [(ngModel)]="psychology.AngerLanguage.d" (change)="changeAl($event)"> Direct
-                                </label>
+                            <div [class.hidden]="!psychology.AngerLanguage.d" class="text-left">
+                                <strong class="text-left">Direct</strong>
+                                <p class="text-left">{{la.Anger["Direct"]}}</p>
                             </div>
                         </div>
 
@@ -114,6 +111,91 @@
         </div>
     </div>
 
+
+    <!-- Choose Love Lang -->
+    <div id="chooseLL" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Choose love language</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" #wordsOfAffCb [(ngModel)]="psychology.LoveLanguage.wof" (change)="changell($event)" /> Words of Affirmation
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" #actsOfServiceCb [(ngModel)]="psychology.LoveLanguage.aos" (change)="changell($event)"> Acts of Service
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" #receivingGiftsCb [(ngModel)]="psychology.LoveLanguage.rg" (change)="changell($event)"> Receiving Gifts
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" #qualityTimeCb [(ngModel)]="psychology.LoveLanguage.qt" (change)="changell($event)"> Quality Time
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" #wphysicakTouchCb [(ngModel)]="psychology.LoveLanguage.pt" (change)="changell($event)"> Physical Touch
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Choose Love Lang -->
+    <!-- Choose Anger Lang -->
+    <div id="chooseAL" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Choose love language</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" #reactiveCb [(ngModel)]="psychology.AngerLanguage.r" (change)="changeAl($event)" />Reactive
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" #passiveAgressiveCb [(ngModel)]="psychology.AngerLanguage.pa" (change)="changeAl($event)"> Passive Aggressive
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" #avoidantCb [(ngModel)]="psychology.AngerLanguage.av" (change)="changeAl($event)"> Avoidant
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" #directCb [(ngModel)]="psychology.AngerLanguage.d" (change)="changeAl($event)"> Direct
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Choose Anger Lang -->
     <!-- Edit Religion -->
     <div id="editReligionModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">

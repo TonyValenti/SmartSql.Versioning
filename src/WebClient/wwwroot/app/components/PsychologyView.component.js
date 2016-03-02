@@ -36,6 +36,7 @@ System.register(['angular2/core', '../services/ServerAPI.service', '../services/
         execute: function() {
             PsychologyView = (function () {
                 function PsychologyView(_serverAPI, _psychSvc, _routeParams) {
+                    var _this = this;
                     this._serverAPI = _serverAPI;
                     this._psychSvc = _psychSvc;
                     this._routeParams = _routeParams;
@@ -49,6 +50,7 @@ System.register(['angular2/core', '../services/ServerAPI.service', '../services/
                     this.rfv = 0;
                     this.isAddLL = true;
                     this.isAddAL = true;
+                    this.la = null;
                     var instanceId = this._routeParams.get('instanceId');
                     if (!instanceId) {
                         alert("No instanceId provided ... try entering one in the url, like so: http://localhost:3000/Identity?instanceId=22fcf440-d3d5-e511-8d7c-a0b3cc47d18e");
@@ -59,6 +61,7 @@ System.register(['angular2/core', '../services/ServerAPI.service', '../services/
                         self.psychology = p.psychology;
                         self.rfv = self.selectedDude.psychology.ReligiousFrequency;
                     }, function (error) { return alert("Server error. Try again later"); });
+                    _serverAPI.getLA().subscribe(function (lajsn) { return _this.la = lajsn; }, function (error) { return alert("Server error. Try again later"); });
                 }
                 //---------------------------
                 //------ Edit Religion ------
@@ -162,6 +165,9 @@ System.register(['angular2/core', '../services/ServerAPI.service', '../services/
                     event.preventDefault();
                     $('#editRelFreqModal').modal('hide');
                 };
+                //---------------------------------------
+                //--------- Love/Anger language ---------
+                //---------------------------------------
                 PsychologyView.prototype.changell = function (event) {
                     event.preventDefault();
                     this.isAddLL = this.psychology.LoveLanguage.wof === null &&
@@ -221,6 +227,14 @@ System.register(['angular2/core', '../services/ServerAPI.service', '../services/
                         }
                     }).bind(this);
                     setTimeout(sf, 50);
+                };
+                PsychologyView.prototype.choosell = function (event) {
+                    event.preventDefault();
+                    $('#chooseLL').modal('show');
+                };
+                PsychologyView.prototype.chooseal = function (event) {
+                    event.preventDefault();
+                    $('#chooseAL').modal('show');
                 };
                 PsychologyView = __decorate([
                     core_1.Component({

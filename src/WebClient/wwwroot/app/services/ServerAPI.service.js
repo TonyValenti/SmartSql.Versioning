@@ -129,13 +129,9 @@ System.register(['angular2/core', '../models/Person', 'angular2/http', 'rxjs/Obs
                         .map(function (res) { return res.json(); })
                         .catch(this.logAndPassOn);
                 };
-                /**
-             $Person = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/EntityApi/Add" -Headers $Headers -Body (ConvertTo-Json @{
-                    Values = @{
-                        Name = $EntityName;
-                    };
-                })
-                 */
+                ServerAPI.prototype.getLA = function () {
+                    return this.http.get(ServerAPI.localUrl + 'app/_db/lalang.json').map(function (res) { return res.json(); });
+                };
                 ServerAPI.prototype.logAndPassOn = function (error) {
                     // in a real world app, we may send the server to some remote logging infrastructure
                     // instead of just logging it to the console
@@ -143,6 +139,7 @@ System.register(['angular2/core', '../models/Person', 'angular2/http', 'rxjs/Obs
                     return Observable_1.Observable.throw(error);
                 };
                 ServerAPI.apiUrl = "http://localhost:47503/api/";
+                ServerAPI.localUrl = "http://localhost:3000/";
                 ServerAPI = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])
