@@ -25,7 +25,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
 
     public class EntityApiController :  ApiController<
-            DataContext, EntityController,
+            EntityDataContext, EntityController,
 
             EntityInstance, Entity,
             EntityParameters, EntityParameters,
@@ -122,106 +122,116 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
             ret.Entity = new EntityApiController().GetWebMethod(ItemRequest);
 
+            //These items are in the order in which they appear in the Solution Explorer.
 
-            ret.BeltSize = new BeltSizeApiController().GetWebMethod(ChildItemRequest);
+            ret.BeltSize = new EntityBeltSizeApiController().GetWebMethod(ChildItemRequest);
+            ret.BraSize = new EntityBraSizeApiController().GetWebMethod(ChildItemRequest);
             ret.DressSize = new DressSizeApiController().GetWebMethod(ChildItemRequest);
-            ret.HeadSize = new HeadSizeApiController().GetWebMethod(ChildItemRequest);
-            ret.PantSize = new PantSizeApiController().GetWebMethod(ChildItemRequest);
-            ret.ShirtSize = new ShirtSizeApiController().GetWebMethod(ChildItemRequest);
-            ret.ShoeSize = new ShoeSizeApiController().GetWebMethod(ChildItemRequest);
+            ret.HeadSize = new EntityHeadSizeApiController().GetWebMethod(ChildItemRequest);
+            ret.PantSize = new EntityPantSizeApiController().GetWebMethod(ChildItemRequest);
+            ret.ShirtSize = new EntityShirtSizeApiController().GetWebMethod(ChildItemRequest);
+            ret.ShoeSize = new EntityShoeSizeApiController().GetWebMethod(ChildItemRequest);
+            ret.UnderwearSize = new EntityUnderwearSizeApiController().GetWebMethod(ChildItemRequest);
 
-            ret.Address = new AddressApiController().ListWebMethod(ChildListRequest);
-            ret.Email = new EmailApiController().ListWebMethod(ChildListRequest);
-            ret.PhoneNumber = new PhoneNumberApiController().ListWebMethod(ChildListRequest);
+            ret.Address = new EntityAddressApiController().ListWebMethod(ChildListRequest);
+            ret.Email = new EntityEmailAddressApiController().ListWebMethod(ChildListRequest);
+            ret.PhoneNumber = new EntityPhoneNumberApiController().ListWebMethod(ChildListRequest);
 
-            ret.Certification = new CertificationApiController().ListWebMethod(ChildListRequest);
-            ret.EducationLevel = new EducationLevelApiController().GetWebMethod(ChildItemRequest);
+            ret.Certification = new EntityCertificationApiController().ListWebMethod(ChildListRequest);
+            ret.EducationLevel = new EntityEducationLevelApiController().GetWebMethod(ChildItemRequest);
 
-            ret.BankAccount = new BankAccountApiController().ListWebMethod(ChildListRequest);
+            ret.BankAccount = new EntityBankAccountApiController().ListWebMethod(ChildListRequest);
 
-            ret.DateOfBirth = new DateOfBirthApiController().GetWebMethod(ChildItemRequest);
-            ret.Ethnicity = new EthnicityApiController().GetWebMethod(ChildItemRequest);
-            ret.EyeColor = new EyeColorApiController().GetWebMethod(ChildItemRequest);
-            ret.GovernmentIdentification = new GovernmentIdentificationApiController().ListWebMethod(ChildListRequest);
-            ret.HairColor = new HairColorApiController().GetWebMethod(ChildItemRequest);
-            ret.Height = new HeightApiController().GetWebMethod(ChildItemRequest);
-            ret.Weight = new WeightApiController().GetWebMethod(ChildItemRequest);
+            ret.DateOfBirth = new EntityDateOfBirthApiController().GetWebMethod(ChildItemRequest);
+            ret.Ethnicity = new EntityEthnicityApiController().GetWebMethod(ChildItemRequest);
+            ret.EyeColor = new EntityEyeColorApiController().GetWebMethod(ChildItemRequest);
+            ret.GovernmentIdentification = new EntityGovernmentIdentificationApiController().ListWebMethod(ChildListRequest);
+            ret.HairColor = new EntityHairColorApiController().GetWebMethod(ChildItemRequest);
+            ret.Height = new EntityHeightApiController().GetWebMethod(ChildItemRequest);
+            ret.Weight = new EntityWeightApiController().GetWebMethod(ChildItemRequest);
 
-            ret.Like = new LikeApiController().ListWebMethod(ChildListRequest);
+            ret.Like = new EntityLikeApiController().ListWebMethod(ChildListRequest);
 
-            ret.Allergy = new AllergyApiController().ListWebMethod(ChildListRequest);
-            ret.Condition = new ConditionApiController().ListWebMethod(ChildListRequest);
-            ret.EmergencyContact = new EmergencyContactApiController().ListWebMethod(ChildListRequest);
-            ret.Immunization = new ImmunizationApiController().ListWebMethod(ChildListRequest);
-            ret.Incident = new IncidentApiController().ListWebMethod(ChildListRequest);
-            ret.Insurance = new InsuranceApiController().ListWebMethod(ChildListRequest);
-            ret.Medication = new MedicationApiController().ListWebMethod(ChildListRequest);
-            ret.Procedure = new ProcedureApiController().ListWebMethod(ChildListRequest);
+            ret.Allergy = new EntityAllergyApiController().ListWebMethod(ChildListRequest);
+            ret.BloodType = new EntityBloodTypeApiController().GetWebMethod(ChildItemRequest);
+            ret.Condition = new EntityConditionApiController().ListWebMethod(ChildListRequest);
+            ret.EmergencyContact = new EntityEmergencyContactApiController().ListWebMethod(ChildListRequest);
+            ret.Immunization = new EntityImmunizationApiController().ListWebMethod(ChildListRequest);
+            ret.Incident = new EntityIncidentApiController().ListWebMethod(ChildListRequest);
+            ret.Insurance = new EntityInsuranceApiController().ListWebMethod(ChildListRequest);
+            ret.Medication = new EntityMedicationApiController().ListWebMethod(ChildListRequest);
+            ret.Procedure = new EntityProcedureApiController().ListWebMethod(ChildListRequest);
+            ret.Sex = new EntitySexApiController().GetWebMethod(ChildItemRequest);
 
-            ret.AngerLanguage = new AngerLanguageApiController().GetWebMethod(ChildItemRequest);
-            ret.BriggsMyers = new BriggsMyersApiController().GetWebMethod(ChildItemRequest);
-            ret.LoveLanguage = new LoveLanguageApiController().GetWebMethod(ChildItemRequest);
-            ret.Religion = new ReligionApiController().GetWebMethod(ChildItemRequest);
-            ret.ReligiousFrequency = new ReligiousFrequencyApiController().GetWebMethod(ChildItemRequest);
-            ret.PoliticalAffiliation = new PoliticalAffiliationApiController().GetWebMethod(ChildItemRequest);
+            ret.AngerLanguage = new EntityAngerLanguageApiController().GetWebMethod(ChildItemRequest);
+            ret.BriggsMyers = new EntityBriggsMyersApiController().GetWebMethod(ChildItemRequest);
+            ret.LoveLanguage = new EntityLoveLanguageApiController().GetWebMethod(ChildItemRequest);
+            ret.PoliticalAffiliation = new EntityPoliticalAffiliationApiController().GetWebMethod(ChildItemRequest);
+            ret.Religion = new EntityReligionApiController().GetWebMethod(ChildItemRequest);
+            ret.ReligiousFrequency = new EntityReligiousFrequencyApiController().GetWebMethod(ChildItemRequest);
+            ret.SexualOrientation = new EntitySexualOrientationApiController().GetWebMethod(ChildItemRequest);
 
-            ret.Sex = new SexApiController().GetWebMethod(ChildItemRequest);
-
-            ret.BloodType = new BloodTypeApiController().GetWebMethod(ChildItemRequest);
+            
 
             return ret;
 
         }
 
 
+        //These items are in the order in which they appear in the Solution Explorer.
 
-        public BeltSizeResponse BeltSize { get; set; }
-        public DressSizeResponse DressSize { get; set; }
-        public HeadSizeResponse HeadSize { get; set; }
-        public PantSizeResponse PantSize { get; set; }
-        public ShirtSizeResponse ShirtSize { get; set; }
-        public ShoeSizeResponse ShoeSize { get; set; }
+        public EntityBeltSizeResponse BeltSize { get; set; }
+        public EntityBraSizeResponse BraSize { get; set; }
+        public EntityDressSizeResponse DressSize { get; set; }
+        public EntityHeadSizeResponse HeadSize { get; set; }
+        public EntityPantSizeResponse PantSize { get; set; }
+        public EntityShirtSizeResponse ShirtSize { get; set; }
+        public EntityShoeSizeResponse ShoeSize { get; set; }
+        public EntityUnderwearSizeResponse UnderwearSize { get; set; }
 
-        public List<AddressResponse> Address { get; set; }
-        public List<EmailResponse> Email { get; set; }
-        public List<PhoneNumberResponse> PhoneNumber { get; set; }
+        public List<EntityAddressResponse> Address { get; set; }
+        public List<EntityEmailAddressResponse> Email { get; set; }
+        public List<EntityPhoneNumberResponse> PhoneNumber { get; set; }
 
-        public List<CertificationResponse> Certification { get; set; }
-        public EducationLevelResponse EducationLevel { get; set; }
+        public List<EntityCertificationResponse> Certification { get; set; }
+        public List<EntityDegreeResponse> Degree { get; set; }
+        public EntityEducationLevelResponse EducationLevel { get; set; }
+        public List<EntitySchoolResponse> School { get; set; }
 
         public EntityResponse Entity { get; set; }
 
-        public List<BankAccountResponse> BankAccount { get; set; }
+        public List<EntityBankAccountResponse> BankAccount { get; set; }
 
-        public DateOfBirthResponse DateOfBirth { get; set; }
-        public EthnicityResponse Ethnicity { get; set; }
-        public EyeColorResponse EyeColor { get; set; }
-        public List<GovernmentIdentificationResponse> GovernmentIdentification { get; set; }
-        public HairColorResponse HairColor { get; set; }
-        public HeightResponse Height { get; set; }
-        public WeightResponse Weight { get; set; }
+        public EntityDateOfBirthResponse DateOfBirth { get; set; }
+        public EntityEthnicityResponse Ethnicity { get; set; }
+        public EntityEyeColorResponse EyeColor { get; set; }
+        public List<EntityGovernmentIdentificationResponse> GovernmentIdentification { get; set; }
+        public EntityHairColorResponse HairColor { get; set; }
+        public EntityHeightResponse Height { get; set; }
+        public EntityWeightResponse Weight { get; set; }
         
-        public List<LikeResponse> Like { get; set; }
+        public List<EntityLikeResponse> Like { get; set; }
 
-        public List<AllergyResponse> Allergy { get; set; }
-        public List<ConditionResponse> Condition { get; set; }
-        public List<EmergencyContactResponse> EmergencyContact { get; set; }
-        public List<ImmunizationResponse> Immunization { get; set; }
-        public List<IncidentResponse> Incident { get; set; }
-        public List<InsuranceResponse> Insurance { get; set; }
-        public List<MedicationResponse> Medication { get; set; }
-        public List<ProcedureResponse> Procedure { get; set; }
+        public List<EntityAllergyResponse> Allergy { get; set; }
+        public EntityBloodTypeResponse BloodType { get; set; }
+        public List<EntityConditionResponse> Condition { get; set; }
+        public List<EntityEmergencyContactResponse> EmergencyContact { get; set; }
+        public List<EntityImmunizationResponse> Immunization { get; set; }
+        public List<EntityIncidentResponse> Incident { get; set; }
+        public List<EntityInsuranceResponse> Insurance { get; set; }
+        public List<EntityMedicationResponse> Medication { get; set; }
+        public List<EntityProcedureResponse> Procedure { get; set; }
+        public EntitySexResponse Sex { get; set; }
 
-        public AngerLanguageResponse AngerLanguage { get; set; }
-        public BriggsMyersResponse BriggsMyers { get; set; }
-        public LoveLanguageResponse LoveLanguage { get; set; }
-        public ReligionResponse Religion { get; set; }
-        public ReligiousFrequencyResponse ReligiousFrequency { get; set; }
-        public PoliticalAffiliationResponse PoliticalAffiliation { get; set; }
+        public EntityAngerLanguageResponse AngerLanguage { get; set; }
+        public EntityBriggsMyersResponse BriggsMyers { get; set; }
+        public EntityLoveLanguageResponse LoveLanguage { get; set; }
+        public EntityPoliticalAffiliationResponse PoliticalAffiliation { get; set; }
+        public EntityReligionResponse Religion { get; set; }
+        public EntityReligiousFrequencyResponse ReligiousFrequency { get; set; }
+        public EntitySexualOrientationResponse SexualOrientation { get; set; }
+        
 
-        public SexResponse Sex { get; set; }
-
-        public BloodTypeResponse BloodType { get; set; }
     }
 
 

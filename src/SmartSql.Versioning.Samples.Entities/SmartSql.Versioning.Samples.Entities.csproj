@@ -94,6 +94,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Data\Clothing\UnderwearSize.cs" />
+    <Compile Include="Data\Clothing\BraSize.cs" />
+    <Compile Include="Data\Education\Degree.cs" />
+    <Compile Include="Data\Education\School.cs" />
     <Compile Include="Data\Education\EducationLevel.cs" />
     <Compile Include="Data\EntityValueMemberController.cs" />
     <Compile Include="Data\EntityListMemberController.cs" />
@@ -104,7 +108,7 @@
     <Compile Include="Data\Clothing\BeltSize.cs" />
     <Compile Include="Data\Clothing\PantSize.cs" />
     <Compile Include="Data\ContactInformation\PhoneNumber.cs" />
-    <Compile Include="Data\ContactInformation\Email.cs" />
+    <Compile Include="Data\ContactInformation\EmailAddress.cs" />
     <Compile Include="Data\ContactInformation\Address.cs" />
     <Compile Include="Data\Education\Certification.cs" />
     <Compile Include="Data\Entity\EntityMemberResponse.cs" />
@@ -130,6 +134,7 @@
     <Compile Include="Data\Medical\BloodType.cs" />
     <Compile Include="Data\Medical\Sex.cs" />
     <Compile Include="Data\Psychology\PoliticalAffiliation.cs" />
+    <Compile Include="Data\Psychology\SexualOrientation.cs" />
     <Compile Include="Data\Psychology\ReligiousFrequency.cs" />
     <Compile Include="Data\Psychology\Religion.cs" />
     <Compile Include="Data\Psychology\BriggsMyers.cs" />
@@ -143,6 +148,7 @@
     <Compile Include="Data\Identity\DateOfBirth.cs" />
     <Compile Include="Data\Entity\Entity.cs" />
     <Compile Include="Data\DataContext.cs" />
+    <Compile Include="Data\Relationships\Relationships.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -161,9 +167,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Relationships\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Documentation.txt" />

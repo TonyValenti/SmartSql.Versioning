@@ -12,47 +12,47 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class AngerLanguageController : EntityValueMemberController<AngerLanguageInstance, AngerLanguage> {
+    public partial class EntityAngerLanguageController : EntityValueMemberController<EntityAngerLanguageInstance, EntityAngerLanguage> {
 
     }
 
-    public partial class AngerLanguageInstance : Instance<AngerLanguage> {
+    public partial class EntityAngerLanguageInstance : Instance<EntityAngerLanguage> {
 
     }
 
-    public partial class AngerLanguage : EntityRevision<AngerLanguageInstance> {
+    public partial class EntityAngerLanguage : EntityRevision<EntityAngerLanguageInstance> {
         public bool HasAvoidant { get; set; }
         public bool HasDirect { get; set; }
         public bool HasPassiveAggressive { get; set; }
         public bool HasReactive { get; set; }
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<AngerLanguageInstance> AngerLanguage { get; set; }
-        public DbSet<AngerLanguage> AngerLanguageRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityAngerLanguageInstance> EntityAngerLanguageInstances { get; set; }
+        public DbSet<EntityAngerLanguage> EntityAngerLanguages { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class AngerLanguageParameters {
+    public class EntityAngerLanguageParameters {
         public bool HasAvoidant { get; set; }
         public bool HasDirect { get; set; }
         public bool HasPassiveAggressive { get; set; }
         public bool HasReactive { get; set; }
     }
 
-    public class AngerLanguageResponse : EntityMemberResponse {
+    public class EntityAngerLanguageResponse : EntityMemberResponse {
         public bool HasAvoidant { get; set; }
-        public bool HasDirect { get; set; }
+        public bool HasAssertive { get; set; }
         public bool HasPassiveAggressive { get; set; }
         public bool HasReactive { get; set; }
     }
 
 
-    public class AngerLanguageApiController : EntityValueMemberApiController<
-      AngerLanguageController,
-      AngerLanguageInstance, AngerLanguage,
-      AngerLanguageParameters, AngerLanguageParameters,
-      AngerLanguageResponse
+    public class EntityAngerLanguageApiController : EntityValueMemberApiController<
+      EntityAngerLanguageController,
+      EntityAngerLanguageInstance, EntityAngerLanguage,
+      EntityAngerLanguageParameters, EntityAngerLanguageParameters,
+      EntityAngerLanguageResponse
       > {
 
     }

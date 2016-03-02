@@ -12,37 +12,37 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class HeadSizeController : EntityValueMemberController<HeadSizeInstance, HeadSize> {
+    public partial class EntityHeadSizeController : EntityValueMemberController<EntityHeadSizeInstance, EntityHeadSize> {
 
     }
 
-    public partial class HeadSizeInstance : Instance<HeadSize> {
+    public partial class EntityHeadSizeInstance : Instance<EntityHeadSize> {
 
     }
 
-    public partial class HeadSize : EntityRevision<HeadSizeInstance, String> {
+    public partial class EntityHeadSize : EntityRevision<EntityHeadSizeInstance, String> {
         
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<HeadSizeInstance> HeadSize { get; set; }
-        public DbSet<HeadSize> HeadSizeRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityHeadSizeInstance> EntityHeadSizeInstances { get; set; }
+        public DbSet<EntityHeadSize> EntityHeadSizes { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class HeadSizeParameters : ValueParameter<String> {
+    public class EntityHeadSizeParameters : ValueParameter<String> {
 
     }
 
-    public class HeadSizeResponse : EntityMemberResponse<String> {
+    public class EntityHeadSizeResponse : EntityMemberResponse<String> {
 
     }
 
-    public class HeadSizeApiController : EntityValueMemberApiController<
-      HeadSizeController,
-      HeadSizeInstance, HeadSize,
-      HeadSizeParameters, HeadSizeParameters,
-      HeadSizeResponse
+    public class EntityHeadSizeApiController : EntityValueMemberApiController<
+      EntityHeadSizeController,
+      EntityHeadSizeInstance, EntityHeadSize,
+      EntityHeadSizeParameters, EntityHeadSizeParameters,
+      EntityHeadSizeResponse
       > {
 
     }

@@ -12,37 +12,37 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class ReligionController : EntityValueMemberController<ReligionInstance, Religion> {
+    public partial class EntityReligionController : EntityValueMemberController<EntityReligionInstance, EntityReligion> {
 
     }
 
-    public partial class ReligionInstance : Instance<Religion> {
+    public partial class EntityReligionInstance : Instance<EntityReligion> {
 
     }
 
-    public partial class Religion : EntityRevision<ReligionInstance, String> {
+    public partial class EntityReligion : EntityRevision<EntityReligionInstance, String> {
         
     }
 
-    public partial class DataContext : DbContext  {
-        public DbSet<ReligionInstance> Religion { get; set; }
-        public DbSet<Religion> ReligionRevisions { get; set; }
+    public partial class EntityDataContext : DbContext  {
+        public DbSet<EntityReligionInstance> EntityReligionInstances { get; set; }
+        public DbSet<EntityReligion> EntityReligions { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class ReligionParameters : ValueParameter<String> {
+    public class EntityReligionParameters : ValueParameter<String> {
 
     }
 
-    public class ReligionResponse : EntityMemberResponse<String> {
+    public class EntityReligionResponse : EntityMemberResponse<String> {
 
     }
 
-    public class ReligionApiController : EntityValueMemberApiController<
-      ReligionController,
-      ReligionInstance, Religion,
-      ReligionParameters, ReligionParameters,
-      ReligionResponse
+    public class EntityReligionApiController : EntityValueMemberApiController<
+      EntityReligionController,
+      EntityReligionInstance, EntityReligion,
+      EntityReligionParameters, EntityReligionParameters,
+      EntityReligionResponse
       > {
 
     }

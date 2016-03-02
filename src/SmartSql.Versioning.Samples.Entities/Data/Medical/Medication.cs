@@ -12,45 +12,45 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class MedicationController : EntityListMemberController<MedicationInstance, Medication> {
+    public partial class EntityMedicationController : EntityListMemberController<EntityMedicationInstance, EntityMedication> {
 
     }
 
-    public partial class MedicationInstance : Instance<Medication> {
+    public partial class EntityMedicationInstance : Instance<EntityMedication> {
 
     }
 
-    public partial class Medication : EntityRevision<MedicationInstance> {
+    public partial class EntityMedication : EntityRevision<EntityMedicationInstance> {
         public string Name { get; set; }
         public string Description { get; set; }
         public string UsageText { get; set; }
     }
 
-    public partial class DataContext : DbContext {
+    public partial class EntityDataContext : DbContext {
 
-        public DbSet<MedicationInstance> Medication { get; set; }
-        public DbSet<Medication> MedicationRevisions { get; set; }
+        public DbSet<EntityMedicationInstance> EntityMedicationInstances { get; set; }
+        public DbSet<EntityMedication> EntityMedications { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class MedicationParameters {
+    public class EntityMedicationParameters {
         public string Name { get; set; }
         public string Description { get; set; }
         public string UsageText { get; set; }
     }
 
-    public class MedicationResponse : EntityMemberResponse {
+    public class EntityMedicationResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Description { get; set; }
         public string UsageText { get; set; }
     }
 
 
-    public class MedicationApiController : EntityListMemberApiController<
-      MedicationController,
-      MedicationInstance, Medication,
-      MedicationParameters, MedicationParameters,
-      MedicationResponse
+    public class EntityMedicationApiController : EntityListMemberApiController<
+      EntityMedicationController,
+      EntityMedicationInstance, EntityMedication,
+      EntityMedicationParameters, EntityMedicationParameters,
+      EntityMedicationResponse
       > {
 
     }

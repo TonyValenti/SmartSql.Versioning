@@ -7,9 +7,9 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
-    public partial class DataContext : DbContext {
+    public partial class EntityDataContext : DbContext {
 
-        public DataContext() : base("DefaultConnection") {
+        public EntityDataContext() : base("DefaultConnection") {
 
         }
 

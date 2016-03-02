@@ -13,24 +13,24 @@ using System.Collections;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
 
-    public class LikeParameters {
-        public LikeStatus Status { get; set; }
-        public LikeCategory Category { get; set; }
+    public class EntityLikeParameters {
+        public EntityLikeStatus Status { get; set; }
+        public EntityLikeCategory Category { get; set; }
         public string Value { get; set; }
     }
 
-    public class LikeResponse : EntityMemberResponse {
-        public LikeStatus Status { get; set; }
-        public LikeCategory Category { get; set; }
+    public class EntityLikeResponse : EntityMemberResponse {
+        public EntityLikeStatus Status { get; set; }
+        public EntityLikeCategory Category { get; set; }
         public string Value { get; set; }
     }
 
 
-    public class LikeApiController : EntityListMemberApiController<
-        LikeController, 
-        LikeInstance, Like, 
-        LikeParameters, LikeParameters, 
-        LikeResponse
+    public class EntityLikeApiController : EntityListMemberApiController<
+        EntityLikeController, 
+        EntityLikeInstance, EntityLike, 
+        EntityLikeParameters, EntityLikeParameters, 
+        EntityLikeResponse
         > { 
         
     }

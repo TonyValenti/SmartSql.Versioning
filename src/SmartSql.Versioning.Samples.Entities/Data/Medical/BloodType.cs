@@ -12,19 +12,19 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class BloodTypeController : EntityValueMemberController<BloodTypeInstance, BloodType> {
+    public partial class EntityBloodTypeController : EntityValueMemberController<EntityBloodTypeInstance, EntityBloodType> {
 
     }
 
-    public partial class BloodTypeInstance : Instance<BloodType> {
+    public partial class EntityBloodTypeInstance : Instance<EntityBloodType> {
 
     }
 
-    public partial class BloodType : EntityRevision<BloodTypeInstance, BloodTypeValue> {
+    public partial class EntityBloodType : EntityRevision<EntityBloodTypeInstance, EntityBloodTypeValue> {
         
     }
 
-    public enum BloodTypeValue {
+    public enum EntityBloodTypeValue {
         Unknown                 =   0000,
         APositive               =   1100,
         ANegative               =   1200,
@@ -36,25 +36,25 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         ONegative               =   4200,
     }
 
-    public partial class DataContext : DbContext  {
-        public DbSet<BloodTypeInstance> BloodType { get; set; }
-        public DbSet<BloodType> BloodTypeRevisions { get; set; }
+    public partial class EntityDataContext : DbContext  {
+        public DbSet<EntityBloodTypeInstance> EntityBloodTypeInstances { get; set; }
+        public DbSet<EntityBloodType> EntityBloodTypes { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class BloodTypeParameters : ValueParameter<BloodTypeValue> {
+    public class EntityBloodTypeParameters : ValueParameter<EntityBloodTypeValue> {
 
     }
 
-    public class BloodTypeResponse : EntityMemberResponse<BloodTypeValue> {
+    public class EntityBloodTypeResponse : EntityMemberResponse<EntityBloodTypeValue> {
 
     }
 
-    public class BloodTypeApiController : EntityValueMemberApiController<
-      BloodTypeController,
-      BloodTypeInstance, BloodType,
-      BloodTypeParameters, BloodTypeParameters,
-      BloodTypeResponse
+    public class EntityBloodTypeApiController : EntityValueMemberApiController<
+      EntityBloodTypeController,
+      EntityBloodTypeInstance, EntityBloodType,
+      EntityBloodTypeParameters, EntityBloodTypeParameters,
+      EntityBloodTypeResponse
       > {
 
     }

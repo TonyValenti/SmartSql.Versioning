@@ -12,44 +12,44 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class ReligiousFrequencyController : EntityValueMemberController<ReligiousFrequencyInstance, ReligiousFrequency> {
+    public partial class EntityReligiousFrequencyController : EntityValueMemberController<EntityReligiousFrequencyInstance, EntityReligiousFrequency> {
 
     }
 
-    public partial class ReligiousFrequencyInstance : Instance<ReligiousFrequency> {
+    public partial class EntityReligiousFrequencyInstance : Instance<EntityReligiousFrequency> {
 
     }
 
-    public partial class ReligiousFrequency : EntityRevision<ReligiousFrequencyInstance, ReligiousFrequencyValue> {
+    public partial class EntityReligiousFrequency : EntityRevision<EntityReligiousFrequencyInstance, EntityReligiousFrequencyValue> {
         
     }
 
-    public enum ReligiousFrequencyValue {
+    public enum EntityReligiousFrequencyValue {
         Never                   =   0,
         SeveralTimesPerYear     =   1000,
         OnceOrTwicePerMonth     =   2000,
         EveryWeek               =   3000
     }
 
-    public partial class DataContext : DbContext  {
-        public DbSet<ReligiousFrequencyInstance> ReligiousFrequency { get; set; }
-        public DbSet<ReligiousFrequency> ReligiousFrequencyRevisions { get; set; }
+    public partial class EntityDataContext : DbContext  {
+        public DbSet<EntityReligiousFrequencyInstance> EntityReligiousFrequencyInstances { get; set; }
+        public DbSet<EntityReligiousFrequency> EntityReligiousFrequencies { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class ReligiousFrequencyParameters : ValueParameter<ReligiousFrequencyValue> {
+    public class EntityReligiousFrequencyParameters : ValueParameter<EntityReligiousFrequencyValue> {
 
     }
 
-    public class ReligiousFrequencyResponse : EntityMemberResponse<ReligiousFrequencyValue> {
+    public class EntityReligiousFrequencyResponse : EntityMemberResponse<EntityReligiousFrequencyValue> {
 
     }
 
-    public class ReligiousFrequencyApiController : EntityValueMemberApiController<
-      ReligiousFrequencyController,
-      ReligiousFrequencyInstance, ReligiousFrequency,
-      ReligiousFrequencyParameters, ReligiousFrequencyParameters,
-      ReligiousFrequencyResponse
+    public class EntityReligiousFrequencyApiController : EntityValueMemberApiController<
+      EntityReligiousFrequencyController,
+      EntityReligiousFrequencyInstance, EntityReligiousFrequency,
+      EntityReligiousFrequencyParameters, EntityReligiousFrequencyParameters,
+      EntityReligiousFrequencyResponse
       > {
 
     }

@@ -12,37 +12,37 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class PoliticalAffiliationController : EntityValueMemberController<PoliticalAffiliationInstance, PoliticalAffiliation> {
+    public partial class EntityPoliticalAffiliationController : EntityValueMemberController<EntityPoliticalAffiliationInstance, EntityPoliticalAffiliation> {
 
     }
 
-    public partial class PoliticalAffiliationInstance : Instance<PoliticalAffiliation> {
+    public partial class EntityPoliticalAffiliationInstance : Instance<EntityPoliticalAffiliation> {
 
     }
 
-    public partial class PoliticalAffiliation : EntityRevision<PoliticalAffiliationInstance, String> {
+    public partial class EntityPoliticalAffiliation : EntityRevision<EntityPoliticalAffiliationInstance, String> {
         
     }
 
-    public partial class DataContext : DbContext  {
-        public DbSet<PoliticalAffiliationInstance> PoliticalAffiliation { get; set; }
-        public DbSet<PoliticalAffiliation> PoliticalAffiliationRevisions { get; set; }
+    public partial class EntityDataContext : DbContext  {
+        public DbSet<EntityPoliticalAffiliationInstance> EntityPoliticalAffiliationInstances { get; set; }
+        public DbSet<EntityPoliticalAffiliation> EntityPoliticalAffiliations { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class PoliticalAffiliationParameters : ValueParameter<String> {
+    public class EntityPoliticalAffiliationParameters : ValueParameter<String> {
 
     }
 
-    public class PoliticalAffiliationResponse : EntityMemberResponse<String> {
+    public class EntityPoliticalAffiliationResponse : EntityMemberResponse<String> {
 
     }
 
-    public class PoliticalAffiliationApiController : EntityValueMemberApiController<
-      PoliticalAffiliationController,
-      PoliticalAffiliationInstance, PoliticalAffiliation,
-      PoliticalAffiliationParameters, PoliticalAffiliationParameters,
-      PoliticalAffiliationResponse
+    public class EntityPoliticalAffiliationApiController : EntityValueMemberApiController<
+      EntityPoliticalAffiliationController,
+      EntityPoliticalAffiliationInstance, EntityPoliticalAffiliation,
+      EntityPoliticalAffiliationParameters, EntityPoliticalAffiliationParameters,
+      EntityPoliticalAffiliationResponse
       > {
 
     }

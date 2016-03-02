@@ -12,45 +12,45 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class ProcedureController : EntityListMemberController<ProcedureInstance, Procedure> {
+    public partial class EntityProcedureController : EntityListMemberController<EntityProcedureInstance, EntityProcedure> {
 
     }
 
-    public partial class ProcedureInstance : Instance<Procedure> {
+    public partial class EntityProcedureInstance : Instance<EntityProcedure> {
 
     }
 
-    public partial class Procedure : EntityRevision<ProcedureInstance> {
+    public partial class EntityProcedure : EntityRevision<EntityProcedureInstance> {
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 
-    public partial class DataContext : DbContext {
+    public partial class EntityDataContext : DbContext {
 
-        public DbSet<ProcedureInstance> Procedure { get; set; }
-        public DbSet<Procedure> ProcedureRevisions { get; set; }
+        public DbSet<EntityProcedureInstance> EntityProcedureInstances { get; set; }
+        public DbSet<EntityProcedure> EntityProcedures { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class ProcedureParameters {
+    public class EntityProcedureParameters {
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 
-    public class ProcedureResponse : EntityMemberResponse {
+    public class EntityProcedureResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 
 
-    public class ProcedureApiController : EntityListMemberApiController<
-      ProcedureController,
-      ProcedureInstance, Procedure,
-      ProcedureParameters, ProcedureParameters,
-      ProcedureResponse
+    public class EntityProcedureApiController : EntityListMemberApiController<
+      EntityProcedureController,
+      EntityProcedureInstance, EntityProcedure,
+      EntityProcedureParameters, EntityProcedureParameters,
+      EntityProcedureResponse
       > {
 
     }

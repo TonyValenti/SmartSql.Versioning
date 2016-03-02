@@ -12,75 +12,75 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class BriggsMyersController : EntityValueMemberController<BriggsMyersInstance, BriggsMyers> {
+    public partial class EntityBriggsMyersController : EntityValueMemberController<EntityBriggsMyersInstance, EntityBriggsMyers> {
 
     }
 
-    public partial class BriggsMyersInstance : Instance<BriggsMyers> {
+    public partial class EntityBriggsMyersInstance : Instance<EntityBriggsMyers> {
 
     }
 
-    public partial class BriggsMyers : EntityRevision<BriggsMyersInstance> {
-        public BriggsMyers1 Value1 { get; set; }
-        public BriggsMyers2 Value2 { get; set; }
-        public BriggsMyers3 Value3 { get; set; }
-        public BriggsMyers4 Value4 { get; set; }
+    public partial class EntityBriggsMyers : EntityRevision<EntityBriggsMyersInstance> {
+        public EntityBriggsMyers1 Value1 { get; set; }
+        public EntityBriggsMyers2 Value2 { get; set; }
+        public EntityBriggsMyers3 Value3 { get; set; }
+        public EntityBriggsMyers4 Value4 { get; set; }
     }
 
-    public enum BriggsMyers1 {
+    public enum EntityBriggsMyers1 {
         Extraverted,
         Introverted,
         E = Extraverted,
         I = Introverted,
     }
 
-    public enum BriggsMyers2 {
+    public enum EntityBriggsMyers2 {
         Sensing,
         Intuition,
         S = Sensing,
         I = Intuition,
     }
 
-    public enum BriggsMyers3 {
+    public enum EntityBriggsMyers3 {
         Thinking,
         Feeling,
         T = Thinking,
         F = Feeling,
     }
 
-    public enum BriggsMyers4 {
+    public enum EntityBriggsMyers4 {
         Judging,
         Perceiving,
         J = Judging,
         P = Perceiving,
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<BriggsMyersInstance> BriggsMyers { get; set; }
-        public DbSet<BriggsMyers> BriggsMyersRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityBriggsMyersInstance> BriggsMyers { get; set; }
+        public DbSet<EntityBriggsMyers> BriggsMyersRevisions { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class BriggsMyersParameters {
-        public BriggsMyers1 Value1 { get; set; }
-        public BriggsMyers2 Value2 { get; set; }
-        public BriggsMyers3 Value3 { get; set; }
-        public BriggsMyers4 Value4 { get; set; }
+    public class EntityBriggsMyersParameters {
+        public EntityBriggsMyers1 Value1 { get; set; }
+        public EntityBriggsMyers2 Value2 { get; set; }
+        public EntityBriggsMyers3 Value3 { get; set; }
+        public EntityBriggsMyers4 Value4 { get; set; }
     }
 
-    public class BriggsMyersResponse : EntityMemberResponse {
-        public BriggsMyers1 Value1 { get; set; }
-        public BriggsMyers2 Value2 { get; set; }
-        public BriggsMyers3 Value3 { get; set; }
-        public BriggsMyers4 Value4 { get; set; }
+    public class EntityBriggsMyersResponse : EntityMemberResponse {
+        public EntityBriggsMyers1 Value1 { get; set; }
+        public EntityBriggsMyers2 Value2 { get; set; }
+        public EntityBriggsMyers3 Value3 { get; set; }
+        public EntityBriggsMyers4 Value4 { get; set; }
     }
 
 
-    public class BriggsMyersApiController : EntityValueMemberApiController<
-      BriggsMyersController,
-      BriggsMyersInstance, BriggsMyers,
-      BriggsMyersParameters, BriggsMyersParameters,
-      BriggsMyersResponse
+    public class EntityBriggsMyersApiController : EntityValueMemberApiController<
+      EntityBriggsMyersController,
+      EntityBriggsMyersInstance, EntityBriggsMyers,
+      EntityBriggsMyersParameters, EntityBriggsMyersParameters,
+      EntityBriggsMyersResponse
       > {
 
     }

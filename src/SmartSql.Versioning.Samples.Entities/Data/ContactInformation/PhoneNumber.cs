@@ -12,35 +12,35 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class PhoneNumberController : EntityListMemberController<PhoneNumberInstance, PhoneNumber> {
+    public partial class EntityPhoneNumberController : EntityListMemberController<EntityPhoneNumberInstance, EntityPhoneNumber> {
 
     }
 
-    public partial class PhoneNumberInstance : Instance<PhoneNumber> {
+    public partial class EntityPhoneNumberInstance : Instance<EntityPhoneNumber> {
 
     }
 
-    public partial class PhoneNumber : EntityRevision<PhoneNumberInstance> {
+    public partial class EntityPhoneNumber : EntityRevision<EntityPhoneNumberInstance> {
         public string Name { get; set; }
         public string Value { get; set; }
         bool IsMobile { get; set; }
         bool EnableNotifications { get; set; }
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<PhoneNumberInstance> PhoneNumber { get; set; }
-        public DbSet<PhoneNumber> PhoneNumberRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityPhoneNumberInstance> EntityPhoneNumberInstances { get; set; }
+        public DbSet<EntityPhoneNumber> EntityPhoneNumbers { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class PhoneNumberParameters {
+    public class EntityPhoneNumberParameters {
         public string Name { get; set; }
         public string Value { get; set; }
         bool IsMobile { get; set; }
         bool EnableNotifications { get; set; }
     }
 
-    public class PhoneNumberResponse : EntityMemberResponse {
+    public class EntityPhoneNumberResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Value { get; set; }
         bool IsMobile { get; set; }
@@ -48,11 +48,11 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
     }
 
 
-    public class PhoneNumberApiController : EntityListMemberApiController<
-      PhoneNumberController,
-      PhoneNumberInstance, PhoneNumber,
-      PhoneNumberParameters, PhoneNumberParameters,
-      PhoneNumberResponse
+    public class EntityPhoneNumberApiController : EntityListMemberApiController<
+      EntityPhoneNumberController,
+      EntityPhoneNumberInstance, EntityPhoneNumber,
+      EntityPhoneNumberParameters, EntityPhoneNumberParameters,
+      EntityPhoneNumberResponse
       > {
 
     }

@@ -12,46 +12,46 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class HeightController : EntityValueMemberController<HeightInstance, Height> {
+    public partial class EntityHeightController : EntityValueMemberController<EntityHeightInstance, EntityHeight> {
 
     }
 
-    public partial class HeightInstance : Instance<Height> {
+    public partial class EntityHeightInstance : Instance<EntityHeight> {
 
     }
 
-    public partial class Height : EntityRevision<HeightInstance> {
-        public HeightUnit Unit { get; set; }
+    public partial class EntityHeight : EntityRevision<EntityHeightInstance> {
+        public EntityHeightUnit Unit { get; set; }
         public float Value { get; set; }
     }
 
-    public enum HeightUnit {
+    public enum EntityHeightUnit {
         Inches,
         Centimeters
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<HeightInstance> Height { get; set; }
-        public DbSet<Height> HeightRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityHeightInstance> EntityHeightInstances { get; set; }
+        public DbSet<EntityHeight> HeightInstances { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class HeightParameters {
-        public HeightUnit Unit { get; set; }
+    public class EntityHeightParameters {
+        public EntityHeightUnit Unit { get; set; }
         public float Value { get; set; }
     }
 
-    public class HeightResponse : EntityMemberResponse {
-        public HeightUnit Unit { get; set; }
+    public class EntityHeightResponse : EntityMemberResponse {
+        public EntityHeightUnit Unit { get; set; }
         public float Value { get; set; }
     }
 
 
-    public class HeightApiController : EntityValueMemberApiController<
-      HeightController,
-      HeightInstance, Height,
-      HeightParameters, HeightParameters,
-      HeightResponse
+    public class EntityHeightApiController : EntityValueMemberApiController<
+      EntityHeightController,
+      EntityHeightInstance, EntityHeight,
+      EntityHeightParameters, EntityHeightParameters,
+      EntityHeightResponse
       > {
 
     }

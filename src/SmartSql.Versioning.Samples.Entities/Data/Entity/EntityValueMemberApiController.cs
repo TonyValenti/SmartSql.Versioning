@@ -24,7 +24,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         TCommonResponse
         >
         : ApiController<
-            DataContext, TController,
+            EntityDataContext, TController,
 
             TInstance, TValue,
 

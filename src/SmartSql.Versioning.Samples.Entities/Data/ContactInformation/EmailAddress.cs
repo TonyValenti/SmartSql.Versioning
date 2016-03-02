@@ -12,44 +12,44 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class EmailController : EntityListMemberController<EmailInstance, Email> {
+    public partial class EntityEmailAddressController : EntityListMemberController<EntityEmailAddressInstance, EntityEmailAddress> {
 
     }
 
-    public partial class EmailInstance : Instance<Email> {
+    public partial class EntityEmailAddressInstance : Instance<EntityEmailAddress> {
 
     }
 
-    public partial class Email : EntityRevision<EmailInstance> {
+    public partial class EntityEmailAddress : EntityRevision<EntityEmailAddressInstance> {
         public string Name { get; set; }
         public string Value { get; set; }
         public bool EnableNotifications { get; set; }
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<EmailInstance> Email { get; set; }
-        public DbSet<Email> EmailRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityEmailAddressInstance> EntityEmailAddressInstances { get; set; }
+        public DbSet<EntityEmailAddress> EntityEmailAddresses { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class EmailParameters {
+    public class EntityEmailAddressParameters {
         public string Name { get; set; }
         public string Value { get; set; }
         public bool EnableNotifications { get; set; }
     }
 
-    public class EmailResponse : EntityMemberResponse {
+    public class EntityEmailAddressResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Value { get; set; }
         public bool EnableNotifications { get; set; }
     }
 
 
-    public class EmailApiController : EntityListMemberApiController<
-      EmailController,
-      EmailInstance, Email,
-      EmailParameters, EmailParameters,
-      EmailResponse
+    public class EntityEmailAddressApiController : EntityListMemberApiController<
+      EntityEmailAddressController,
+      EntityEmailAddressInstance, EntityEmailAddress,
+      EntityEmailAddressParameters, EntityEmailAddressParameters,
+      EntityEmailAddressResponse
       > {
 
     }

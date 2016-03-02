@@ -12,41 +12,41 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class ConditionController : EntityListMemberController<ConditionInstance, Condition> {
+    public partial class EntityConditionController : EntityListMemberController<EntityConditionInstance, EntityCondition> {
 
     }
 
-    public partial class ConditionInstance : Instance<Condition> {
+    public partial class EntityConditionInstance : Instance<EntityCondition> {
 
     }
 
-    public partial class Condition : EntityRevision<ConditionInstance> {
+    public partial class EntityCondition : EntityRevision<EntityConditionInstance> {
         public string Name { get; set; }
         public string Description { get; set; }
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<ConditionInstance> Condition { get; set; }
-        public DbSet<Condition> ConditionRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityConditionInstance> EntityConditionInstances { get; set; }
+        public DbSet<EntityCondition> EntityConditions { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class ConditionParameters {
+    public class EntityConditionParameters {
         public string Name { get; set; }
         public string Description { get; set; }
     }
 
-    public class ConditionResponse : EntityMemberResponse {
+    public class EntityConditionResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Description { get; set; }
     }
 
 
-    public class ConditionApiController : EntityListMemberApiController<
-      ConditionController,
-      ConditionInstance, Condition,
-      ConditionParameters, ConditionParameters,
-      ConditionResponse
+    public class EntityConditionApiController : EntityListMemberApiController<
+      EntityConditionController,
+      EntityConditionInstance, EntityCondition,
+      EntityConditionParameters, EntityConditionParameters,
+      EntityConditionResponse
       > {
 
     }

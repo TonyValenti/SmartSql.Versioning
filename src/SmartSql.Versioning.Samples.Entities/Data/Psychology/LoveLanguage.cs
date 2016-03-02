@@ -12,15 +12,15 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class LoveLanguageController : EntityValueMemberController<LoveLanguageInstance, LoveLanguage> {
+    public partial class EntityLoveLanguageController : EntityValueMemberController<EntityLoveLanguageInstance, EntityLoveLanguage> {
 
     }
 
-    public partial class LoveLanguageInstance : Instance<LoveLanguage> {
+    public partial class EntityLoveLanguageInstance : Instance<EntityLoveLanguage> {
 
     }
 
-    public partial class LoveLanguage : EntityRevision<LoveLanguageInstance> {
+    public partial class EntityLoveLanguage : EntityRevision<EntityLoveLanguageInstance> {
         public bool HasWordsOfAffirmation { get; set; }
         public bool HasActsOfService { get; set; }
         public bool HasReceivingGifts { get; set; }
@@ -28,13 +28,13 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public bool HasPhysicalTouch { get; set; }
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<LoveLanguageInstance> LoveLanguage { get; set; }
-        public DbSet<LoveLanguage> LoveLanguageRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityLoveLanguageInstance> EntityLoveLanguageInstances { get; set; }
+        public DbSet<EntityLoveLanguage> EntityLoveLanguages { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class LoveLanguageParameters {
+    public class EntityLoveLanguageParameters {
         public bool HasWordsOfAffirmation { get; set; }
         public bool HasActsOfService { get; set; }
         public bool HasReceivingGifts { get; set; }
@@ -42,7 +42,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public bool HasPhysicalTouch { get; set; }
     }
 
-    public class LoveLanguageResponse : EntityMemberResponse {
+    public class EntityLoveLanguageResponse : EntityMemberResponse {
         public bool HasWordsOfAffirmation { get; set; }
         public bool HasActsOfService { get; set; }
         public bool HasReceivingGifts { get; set; }
@@ -51,11 +51,11 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
     }
 
 
-    public class LoveLanguageApiController : EntityValueMemberApiController<
-      LoveLanguageController,
-      LoveLanguageInstance, LoveLanguage,
-      LoveLanguageParameters, LoveLanguageParameters,
-      LoveLanguageResponse
+    public class EntityLoveLanguageApiController : EntityValueMemberApiController<
+      EntityLoveLanguageController,
+      EntityLoveLanguageInstance, EntityLoveLanguage,
+      EntityLoveLanguageParameters, EntityLoveLanguageParameters,
+      EntityLoveLanguageResponse
       > {
 
     }

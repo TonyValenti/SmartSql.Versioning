@@ -12,7 +12,7 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
 
-    public partial class EntityController : DataController<DataContext, EntityInstance, Entity> {
+    public partial class EntityController : DataController<EntityDataContext, EntityInstance, Entity> {
         public Guid? Filter_OwnerUserId { get; set; }
         public Guid? Default_OwnerUserId { get; set; }
 
@@ -52,7 +52,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
     }
 
-    public partial class DataContext : DbContext {
+    public partial class EntityDataContext : DbContext {
         public DbSet<EntityInstance> Entity { get; set; }
         public DbSet<Entity> EntityRevisions { get; set; }
     }

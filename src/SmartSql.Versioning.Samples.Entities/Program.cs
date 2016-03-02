@@ -23,8 +23,8 @@ namespace SmartSql.Versioning.Samples.Entities {
             var Random = new System.Random();
 
             var EntityAPI = new Data.EntityController();
-            var DateOfBirthApi = new Data.DateOfBirthController();
-            var BeltSizeApi = new Data.BeltSizeController();
+            var DateOfBirthApi = new Data.EntityDateOfBirthController();
+            var BeltSizeApi = new Data.EntityBeltSizeController();
 
             var StartIndex = EntityAPI.Current().Count() - 1;
 
@@ -33,12 +33,12 @@ namespace SmartSql.Versioning.Samples.Entities {
 
                 var Entity = EntityAPI.Add(new Data.Entity() { Name = "Some Person " + i, OwnerUserId = ToGuid(i % 50)});
 
-                DateOfBirthApi = new Data.DateOfBirthController() {
+                DateOfBirthApi = new Data.EntityDateOfBirthController() {
                     Filter_EntityId = Entity.InstanceId,
                     Default_EntityId = Entity.InstanceId,
                 };
 
-                BeltSizeApi = new Data.BeltSizeController() {
+                BeltSizeApi = new Data.EntityBeltSizeController() {
                     Filter_EntityId = Entity.InstanceId,
                     Default_EntityId = Entity.InstanceId,
                 };
@@ -46,12 +46,12 @@ namespace SmartSql.Versioning.Samples.Entities {
                 Entity.Name = "Some Person " + i + " Updated";
                 EntityAPI.Update(Entity);
                 
-                DateOfBirthApi.Add(new Data.DateOfBirth() { Value = DateTime.Now });
-                DateOfBirthApi.Add(new Data.DateOfBirth() { Value = DateTime.UtcNow });
+                DateOfBirthApi.Add(new Data.EntityDateOfBirth() { Value = DateTime.Now });
+                DateOfBirthApi.Add(new Data.EntityDateOfBirth() { Value = DateTime.UtcNow });
 
-                BeltSizeApi.Add(new BeltSize() { Value = "Small" });
-                BeltSizeApi.Add(new BeltSize() { Value = "Medium" });
-                BeltSizeApi.Add(new BeltSize() { Value = "Large" });
+                BeltSizeApi.Add(new EntityBeltSize() { Value = "Small" });
+                BeltSizeApi.Add(new EntityBeltSize() { Value = "Medium" });
+                BeltSizeApi.Add(new EntityBeltSize() { Value = "Large" });
             }
 
             {
@@ -64,17 +64,17 @@ namespace SmartSql.Versioning.Samples.Entities {
 
             {
                 var Rory = EntityAPI.Current().Where(x => x.Name.Contains("Rory")).FirstOrDefault();
-                DateOfBirthApi = new Data.DateOfBirthController() {
+                DateOfBirthApi = new Data.EntityDateOfBirthController() {
                     Filter_EntityId = Rory.InstanceId,
                     Default_EntityId = Rory.InstanceId,
                 };
                 
                 var DateOfBirth = DateOfBirthApi.Get();
 
-                DateOfBirthApi.Add(new Data.DateOfBirth() { Value = DateTime.UtcNow });
+                DateOfBirthApi.Add(new Data.EntityDateOfBirth() { Value = DateTime.UtcNow });
                 var DateOfBirth1 = DateOfBirthApi.Get();
 
-                DateOfBirthApi.Add(new Data.DateOfBirth() { Value = new DateTime(1985,09,18) });
+                DateOfBirthApi.Add(new Data.EntityDateOfBirth() { Value = new DateTime(1985,09,18) });
                 var DateOfBirth2 = DateOfBirthApi.Get();
 
             }

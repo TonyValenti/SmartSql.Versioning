@@ -12,37 +12,37 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class ShoeSizeController : EntityValueMemberController<ShoeSizeInstance, ShoeSize> {
+    public partial class EntityShoeSizeController : EntityValueMemberController<EntityShoeSizeInstance, EntityShoeSize> {
 
     }
 
-    public partial class ShoeSizeInstance : Instance<ShoeSize> {
+    public partial class EntityShoeSizeInstance : Instance<EntityShoeSize> {
 
     }
 
-    public partial class ShoeSize : EntityRevision<ShoeSizeInstance, String> {
+    public partial class EntityShoeSize : EntityRevision<EntityShoeSizeInstance, String> {
         
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<ShoeSizeInstance> ShoeSize { get; set; }
-        public DbSet<ShoeSize> ShoeSizeRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityShoeSizeInstance> EntityShoeSizeInstances { get; set; }
+        public DbSet<EntityShoeSize> EntityShoeSizes { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class ShoeSizeParameters : ValueParameter<String> {
+    public class EntityShoeSizeParameters : ValueParameter<String> {
 
     }
 
-    public class ShoeSizeResponse : EntityMemberResponse<String> {
+    public class EntityShoeSizeResponse : EntityMemberResponse<String> {
 
     }
 
-    public class ShoeSizeApiController : EntityValueMemberApiController<
-      ShoeSizeController,
-      ShoeSizeInstance, ShoeSize,
-      ShoeSizeParameters, ShoeSizeParameters,
-      ShoeSizeResponse
+    public class EntityShoeSizeApiController : EntityValueMemberApiController<
+      EntityShoeSizeController,
+      EntityShoeSizeInstance, EntityShoeSize,
+      EntityShoeSizeParameters, EntityShoeSizeParameters,
+      EntityShoeSizeResponse
       > {
 
     }
