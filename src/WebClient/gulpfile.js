@@ -59,7 +59,7 @@ gulp.task("copy:css", function () {
 });
 
 gulp.task("clean", function (cb) {
-    return del([pth.wroot + "js", pth.wroot + "lib", pth.wroot + "css", ], cb);
+    return del([pth.wroot + "js", pth.wroot + "lib", pth.wroot + "css", pth.wroot + 'app/**/*.js', pth.wroot + 'app/**/*.js.map'], cb);
 });
  
 // TypeScript compile
