@@ -12,41 +12,41 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class GovernmentIdentificationController : EntityListMemberController<GovernmentIdentificationInstance, GovernmentIdentification> {
+    public partial class EntityGovernmentIdentificationController : EntityListMemberController<EntityGovernmentIdentificationInstance, EntityGovernmentIdentification> {
 
     }
 
-    public partial class GovernmentIdentificationInstance : Instance<GovernmentIdentification> {
+    public partial class EntityGovernmentIdentificationInstance : Instance<EntityGovernmentIdentification> {
 
     }
 
-    public partial class GovernmentIdentification : EntityRevision<GovernmentIdentificationInstance> {
+    public partial class EntityGovernmentIdentification : EntityRevision<EntityGovernmentIdentificationInstance> {
         public string Name { get; set; }
         public string Value { get; set; }
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<GovernmentIdentificationInstance> GovernmentIdentification { get; set; }
-        public DbSet<GovernmentIdentification> GovernmentIdentificationRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityGovernmentIdentificationInstance> EntityGovernmentIdentificationInstances { get; set; }
+        public DbSet<EntityGovernmentIdentification> EntityGovernmentIdentifications { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class GovernmentIdentificationParameters {
+    public class EntityGovernmentIdentificationParameters {
         public string Name { get; set; }
         public string Value { get; set; }
     }
 
-    public class GovernmentIdentificationResponse : EntityMemberResponse {
+    public class EntityGovernmentIdentificationResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Value { get; set; }
     }
 
 
-    public class GovernmentIdentificationApiController : EntityListMemberApiController<
-      GovernmentIdentificationController,
-      GovernmentIdentificationInstance, GovernmentIdentification,
-      GovernmentIdentificationParameters, GovernmentIdentificationParameters,
-      GovernmentIdentificationResponse
+    public class EntityGovernmentIdentificationApiController : EntityListMemberApiController<
+      EntityGovernmentIdentificationController,
+      EntityGovernmentIdentificationInstance, EntityGovernmentIdentification,
+      EntityGovernmentIdentificationParameters, EntityGovernmentIdentificationParameters,
+      EntityGovernmentIdentificationResponse
       > {
 
     }

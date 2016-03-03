@@ -12,46 +12,46 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class WeightController : EntityValueMemberController<WeightInstance, Weight> {
+    public partial class EntityWeightController : EntityValueMemberController<EntityWeightInstance, EntityWeight> {
 
     }
 
-    public partial class WeightInstance : Instance<Weight> {
+    public partial class EntityWeightInstance : Instance<EntityWeight> {
 
     }
 
-    public partial class Weight : EntityRevision<WeightInstance> {
-        public WeightUnit Unit { get; set; }
+    public partial class EntityWeight : EntityRevision<EntityWeightInstance> {
+        public EntityWeightUnit Unit { get; set; }
         public float Value { get; set; }
     }
 
-    public enum WeightUnit {
+    public enum EntityWeightUnit {
         Pounds,
         Kilograms,
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<WeightInstance> Weight { get; set; }
-        public DbSet<Weight> WeightRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityWeightInstance> EntityWeightInstances { get; set; }
+        public DbSet<EntityWeight> EntityWeights { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class WeightParameters {
-        public WeightUnit Unit { get; set; }
+    public class EntityWeightParameters {
+        public EntityWeightUnit Unit { get; set; }
         public float Value { get; set; }
     }
 
-    public class WeightResponse : EntityMemberResponse {
-        public WeightUnit Unit { get; set; }
+    public class EntityWeightResponse : EntityMemberResponse {
+        public EntityWeightUnit Unit { get; set; }
         public float Value { get; set; }
     }
 
 
-    public class WeightApiController : EntityValueMemberApiController<
-      WeightController,
-      WeightInstance, Weight,
-      WeightParameters, WeightParameters,
-      WeightResponse
+    public class EntityWeightApiController : EntityValueMemberApiController<
+      EntityWeightController,
+      EntityWeightInstance, EntityWeight,
+      EntityWeightParameters, EntityWeightParameters,
+      EntityWeightResponse
       > {
 
     }

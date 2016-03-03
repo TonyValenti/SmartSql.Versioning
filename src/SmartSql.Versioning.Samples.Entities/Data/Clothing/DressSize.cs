@@ -12,37 +12,37 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class DressSizeController : EntityValueMemberController<DressSizeInstance, DressSize> {
+    public partial class EntityDressSizeController : EntityValueMemberController<EntityDressSizeInstance, EntityDressSize> {
 
     }
 
-    public partial class DressSizeInstance : Instance<DressSize> {
+    public partial class EntityDressSizeInstance : Instance<EntityDressSize> {
 
     }
 
-    public partial class DressSize : EntityRevision<DressSizeInstance, String> {
+    public partial class EntityDressSize : EntityRevision<EntityDressSizeInstance, String> {
 
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<DressSizeInstance> DressSize { get; set; }
-        public DbSet<DressSize> DressSizeRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityDressSizeInstance> EntityDressSizeInstances { get; set; }
+        public DbSet<EntityDressSize> EntityDressSizes { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class DressSizeParameters : ValueParameter<String> {
+    public class EntityDressSizeParameters : ValueParameter<String> {
 
     }
 
-    public class DressSizeResponse : EntityMemberResponse<String> {
+    public class EntityDressSizeResponse : EntityMemberResponse<String> {
 
     }
 
     public class DressSizeApiController : EntityValueMemberApiController<
-      DressSizeController,
-      DressSizeInstance, DressSize,
-      DressSizeParameters, DressSizeParameters,
-      DressSizeResponse
+      EntityDressSizeController,
+      EntityDressSizeInstance, EntityDressSize,
+      EntityDressSizeParameters, EntityDressSizeParameters,
+      EntityDressSizeResponse
       > {
 
     }

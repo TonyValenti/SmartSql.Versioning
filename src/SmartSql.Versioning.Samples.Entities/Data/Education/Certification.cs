@@ -12,44 +12,47 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class CertificationController : EntityListMemberController<CertificationInstance, Certification> {
+    public partial class EntityCertificationController : EntityListMemberController<EntityCertificationInstance, EntityCertification> {
 
     }
 
-    public partial class CertificationInstance : Instance<Certification> {
+    public partial class EntityCertificationInstance : Instance<EntityCertification> {
 
     }
 
-    public partial class Certification : EntityRevision<CertificationInstance> {
+    public partial class EntityCertification : EntityRevision<EntityCertificationInstance> {
         public string Name { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public string Issuer { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<CertificationInstance> Certification { get; set; }
-        public DbSet<Certification> CertificationRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityCertificationInstance> EntityCertificationInstance { get; set; }
+        public DbSet<EntityCertification> EntityCertifications { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class CertificationParameters {
+    public class EntityCertificationParameters {
         public string Name { get; set; }
-        public string Value { get; set; }
+        public string Issuer { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 
-    public class CertificationResponse : EntityMemberResponse {
+    public class EntityCertificationResponse : EntityMemberResponse {
         public string Name { get; set; }
-        public string Value { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+        public string Issuer { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 
 
-    public class CertificationApiController : EntityListMemberApiController<
-      CertificationController,
-      CertificationInstance, Certification,
-      CertificationParameters, CertificationParameters,
-      CertificationResponse
+    public class EntityCertificationApiController : EntityListMemberApiController<
+      EntityCertificationController,
+      EntityCertificationInstance, EntityCertification,
+      EntityCertificationParameters, EntityCertificationParameters,
+      EntityCertificationResponse
       > {
 
     }

@@ -12,33 +12,37 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
 
-    public partial class LikeController : EntityListMemberController<LikeInstance, Like> {
+    public partial class EntityLikeController : EntityListMemberController<EntityLikeInstance, EntityLike> {
 
     }
 
-    public partial class LikeInstance : Instance<Like> {
+    public partial class EntityLikeInstance : Instance<EntityLike> {
 
     }
 
-    public partial class Like : EntityRevision<LikeInstance> {
-        public LikeStatus Status { get; set; }
-        public LikeCategory Category { get; set; }
+    public partial class EntityLike : EntityRevision<EntityLikeInstance> {
+        public EntityLikeStatus Status { get; set; }
+        public EntityLikeCategory Category { get; set; }
         public string Value { get; set; }
     }
 
-    public enum LikeStatus {
+    public enum EntityLikeStatus {
         Likes = 1,
         Dislikes = 0
     }
 
-    public enum LikeCategory {
+    public enum EntityLikeCategory {
+        Animal      =   0050,
         Beverage    =   0100,
         Book        =   0200,
         Food        =   0300,
         Game        =   0400,
         Hobby       =   0500,
+        Jewelry     =   0550,
         Movie       =   0600,
         Music       =   0700,
+        Place       =   0725,
+        Plant       =   0750,
         Show        =   0800,
         Sport       =   0900,
         Store       =   1000,
@@ -49,9 +53,9 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<LikeInstance> Like { get; set; }
-        public DbSet<Like> LikeRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityLikeInstance> EntityLikeInstances { get; set; }
+        public DbSet<EntityLike> EntityLikes { get; set; }
     }
 
 }

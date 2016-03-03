@@ -12,37 +12,37 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class EyeColorController : EntityValueMemberController<EyeColorInstance, EyeColor> {
+    public partial class EntityEyeColorController : EntityValueMemberController<EntityEyeColorInstance, EntityEyeColor> {
 
     }
 
-    public partial class EyeColorInstance : Instance<EyeColor> {
+    public partial class EntityEyeColorInstance : Instance<EntityEyeColor> {
 
     }
 
-    public partial class EyeColor : EntityRevision<EyeColorInstance, String> {
+    public partial class EntityEyeColor : EntityRevision<EntityEyeColorInstance, String> {
         
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<EyeColorInstance> EyeColor { get; set; }
-        public DbSet<EyeColor> EyeColorRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityEyeColorInstance> EntityEyeColorInstances { get; set; }
+        public DbSet<EntityEyeColor> EntityEyeColors { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class EyeColorParameters : ValueParameter<String> {
+    public class EntityEyeColorParameters : ValueParameter<String> {
 
     }
 
-    public class EyeColorResponse : EntityMemberResponse<String> {
+    public class EntityEyeColorResponse : EntityMemberResponse<String> {
 
     }
 
-    public class EyeColorApiController : EntityValueMemberApiController<
-      EyeColorController,
-      EyeColorInstance, EyeColor,
-      EyeColorParameters, EyeColorParameters,
-      EyeColorResponse
+    public class EntityEyeColorApiController : EntityValueMemberApiController<
+      EntityEyeColorController,
+      EntityEyeColorInstance, EntityEyeColor,
+      EntityEyeColorParameters, EntityEyeColorParameters,
+      EntityEyeColorResponse
       > {
 
     }

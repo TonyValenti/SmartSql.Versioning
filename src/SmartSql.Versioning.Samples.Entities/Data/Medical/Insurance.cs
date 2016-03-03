@@ -12,41 +12,41 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class InsuranceController : EntityListMemberController<InsuranceInstance, Insurance> {
+    public partial class EntityInsuranceController : EntityListMemberController<EntityInsuranceInstance, EntityInsurance> {
 
     }
 
-    public partial class InsuranceInstance : Instance<Insurance> {
+    public partial class EntityInsuranceInstance : Instance<EntityInsurance> {
 
     }
 
-    public partial class Insurance : EntityRevision<InsuranceInstance> {
+    public partial class EntityInsurance : EntityRevision<EntityInsuranceInstance> {
         public string Name { get; set; }
         public string Details { get; set; }
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<InsuranceInstance> Insurance { get; set; }
-        public DbSet<Insurance> InsuranceRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityInsuranceInstance> EntityInsuranceInstances { get; set; }
+        public DbSet<EntityInsurance> EntityInsurances { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class InsuranceParameters {
+    public class EntityInsuranceParameters {
         public string Name { get; set; }
         public string Details { get; set; }
     }
 
-    public class InsuranceResponse : EntityMemberResponse {
+    public class EntityInsuranceResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Details { get; set; }
     }
 
 
-    public class InsuranceApiController : EntityListMemberApiController<
-      InsuranceController,
-      InsuranceInstance, Insurance,
-      InsuranceParameters, InsuranceParameters,
-      InsuranceResponse
+    public class EntityInsuranceApiController : EntityListMemberApiController<
+      EntityInsuranceController,
+      EntityInsuranceInstance, EntityInsurance,
+      EntityInsuranceParameters, EntityInsuranceParameters,
+      EntityInsuranceResponse
       > {
 
     }

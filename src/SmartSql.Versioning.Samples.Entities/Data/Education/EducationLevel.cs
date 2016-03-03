@@ -12,19 +12,19 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class EducationLevelController : EntityValueMemberController<EducationLevelInstance, EducationLevel> {
+    public partial class EntityEducationLevelController : EntityValueMemberController<EntityEducationLevelInstance, EntityEducationLevel> {
 
     }
 
-    public partial class EducationLevelInstance : Instance<EducationLevel> {
+    public partial class EntityEducationLevelInstance : Instance<EntityEducationLevel> {
 
     }
 
-    public partial class EducationLevel : EntityRevision<EducationLevelInstance, EducationLevelValue> {
+    public partial class EntityEducationLevel : EntityRevision<EntityEducationLevelInstance, EntityEducationLevelValue> {
         
     }
 
-    public enum EducationLevelValue {
+    public enum EntityEducationLevelValue {
         None                    =   0,
         HighSchool              =   1000,
         TechnicalSchool         =   2000,
@@ -36,25 +36,25 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         DoctoralDegree          =   8000,
     }
 
-    public partial class DataContext : DbContext  {
-        public DbSet<EducationLevelInstance> EducationLevel { get; set; }
-        public DbSet<EducationLevel> EducationLevelRevisions { get; set; }
+    public partial class EntityDataContext : DbContext  {
+        public DbSet<EntityEducationLevelInstance> EntityEducationLevelInstances { get; set; }
+        public DbSet<EntityEducationLevel> EntityEducationLevels { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class EducationLevelParameters : ValueParameter<EducationLevelValue> {
+    public class EntityEducationLevelParameters : ValueParameter<EntityEducationLevelValue> {
 
     }
 
-    public class EducationLevelResponse : EntityMemberResponse<EducationLevelValue> {
+    public class EntityEducationLevelResponse : EntityMemberResponse<EntityEducationLevelValue> {
 
     }
 
-    public class EducationLevelApiController : EntityValueMemberApiController<
-      EducationLevelController,
-      EducationLevelInstance,   EducationLevel,
-      EducationLevelParameters, EducationLevelParameters,
-      EducationLevelResponse
+    public class EntityEducationLevelApiController : EntityValueMemberApiController<
+      EntityEducationLevelController,
+      EntityEducationLevelInstance,   EntityEducationLevel,
+      EntityEducationLevelParameters, EntityEducationLevelParameters,
+      EntityEducationLevelResponse
       > {
 
     }

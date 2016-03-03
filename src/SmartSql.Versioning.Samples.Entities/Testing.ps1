@@ -1,4 +1,6 @@
-﻿
+﻿Clear-Host
+
+
 $Headers = @{"Content-Type" = "application/json"}
 
 $EntityName = "Original Person"
@@ -124,6 +126,7 @@ $DateOfBirth = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/D
 
 
 
+
 $Details = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/EntityApi/Details" -Headers $Headers -Body (ConvertTo-Json @{
     Key = @{
         InstanceId = $Person.InstanceId;
@@ -137,6 +140,15 @@ $Details
 
 
 
-
+ $Certification = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/CertificationApi/Add" -Headers $Headers -Body (ConvertTo-Json @{
+        Key = @{
+            EntityId = $Person.InstanceId;
+        }
+        Values = @{
+            Name = "Batchelor of Science, Computer Science";
+            Issuer = "University of Nebraska, Omaha";
+        }
+    }) 
+    $Certification
 
 

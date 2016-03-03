@@ -12,37 +12,37 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class EthnicityController : EntityValueMemberController<EthnicityInstance, Ethnicity> {
+    public partial class EntityEthnicityController : EntityValueMemberController<EntityEthnicityInstance, EntityEthnicity> {
 
     }
 
-    public partial class EthnicityInstance : Instance<Ethnicity> {
+    public partial class EntityEthnicityInstance : Instance<EntityEthnicity> {
 
     }
 
-    public partial class Ethnicity : EntityRevision<EthnicityInstance, String> {
+    public partial class EntityEthnicity : EntityRevision<EntityEthnicityInstance, String> {
         
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<EthnicityInstance> Ethnicity { get; set; }
-        public DbSet<Ethnicity> EthnicityRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityEthnicityInstance> EntityEthnicityInstances { get; set; }
+        public DbSet<EntityEthnicity> EntityEthnicities { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class EthnicityParameters : ValueParameter<String> {
+    public class EntityEthnicityParameters : ValueParameter<String> {
 
     }
 
-    public class EthnicityResponse : EntityMemberResponse<String> {
+    public class EntityEthnicityResponse : EntityMemberResponse<String> {
 
     }
 
-    public class EthnicityApiController : EntityValueMemberApiController<
-      EthnicityController,
-      EthnicityInstance, Ethnicity,
-      EthnicityParameters, EthnicityParameters,
-      EthnicityResponse
+    public class EntityEthnicityApiController : EntityValueMemberApiController<
+      EntityEthnicityController,
+      EntityEthnicityInstance, EntityEthnicity,
+      EntityEthnicityParameters, EntityEthnicityParameters,
+      EntityEthnicityResponse
       > {
 
     }

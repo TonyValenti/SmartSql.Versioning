@@ -12,37 +12,37 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class PantSizeController : EntityValueMemberController<PantSizeInstance, PantSize> {
+    public partial class EntityPantSizeController : EntityValueMemberController<EntityPantSizeInstance, EntityPantSize> {
 
     }
 
-    public partial class PantSizeInstance : Instance<PantSize> {
+    public partial class EntityPantSizeInstance : Instance<EntityPantSize> {
 
     }
 
-    public partial class PantSize : EntityRevision<PantSizeInstance, String> {
+    public partial class EntityPantSize : EntityRevision<EntityPantSizeInstance, String> {
         
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<PantSizeInstance> PantSize { get; set; }
-        public DbSet<PantSize> PantSizeRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityPantSizeInstance> EntityPantSizeInstances { get; set; }
+        public DbSet<EntityPantSize> EntityPantSizes { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class PantSizeParameters : ValueParameter<String> {
+    public class EntityPantSizeParameters : ValueParameter<String> {
 
     }
 
-    public class PantSizeResponse : EntityMemberResponse<String> {
+    public class EntityPantSizeResponse : EntityMemberResponse<String> {
 
     }
 
-    public class PantSizeApiController : EntityValueMemberApiController<
-      PantSizeController,
-      PantSizeInstance, PantSize,
-      PantSizeParameters, PantSizeParameters,
-      PantSizeResponse
+    public class EntityPantSizeApiController : EntityValueMemberApiController<
+      EntityPantSizeController,
+      EntityPantSizeInstance, EntityPantSize,
+      EntityPantSizeParameters, EntityPantSizeParameters,
+      EntityPantSizeResponse
       > {
 
     }

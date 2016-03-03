@@ -12,45 +12,45 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class IncidentController : EntityListMemberController<IncidentInstance, Incident> {
+    public partial class EntityIncidentController : EntityListMemberController<EntityIncidentInstance, EntityIncident> {
 
     }
 
-    public partial class IncidentInstance : Instance<Incident> {
+    public partial class EntityIncidentInstance : Instance<EntityIncident> {
 
     }
 
-    public partial class Incident : EntityRevision<IncidentInstance> {
+    public partial class EntityIncident : EntityRevision<EntityIncidentInstance> {
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 
-    public partial class DataContext : DbContext {
+    public partial class EntityDataContext : DbContext {
 
-        public DbSet<IncidentInstance> Incident { get; set; }
-        public DbSet<Incident> IncidentRevisions { get; set; }
+        public DbSet<EntityIncidentInstance> EntityIncidentInstances { get; set; }
+        public DbSet<EntityIncident> EntityIncidents { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class IncidentParameters {
+    public class EntityIncidentParameters {
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 
-    public class IncidentResponse : EntityMemberResponse {
+    public class EntityIncidentResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 
 
-    public class IncidentApiController : EntityListMemberApiController<
-      IncidentController,
-      IncidentInstance, Incident,
-      IncidentParameters, IncidentParameters,
-      IncidentResponse
+    public class EntityIncidentApiController : EntityListMemberApiController<
+      EntityIncidentController,
+      EntityIncidentInstance, EntityIncident,
+      EntityIncidentParameters, EntityIncidentParameters,
+      EntityIncidentResponse
       > {
 
     }

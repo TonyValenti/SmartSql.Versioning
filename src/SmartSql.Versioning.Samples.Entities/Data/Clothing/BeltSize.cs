@@ -12,37 +12,37 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class BeltSizeController : EntityValueMemberController<BeltSizeInstance, BeltSize> {
+    public partial class EntityBeltSizeController : EntityValueMemberController<EntityBeltSizeInstance, EntityBeltSize> {
 
     }
 
-    public partial class BeltSizeInstance : Instance<BeltSize> {
+    public partial class EntityBeltSizeInstance : Instance<EntityBeltSize> {
 
     }
 
-    public partial class BeltSize : EntityRevision<BeltSizeInstance, String> {
+    public partial class EntityBeltSize : EntityRevision<EntityBeltSizeInstance, String> {
 
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<BeltSizeInstance> BeltSize { get; set; }
-        public DbSet<BeltSize> BeltSizeRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityBeltSizeInstance> EntityBeltSizeInstances { get; set; }
+        public DbSet<EntityBeltSize> EntityBeltSizes { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class BeltSizeParameters : ValueParameter<String> {
+    public class EntityBeltSizeParameters : ValueParameter<String> {
 
     }
 
-    public class BeltSizeResponse : EntityMemberResponse<String> {
+    public class EntityBeltSizeResponse : EntityMemberResponse<String> {
 
     }
 
-    public class BeltSizeApiController : EntityValueMemberApiController<
-      BeltSizeController,
-      BeltSizeInstance, BeltSize,
-      BeltSizeParameters, BeltSizeParameters,
-      BeltSizeResponse
+    public class EntityBeltSizeApiController : EntityValueMemberApiController<
+      EntityBeltSizeController,
+      EntityBeltSizeInstance, EntityBeltSize,
+      EntityBeltSizeParameters, EntityBeltSizeParameters,
+      EntityBeltSizeResponse
       > {
 
     }

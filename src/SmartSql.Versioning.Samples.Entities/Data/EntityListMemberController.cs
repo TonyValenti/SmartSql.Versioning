@@ -11,7 +11,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
 
     
 
-    public class EntityListMemberController<TInstance, TValue> : DataController<DataContext, TInstance, TValue>
+    public class EntityListMemberController<TInstance, TValue> : DataController<EntityDataContext, TInstance, TValue>
         where TInstance : Instance<TValue>, new()
         where TValue : EntityRevision<TInstance>, new() {
 

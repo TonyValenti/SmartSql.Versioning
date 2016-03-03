@@ -12,42 +12,42 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class ImmunizationController : EntityListMemberController<ImmunizationInstance, Immunization> {
+    public partial class EntityImmunizationController : EntityListMemberController<EntityImmunizationInstance, EntityImmunization> {
 
     }
 
-    public partial class ImmunizationInstance : Instance<Immunization> {
+    public partial class EntityImmunizationInstance : Instance<EntityImmunization> {
 
     }
 
-    public partial class Immunization : EntityRevision<ImmunizationInstance> {
+    public partial class EntityImmunization : EntityRevision<EntityImmunizationInstance> {
         public string Name { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 
-    public partial class DataContext : DbContext {
+    public partial class EntityDataContext : DbContext {
 
-        public DbSet<ImmunizationInstance> Immunization { get; set; }
-        public DbSet<Immunization> ImmunizationRevisions { get; set; }
+        public DbSet<EntityImmunizationInstance> EntityImmunizationInstances { get; set; }
+        public DbSet<EntityImmunization> EntityImmunizations { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class ImmunizationParameters {
+    public class EntityImmunizationParameters {
         public string Name { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 
-    public class ImmunizationResponse : EntityMemberResponse {
+    public class EntityImmunizationResponse : EntityMemberResponse {
         public string Name { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 
 
-    public class ImmunizationApiController : EntityListMemberApiController<
-      ImmunizationController,
-      ImmunizationInstance, Immunization,
-      ImmunizationParameters, ImmunizationParameters,
-      ImmunizationResponse
+    public class EntityImmunizationApiController : EntityListMemberApiController<
+      EntityImmunizationController,
+      EntityImmunizationInstance, EntityImmunization,
+      EntityImmunizationParameters, EntityImmunizationParameters,
+      EntityImmunizationResponse
       > {
 
     }

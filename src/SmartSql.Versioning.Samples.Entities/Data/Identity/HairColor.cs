@@ -12,36 +12,36 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class HairColorController : EntityValueMemberController<HairColorInstance, HairColor> {
+    public partial class EntityHairColorController : EntityValueMemberController<EntityHairColorInstance, EntityHairColor> {
 
     }
 
-    public partial class HairColorInstance : Instance<HairColor> {
+    public partial class EntityHairColorInstance : Instance<EntityHairColor> {
     }
 
-    public partial class HairColor : EntityRevision<HairColorInstance, String> {
+    public partial class EntityHairColor : EntityRevision<EntityHairColorInstance, String> {
         
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<HairColorInstance> HairColor { get; set; }
-        public DbSet<HairColor> HairColorRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityHairColorInstance> EntityHairColorInstances { get; set; }
+        public DbSet<EntityHairColor> EntityHairColors { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class HairColorParameters : ValueParameter<String> {
+    public class EntityHairColorParameters : ValueParameter<String> {
 
     }
 
-    public class HairColorResponse : EntityMemberResponse<String> {
+    public class EntityHairColorResponse : EntityMemberResponse<String> {
 
     }
 
-    public class HairColorApiController : EntityValueMemberApiController<
-      HairColorController,
-      HairColorInstance, HairColor,
-      HairColorParameters, HairColorParameters,
-      HairColorResponse
+    public class EntityHairColorApiController : EntityValueMemberApiController<
+      EntityHairColorController,
+      EntityHairColorInstance, EntityHairColor,
+      EntityHairColorParameters, EntityHairColorParameters,
+      EntityHairColorResponse
       > {
 
     }

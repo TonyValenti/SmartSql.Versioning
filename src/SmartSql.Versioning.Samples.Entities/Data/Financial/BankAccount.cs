@@ -12,35 +12,35 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class BankAccountController : EntityListMemberController<BankAccountInstance, BankAccount> {
+    public partial class EntityBankAccountController : EntityListMemberController<EntityBankAccountInstance, EntityBankAccount> {
 
     }
 
-    public partial class BankAccountInstance : Instance<BankAccount> {
+    public partial class EntityBankAccountInstance : Instance<EntityBankAccount> {
 
     }
 
-    public partial class BankAccount : EntityRevision<BankAccountInstance> {
+    public partial class EntityBankAccount : EntityRevision<EntityBankAccountInstance> {
         public string Name { get; set; }
         public string AccountNumber { get; set; }
         public string Description { get; set; }
         public string Institution { get; set; }
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<BankAccountInstance> BankAccount { get; set; }
-        public DbSet<BankAccount> BankAccountRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityBankAccountInstance> EntityBankAccountInstances { get; set; }
+        public DbSet<EntityBankAccount> EntityBankAccounts { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class BankAccountParameters {
+    public class EntityBankAccountParameters {
         public string Name { get; set; }
         public string AccountNumber { get; set; }
         public string Description { get; set; }
         public string Institution { get; set; }
     }
 
-    public class BankAccountResponse : EntityMemberResponse {
+    public class EntityBankAccountResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string AccountNumber { get; set; }
         public string Description { get; set; }
@@ -48,11 +48,11 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
     }
 
 
-    public class BankAccountApiController : EntityListMemberApiController<
-      BankAccountController,
-      BankAccountInstance, BankAccount,
-      BankAccountParameters, BankAccountParameters,
-      BankAccountResponse
+    public class EntityBankAccountApiController : EntityListMemberApiController<
+      EntityBankAccountController,
+      EntityBankAccountInstance, EntityBankAccount,
+      EntityBankAccountParameters, EntityBankAccountParameters,
+      EntityBankAccountResponse
       > {
 
     }

@@ -12,15 +12,15 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class AddressController : EntityListMemberController<AddressInstance, Address> {
+    public partial class EntityAddressController : EntityListMemberController<EntityAddressInstance, EntityAddress> {
 
     }
 
-    public partial class AddressInstance : Instance<Address> {
+    public partial class EntityAddressInstance : Instance<EntityAddress> {
 
     }
 
-    public partial class Address : EntityRevision<AddressInstance> {
+    public partial class EntityAddress : EntityRevision<EntityAddressInstance> {
         public string Name { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
@@ -29,13 +29,13 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public string PostalCode { get; set; }
     }
 
-    public partial class DataContext : DbContext {
-        public DbSet<AddressInstance> Address { get; set; }
-        public DbSet<Address> AddressRevisions { get; set; }
+    public partial class EntityDataContext : DbContext {
+        public DbSet<EntityAddressInstance> EntityAddressInstances { get; set; }
+        public DbSet<EntityAddress> EntityAddresses { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class AddressParameters {
+    public class EntityAddressParameters {
         public string Name { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
@@ -44,7 +44,7 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
         public string PostalCode { get; set; }
     }
 
-    public class AddressResponse : EntityMemberResponse {
+    public class EntityAddressResponse : EntityMemberResponse {
         public string Name { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
@@ -54,11 +54,11 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
     }
 
 
-    public class AddressApiController : EntityListMemberApiController<
-      AddressController,
-      AddressInstance, Address,
-      AddressParameters, AddressParameters,
-      AddressResponse
+    public class EntityAddressApiController : EntityListMemberApiController<
+      EntityAddressController,
+      EntityAddressInstance, EntityAddress,
+      EntityAddressParameters, EntityAddressParameters,
+      EntityAddressResponse
       > {
 
     }

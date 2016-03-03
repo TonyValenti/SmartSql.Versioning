@@ -12,43 +12,43 @@ using SmartSql.Versioning;
 
 namespace SmartSql.Versioning.Samples.Entities.Data {
     //Data Access--------------------------------------------
-    public partial class SexController : EntityValueMemberController<SexInstance, Sex> {
+    public partial class EntitySexController : EntityValueMemberController<EntitySexInstance, EntitySex> {
 
     }
 
-    public partial class SexInstance : Instance<Sex> {
+    public partial class EntitySexInstance : Instance<EntitySex> {
 
     }
 
-    public partial class Sex : EntityRevision<SexInstance, SexValue> {
+    public partial class EntitySex : EntityRevision<EntitySexInstance, EntitySexValue> {
         
     }
 
-    public enum SexValue {
+    public enum EntitySexValue {
         Unknown                 =   0000,
         Male                    =   1000,
         Female                  =   2000,
     }
 
-    public partial class DataContext : DbContext  {
-        public DbSet<SexInstance> Sex { get; set; }
-        public DbSet<Sex> SexRevisions { get; set; }
+    public partial class EntityDataContext : DbContext  {
+        public DbSet<EntitySexInstance> EntitySexInstances { get; set; }
+        public DbSet<EntitySex> EntitySexes { get; set; }
     }
 
     //WebApi Access--------------------------------------------
-    public class SexParameters : ValueParameter<SexValue> {
+    public class EntitySexParameters : ValueParameter<EntitySexValue> {
 
     }
 
-    public class SexResponse : EntityMemberResponse<SexValue> {
+    public class EntitySexResponse : EntityMemberResponse<EntitySexValue> {
 
     }
 
-    public class SexApiController : EntityValueMemberApiController<
-      SexController,
-      SexInstance, Sex,
-      SexParameters, SexParameters,
-      SexResponse
+    public class EntitySexApiController : EntityValueMemberApiController<
+      EntitySexController,
+      EntitySexInstance, EntitySex,
+      EntitySexParameters, EntitySexParameters,
+      EntitySexResponse
       > {
 
     }
