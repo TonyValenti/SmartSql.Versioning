@@ -721,7 +721,7 @@ export class Medical implements OnInit {
             this.heightInches = this.selectedDude.height.value % 12;
 
             if (this.heightFeet === 0 && this.heightInches === 0) {
-                return 'Empty';
+                return '';
             } else {
                 return this.heightFeet + ' ft ' + this.heightInches + ' in';
             }
@@ -730,7 +730,7 @@ export class Medical implements OnInit {
             this.heightCm = this.selectedDude.height.value;
 
             if (this.heightCm === 0) {
-                return 'Empty'
+                return ''
             } else {
                 return this.heightCm + ' Cm';
             }
@@ -816,14 +816,14 @@ export class Medical implements OnInit {
         if (this.tempWeightUnit === 0) {
             // Pounds
             if (this.selectedDude.weight.value === 0) {
-                return 'Empty';
+                return '';
             } else {
                 return this.selectedDude.weight.value + ' pounds';
             }
         } else {
             // Kg
             if (this.selectedDude.weight.value === 0) {
-                return 'Empty';
+                return '';
             } else {
                 return this.selectedDude.weight.value + ' Kg';
             }

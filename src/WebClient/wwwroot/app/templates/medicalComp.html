@@ -6,14 +6,14 @@
                 <a class="btn btn-default" href="#" (click)="openEditSex($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
-            <strong>Sex: </strong><span> {{selectedDude.sex === 1 ? 'Male' : (selectedDude.sex === 2 ? 'Female' : 'Empty')}}</span>
+            <strong>Sex: </strong><span> {{selectedDude.sex === 1 ? 'Male' : (selectedDude.sex === 2 ? 'Female' : '')}}</span>
         </div>
         <div class="col-md-6">
             <div class="btn-group">
                 <a class="btn btn-default" href="#" (click)="openBloodType($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
-            <strong>Blood Type: </strong><span> {{ (selectedDude.bloodType | bt) === 'Select' ? 'Empty' : selectedDude.bloodType | bt}}</span>
+            <strong>Blood Type: </strong><span> {{ (selectedDude.bloodType | bt) === 'Select' ? '' : selectedDude.bloodType | bt}}</span>
         </div>
     </div>
     <div class="row bottom-buffer">
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{allergie.name}}</strong></div>
-                <div class="col-md-9 bottom-buffer"><span>{{allergie.treatment || "Empty"}}</span></div>
+                <div class="col-md-9 bottom-buffer"><span>{{allergie.treatment || ""}}</span></div>
             </div>
         </div>
     </div>
@@ -76,8 +76,8 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{medication.name}}</strong></div>
-                <div class="col-md-9 bottom-buffer"><span>{{medication.description || "Empty"}}</span></div>
-                <div class="col-md-9 col-md-offset-2 bottom-buffer"><strong>{{medication.usageText || "Empty"}}</strong></div>
+                <div class="col-md-9 bottom-buffer"><span>{{medication.description || ""}}</span></div>
+                <div class="col-md-9 col-md-offset-2 bottom-buffer"><strong>{{medication.usageText || ""}}</strong></div>
             </div>
         </div>
     </div>
@@ -99,8 +99,8 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{procedure.Name}}</strong></div>
-                <div class="col-md-8 bottom-buffer"><span>{{procedure.Description || "Empty"}}</span></div>
-                <div class="col-md-2 bottom-buffer"><span>{{procedure.Date || "Empty"}}</span></div>
+                <div class="col-md-8 bottom-buffer"><span>{{procedure.Description || ""}}</span></div>
+                <div class="col-md-2 bottom-buffer"><span>{{procedure.Date || ""}}</span></div>
             </div>
         </div>
     </div>
@@ -122,7 +122,7 @@
                     </div>
                 </div>
                 <div class="col-md-8"><strong>{{immunization.Name}}</strong></div>
-                <div class="col-md-2 bottom-buffer"><span>{{immunization.Date || "Empty"}}</span></div>
+                <div class="col-md-2 bottom-buffer"><span>{{immunization.Date || ""}}</span></div>
             </div>
         </div>
     </div>
@@ -144,8 +144,8 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{incident.Name}}</strong></div>
-                <div class="col-md-8 bottom-buffer"><span>{{incident.Description || "Empty"}}</span></div>
-                <div class="col-md-2 bottom-buffer"><span>{{incident.Date || "Empty"}}</span></div>
+                <div class="col-md-8 bottom-buffer"><span>{{incident.Description || ""}}</span></div>
+                <div class="col-md-2 bottom-buffer"><span>{{incident.Date || ""}}</span></div>
             </div>
         </div>
     </div>
@@ -167,7 +167,7 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{condition.Name}}</strong></div>
-                <div class="col-md-9 bottom-buffer"><span>{{condition.Description || "Empty"}}</span></div>
+                <div class="col-md-9 bottom-buffer"><span>{{condition.Description || ""}}</span></div>
             </div>
         </div>
     </div>
@@ -189,7 +189,7 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{insurance.Name}}</strong></div>
-                <div class="col-md-9 bottom-buffer"><span>{{insurance.Details || "Empty"}}</span></div>
+                <div class="col-md-9 bottom-buffer"><span>{{insurance.Details || ""}}</span></div>
             </div>
         </div>
     </div>
@@ -211,7 +211,7 @@
                     </div>
                 </div>
                 <div class="col-md-8"><strong>{{emContact.Name}}</strong></div>
-                <div class="col-md-2 bottom-buffer"><span>{{emContact.Phone || "Empty"}}</span></div>
+                <div class="col-md-2 bottom-buffer"><span>{{emContact.Phone || ""}}</span></div>
             </div>
         </div>
     </div>
@@ -246,7 +246,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeAllergie($event) ">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveAllergiee($event)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveAllergiee($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -289,7 +289,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeMedication($event) ">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveMedication($event) ">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveMedication($event) "><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -331,7 +331,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeProcedure($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveProcedure($event) ">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveProcedure($event) "><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -366,7 +366,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeImmunization($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveImmunization($event)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveImmunization($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -409,7 +409,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeIncident($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveIncident($event) ">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveIncident($event) "><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -444,7 +444,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeCondition($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveCondition($event)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveCondition($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -478,7 +478,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeInsurance($event) ">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveInsurance($event) ">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveInsurance($event) "><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -512,7 +512,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEmergencyContacts($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveEmergencyContacts($event)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveEmergencyContacts($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -547,7 +547,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEditSex($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveSexChange($event)">Save Changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveSexChange($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -584,7 +584,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeBloodType($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveBloodType($event)">Save Changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveBloodType($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -641,7 +641,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeHeight($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveHeight($event, txtFeet.value, txtInches.value, txtCm.value)">Save Changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveHeight($event, txtFeet.value, txtInches.value, txtCm.value)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -692,7 +692,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeWeight($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveWeight($event, txtPounds.value, txtKg.value)">Save Changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveWeight($event, txtPounds.value, txtKg.value)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>

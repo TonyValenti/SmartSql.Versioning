@@ -19,7 +19,7 @@
               <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
               <a class="btn btn-default" href="#" (click)="deleteLikes($event, prop.prop , true, i)"><i class="fa fa-trash"></i></a>
             </div>
-            <i style="color:gray;padding-left:5px;padding-right:5px" class="fa {{prop.icon}}"></i><span>{{likeData.value || "Empty"}}</span>
+            <i style="color:gray;padding-left:5px;padding-right:5px" class="fa {{prop.icon}}"></i><span>{{likeData.value || ""}}</span>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@
               <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
               <a class="btn btn-default" href="#" (click)="deleteLikes($event, prop.prop , false, i)"><i class="fa fa-trash"></i></a>
             </div>
-            <i style="color:gray;padding-left:5px;padding-right:5px" class="fa {{prop.icon}}"></i><span>{{dislikeData.value || "Empty"}}</span>
+            <i style="color:gray;padding-left:5px;padding-right:5px" class="fa {{prop.icon}}"></i><span>{{dislikeData.value || ""}}</span>
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeLikeModal($event, txtLike)">Close</button>
-          <button type="button" class="btn btn-primary" (click)="updateLike($event, txtLike.value)">Save changes</button>
+          <button type="button" class="btn btn-primary" (click)="updateLike($event, txtLike.value)"><i class="fa fa-floppy-o"></i> Save</button>
         </div>
       </div>
     </div>

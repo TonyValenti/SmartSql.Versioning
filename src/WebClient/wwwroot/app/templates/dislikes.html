@@ -13,7 +13,7 @@
             <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             <a class="btn btn-default" href="#" (click)="deleteDisLikes($event,prop)"><i class="fa fa-trash"></i></a>
           </div>
-          <strong>{{prop}}: </strong><span>{{dislikesData[prop] || "Empty"}}</span>
+          <strong>{{prop}}: </strong><span>{{dislikesData[prop] || ""}}</span>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeDisLikeModal($event, txtDisLike)">Close</button>
-          <button type="button" class="btn btn-primary" (click)="saveDisLike($event, txtDisLike.value)">Save changes</button>
+          <button type="button" class="btn btn-primary" (click)="saveDisLike($event, txtDisLike.value)"><i class="fa fa-floppy-o"></i> Save</button>
         </div>
       </div>
     </div>

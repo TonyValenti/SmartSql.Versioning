@@ -46,10 +46,21 @@ export class PsychologyView {
             self.psychology = p.psychology;
 
             self.rfv = self.selectedDude.psychology.ReligiousFrequency;
+
+            self._serverAPI.getLA().subscribe(lajsn => {
+
+                for (var prop in lajsn.Love) {
+                    lajsn.Love[prop] = lajsn.Love[prop].replace(/\n/g,'<br>').replace(new RegExp("\\[NAME\\]", 'g'), self.selectedDude.name.split(" ")[0]);
+                }
+
+                for (var prop in lajsn.Anger) {
+                    lajsn.Anger[prop] = lajsn.Anger[prop].replace(/\n/g, '<br>').replace(new RegExp("\\[NAME\\]", 'g'), self.selectedDude.name.split(" ")[0]);
+                }
+
+                self.la = lajsn
+            }, error => alert(`Server error. Try again later`));
         }, error => alert(`Server error. Try again later`));
-
-        _serverAPI.getLA().subscribe(lajsn => this.la = lajsn, error => alert(`Server error. Try again later`));
-
+         
     }
 
     //---------------------------

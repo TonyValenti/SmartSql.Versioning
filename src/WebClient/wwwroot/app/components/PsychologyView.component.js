@@ -36,7 +36,6 @@ System.register(['angular2/core', '../services/ServerAPI.service', '../services/
         execute: function() {
             PsychologyView = (function () {
                 function PsychologyView(_serverAPI, _psychSvc, _routeParams) {
-                    var _this = this;
                     this._serverAPI = _serverAPI;
                     this._psychSvc = _psychSvc;
                     this._routeParams = _routeParams;
@@ -60,8 +59,16 @@ System.register(['angular2/core', '../services/ServerAPI.service', '../services/
                         self.selectedDude = p;
                         self.psychology = p.psychology;
                         self.rfv = self.selectedDude.psychology.ReligiousFrequency;
+                        self._serverAPI.getLA().subscribe(function (lajsn) {
+                            for (var prop in lajsn.Love) {
+                                lajsn.Love[prop] = lajsn.Love[prop].replace(/\n/g, '<br>').replace(new RegExp("\\[NAME\\]", 'g'), self.selectedDude.name.split(" ")[0]);
+                            }
+                            for (var prop in lajsn.Anger) {
+                                lajsn.Anger[prop] = lajsn.Anger[prop].replace(/\n/g, '<br>').replace(new RegExp("\\[NAME\\]", 'g'), self.selectedDude.name.split(" ")[0]);
+                            }
+                            self.la = lajsn;
+                        }, function (error) { return alert("Server error. Try again later"); });
                     }, function (error) { return alert("Server error. Try again later"); });
-                    _serverAPI.getLA().subscribe(function (lajsn) { return _this.la = lajsn; }, function (error) { return alert("Server error. Try again later"); });
                 }
                 //---------------------------
                 //------ Edit Religion ------

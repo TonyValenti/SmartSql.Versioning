@@ -6,7 +6,7 @@
                 <a class="btn btn-default" href="#" (click)="editEduLevel($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
-            <strong>Education Level: </strong><span>{{(selectedDude.education.EducationLevel | eduLevel) === 'Select'? 'Empty': selectedDude.education.EducationLevel | eduLevel}}</span>
+            <strong>Education Level: </strong><span>{{(selectedDude.education.EducationLevel | eduLevel) === 'Select'? '': selectedDude.education.EducationLevel | eduLevel}}</span>
         </div>
     </div>
     <div class="panel panel-default">
@@ -67,7 +67,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeCertModal($event,txtCert,txtStart,txtEnd)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveCertification($event, txtCert, txtStart, txtEnd)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveCertification($event, txtCert, txtStart, txtEnd)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -105,7 +105,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEduLevel($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveEduLevel($event)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveEduLevel($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>

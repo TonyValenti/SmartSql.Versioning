@@ -7,7 +7,7 @@
                 <a class="btn btn-default" href="#" (click)="editReligion($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
-            <strong>Religion: </strong><span>{{psychology.Religion || "Empty"}}</span>
+            <strong>Religion: </strong><span>{{psychology.Religion || ""}}</span>
         </div>
         <div class="col-md-6 bottom-buffer">
             <div class="btn-group">
@@ -15,7 +15,7 @@
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
 
-            <strong>Religious frequency: </strong><span>{{(psychology.ReligiousFrequency | religiousFreq) === 'Select'? 'Empty': psychology.ReligiousFrequency | religiousFreq}}</span>
+            <strong>Religious frequency: </strong><span>{{(psychology.ReligiousFrequency | religiousFreq) === 'Select'? '': psychology.ReligiousFrequency | religiousFreq}}</span>
         </div>
         <div class="col-md-12 bottom-buffer">
             <div class="btn-group">
@@ -23,7 +23,7 @@
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
 
-            <strong>Political affiliation: </strong><span>{{psychology.PoliticalAffiliation || "Empty"}}</span>
+            <strong>Political affiliation: </strong><span>{{psychology.PoliticalAffiliation || ""}}</span>
         </div>
     </div>
     <br>
@@ -42,26 +42,26 @@
 
                 <div class="panel-body">
                     <div class="row bottom-buffer">
-                        <div *ngIf="la" class="col-md-10 text-left columnspacing">
+                        <div *ngIf="la" class="col-md-12 text-left columnspacing">
                             <div [class.hidden]="!psychology.LoveLanguage.aos" class="text-left">
                                 <strong class="text-left">Acts of Service</strong>
-                                <p class="text-left">{{la.Love["Acts of Service"]}}</p>
+                                <p class="text-left" [innerHTML]="la.Love['Acts of Service']"></p>
                             </div>
                             <div [class.hidden]="!psychology.LoveLanguage.pt" class="text-left">
                                 <strong class="text-left">Physical Touch</strong>
-                                <p class="text-left">{{la.Love["Physical Touch"]}}</p>
+                                <p class="text-left" [innerHTML]="la.Love['Physical Touch']"></p>
                             </div>
                             <div [class.hidden]="!psychology.LoveLanguage.qt" class="text-left">
                                 <strong class="text-left">Quality Tim</strong>
-                                <p class="text-left">{{la.Love["Quality Time"]}}</p>
+                                <p class="text-left" [innerHTML]="la.Love['Quality Time']"></p>
                             </div>
                             <div [class.hidden]="!psychology.LoveLanguage.rg" class="text-left">
                                 <strong class="text-left">Receiving Gifts</strong>
-                                <p class="text-left">{{la.Love["Receiving Gifts"]}}</p>
+                                <p class="text-left" [innerHTML]="la.Love['Receiving Gifts']"></p>
                             </div>
                             <div [class.hidden]="!psychology.LoveLanguage.wof" class="text-left">
                                 <strong class="text-left">Words of Affirmation</strong>
-                                <p class="text-left">{{la.Love["Words of Affirmation"]}}</p>
+                                <p class="text-left" [innerHTML]="la.Love['Words of Affirmation']"></p>
                             </div>
                         </div>
                     </div>
@@ -86,22 +86,22 @@
                 <div class="panel-body">
                     <div class="row bottom-buffer">
 
-                        <div *ngIf="la" class="col-md-10 text-left columnspacing">
+                        <div *ngIf="la" class="col-md-12 text-left columnspacing">
                             <div [class.hidden]="!psychology.AngerLanguage.r" class="text-left">
                                 <strong class="text-left">Reactive</strong>
-                                <p class="text-left">{{la.Anger["Reactive"]}}</p>
+                                <p class="text-left" [innerHTML]="la.Anger['Reactive']"></p>
                             </div>
                             <div [class.hidden]="!psychology.AngerLanguage.pa" class="text-left">
                                 <strong class="text-left">Passive Aggressive</strong>
-                                <p class="text-left">{{la.Anger["Passive Aggressive"]}}</p>
+                                <p class="text-left" [innerHTML]="la.Anger['Passive Aggressive']"></p>
                             </div>
                             <div [class.hidden]="!psychology.AngerLanguage.av" class="text-left">
                                 <strong class="text-left">Avoidant</strong>
-                                <p class="text-left">{{la.Anger["Avoidant"]}}</p>
+                                <p class="text-left" [innerHTML]="la.Anger['Avoidant']"></p>
                             </div>
                             <div [class.hidden]="!psychology.AngerLanguage.d" class="text-left">
                                 <strong class="text-left">Direct</strong>
-                                <p class="text-left">{{la.Anger["Direct"]}}</p>
+                                <p class="text-left" [innerHTML]="la.Anger['Direct']"></p>
                             </div>
                         </div>
 
@@ -217,7 +217,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeRelgionModal($event,txtReligion)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveReligion($event, txtReligion.value)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveReligion($event, txtReligion.value)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -244,7 +244,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closePolAff($event,txtPolAff)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="savePolAff($event, txtPolAff.value)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="savePolAff($event, txtPolAff.value)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -280,7 +280,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeRelFreq($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveRelFreq($event)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveRelFreq($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>

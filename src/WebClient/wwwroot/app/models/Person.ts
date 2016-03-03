@@ -177,7 +177,7 @@ export class Person {
                 pt: pjsn.LoveLanguage && pjsn.LoveLanguage.HasPhysicalTouch || null
             },
             AngerLanguage: {
-                r: pjsn.LoveLanguageAngerLanguage && pjsn.AngerLanguage.HasReactive || null,
+                r: pjsn.AngerLanguage && pjsn.AngerLanguage.HasReactive || null,
                 pa: pjsn.AngerLanguage && pjsn.AngerLanguage.HasPassiveAggressive || null,
                 av: pjsn.AngerLanguage && pjsn.AngerLanguage.HasAvoidant || null,
                 d: pjsn.AngerLanguage && pjsn.AngerLanguage.HasDirect || null,

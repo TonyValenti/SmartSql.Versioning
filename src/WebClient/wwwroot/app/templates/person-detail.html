@@ -4,28 +4,28 @@
             <a class="btn btn-default" href="#" (click)="editEyeColor($event)"><i class="fa fa-pencil"></i></a>
             <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
         </div>
-        <strong>Eye Color: </strong><span>{{selectedPerson.eyeColor || "Empty"}}</span>
+        <strong>Eye Color: </strong><span>{{selectedPerson.eyeColor || ""}}</span>
         <br>
         <br>
         <div class="btn-group">
             <a class="btn btn-default" href="#" (click)="editHairColor($event)"><i class="fa fa-pencil"></i></a>
             <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
         </div>
-        <strong>Hair Color: </strong><span>{{selectedPerson.hairColor || "Empty"}}</span>
+        <strong>Hair Color: </strong><span>{{selectedPerson.hairColor || ""}}</span>
     </div>
     <div class="col-md-6 col-lg-6 text-left">
         <div class="btn-group">
             <a class="btn btn-default" href="#" (click)="editEthnicity($event)"><i class="fa fa-pencil"></i></a>
             <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
         </div>
-        <strong>Ethnicity: </strong><span>{{selectedPerson.ethnicity || "Empty"}}</span>
+        <strong>Ethnicity: </strong><span>{{selectedPerson.ethnicity || ""}}</span>
         <br>
         <br>
         <div class="btn-group">
             <a class="btn btn-default" href="#" (click)="editBDay($event)"><i class="fa fa-pencil"></i></a>
             <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
         </div>
-        <strong>Date of Birth: </strong><span>{{selectedPerson.dob || "Empty"}}</span>
+        <strong>Date of Birth: </strong><span>{{selectedPerson.dob || ""}}</span>
     </div>
 </div>
 <br>
@@ -44,7 +44,7 @@
                     <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
                     <a (click)="deleteGID($event, i)" class="btn btn-default" href="#"><i class="fa fa-trash"></i></a>
                 </div>
-                <strong>{{gitem.name}} :</strong><span> {{gitem.value || "Empty"}}</span>
+                <strong>{{gitem.name}} :</strong><span> {{gitem.value || ""}}</span>
             </div>
         </div>
     </div>
@@ -75,7 +75,7 @@
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEyeModal($event)">Close</button>
                 <button type="button" class="btn btn-primary" (click)="saveEyeColor($event)">
                     <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
-                    <span [class.hidden]="saving">Save changes</span>
+                    <span [class.hidden]="saving"><i class="fa fa-floppy-o"></i> Save</span>
                 </button>
             </div>
         </div>
@@ -109,7 +109,7 @@
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeHairModal($event)">Close</button>
                 <button type="button" class="btn btn-primary" (click)="saveHairColor($event)">
                     <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
-                    <span [class.hidden]="saving">Save changes</span>
+                    <span [class.hidden]="saving"><i class="fa fa-floppy-o"></i> Save</span>
                 </button>
             </div>
         </div>
@@ -139,7 +139,7 @@
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEthnicityModal($event,txtEthnicity)">Close</button>
                 <button type="button" class="btn btn-primary" (click)="saveEthnicity($event, txtEthnicity.value)">
                     <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
-                    <span [class.hidden]="saving">Save changes</span>
+                    <span [class.hidden]="saving"><i class="fa fa-floppy-o"></i> Save</span>
                 </button>
             </div>
         </div>
@@ -169,7 +169,7 @@
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeBdayyModal($event,birthday)">Close</button>
                 <button type="button" class="btn btn-primary" (click)="saveBday($event,birthday.value)">
                     <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
-                    <span [class.hidden]="saving">Save changes</span>
+                    <span [class.hidden]="saving"><i class="fa fa-floppy-o"></i> Save</span>
                 </button>
             </div>
         </div>
@@ -205,7 +205,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeGidModal($event) ">Close</button>
-                <button type="button" class="btn btn-primary" (click)="saveGid($event) ">Save changes</button>
+                <button type="button" class="btn btn-primary" (click)="saveGid($event) "><i class="fa fa-floppy-o"></i> Save</button>
             </div>
         </div>
     </div>
