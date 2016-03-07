@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import { RouteConfig, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 
 import {Identity} from './Identity.component';
 import {Medical} from './Medical.component';
@@ -64,7 +64,7 @@ export class Main {
     insid: string;
 
     constructor(private router: Router) {
-        this.insid = "22fcf440-d3d5-e511-8d7c-a0b3cc47d18e";
+        this.insid = "37e717c8-32e1-e511-8d81-a0b3cc47d18e";
 
         router.subscribe((val) => console.log("Navigating to: " + val))
     }

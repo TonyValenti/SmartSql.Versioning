@@ -34,8 +34,8 @@ export class Identity implements OnInit {
         }, error => alert(`Server error. Try again later`));
     } 
 
-    selectDude(element, dude: Person) {
-        this.activePersonEl = element;
-        this.selectedDude = dude;
-    }
+    //selectDude(element, dude: Person) {
+    //    this.activePersonEl = element;
+    //    this.selectedDude = dude;
+    //}
 }

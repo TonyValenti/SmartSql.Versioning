@@ -1,4 +1,4 @@
-// Compiled using typings@0.6.8
+// Compiled using typings@0.6.10
 // Source: https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/4de74cb527395c13ba20b438c3a7a419ad931f1c/bootstrap/bootstrap.d.ts
 // Type definitions for Bootstrap 3.3.5
 // Project: http://twitter.github.com/bootstrap/

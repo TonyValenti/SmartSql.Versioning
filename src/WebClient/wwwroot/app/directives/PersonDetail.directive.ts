@@ -12,7 +12,6 @@ import {IdentitySvc} from '../services/Identity.service';
 @Component({
     selector: 'person-detail',
     templateUrl: '../app/templates/person-detail.html',
-    pipes: [Gidfull],
     directives: [FORM_DIRECTIVES],
     providers: [IdentitySvc]
 })
@@ -26,8 +25,10 @@ export class PersonDetailDirective implements OnInit {
     ngOnInit() {
         console.log("Working with", this.selectedPerson);
 
-        this.tempObjGovernmentId = this.selectedPerson.governmentId && JSON.parse(JSON.stringify(this.selectedPerson.governmentId[0]));
-        this.tempSelectedGidType = this.tempObjGovernmentId.name;
+        if (this.selectedPerson.governmentId.length) {
+            this.tempObjGovernmentId = JSON.parse(JSON.stringify(this.selectedPerson.governmentId[0]));
+            this.tempSelectedGidType = this.tempObjGovernmentId && this.tempObjGovernmentId.name;
+        }
     }
 
     // Person detail props

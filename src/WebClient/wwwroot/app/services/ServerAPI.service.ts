@@ -1,11 +1,13 @@
 import { Injectable, Inject, Component } from 'angular2/core';
+import { Http, Headers, RequestOptions } from 'angular2/http';
+import { Observable } from 'rxjs/Observable';
+
 import { Person } from '../models/Person';
 import { eyeColors } from '../models/eyeColors';
 import { hairColors } from '../models/hairColors';
 import { ClothingSizes } from '../models/ClothingSizes';
 import { createEnum } from '../common/enum';
-import { Http, Headers, RequestOptions } from 'angular2/http';
-import { Observable } from 'rxjs/Observable';
+
 
 // Add all operators to Observable
 import 'rxjs/Rx';
@@ -18,6 +20,7 @@ export class ServerAPI {
     static apiUrl = "http://localhost:47503/api/";
     static localUrl = "http://localhost:3000/";
 
+    pinstanceId: string;
     peopleList: Person[] = [];
     static person: Person;
 
@@ -33,7 +36,8 @@ export class ServerAPI {
 
         // If Person is already in memory
         // just return it
-        if (ServerAPI.person) {  
+        if (ServerAPI.person) {
+            //return Observable.of(ServerAPI.person);
             return Observable.create(function (observer) {
                 observer.next(ServerAPI.person);
                 observer.complete();
@@ -52,10 +56,10 @@ export class ServerAPI {
                         observer.next(ServerAPI.person);
                         observer.complete();
                     });
-            });                     
+            });
         }
     }
-   
+
     /**
      * @description get a json list of
      * @returns Obesrvable list of Persons
@@ -69,21 +73,22 @@ export class ServerAPI {
             .subscribe((plist) => {
 
                 console.log("People list: ", plist);
-                
+
                 // If PeopleList is already in memory
                 // just return it
                 if (this.peopleList.length > 0) {
-                    return Observable.from(this.peopleList).toArray();
+
+                    return Observable.from(this.peopleList, function () { console.log(arguments); }).toArray();
                 }
 
                 if (localStorage.getItem("people")) {
                     // If data is cached in localStorage, use it
-                            
+
                     for (let personJson of JSON.parse(localStorage.getItem("people"))) {
                         this.peopleList.push(Person.createRPerson(personJson));
                     }
 
-                    return Observable.from(this.peopleList).toArray();
+                    return Observable.from(this.peopleList, function () { console.log(arguments); }).toArray();
                     //return new Observable<Array<Person>>().share()
 
                 } else {
@@ -93,13 +98,11 @@ export class ServerAPI {
                         this.peopleList.push(Person.createRPerson(personJson));
                     }
 
-                    return Observable.from(this.peopleList).toArray();                    
+                    return Observable.from(this.peopleList, function () { console.log(arguments); }).toArray();
                 };
-
-                return Observable.from(this.peopleList).toArray();
             });
     }
-     
+
     /**
      * Add Person
      * @param {string} name
@@ -109,7 +112,7 @@ export class ServerAPI {
         let body = JSON.stringify({
             Values: { Name: name }
         });
-        
+
         var options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' }) });
 
         return this.http.post(ServerAPI.apiUrl + "EntityApi/Add", body, options)
@@ -133,10 +136,9 @@ export class ServerAPI {
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
-     
 
-    getLA() { 
-        return this.http.get(ServerAPI.localUrl + 'app/_db/lalang.json').map(res => res.json());        
+    getLA() {
+        return this.http.get(ServerAPI.localUrl + 'app/_db/lalang.json').map(res => res.json());
     }
 
     private logAndPassOn(error: Error) {

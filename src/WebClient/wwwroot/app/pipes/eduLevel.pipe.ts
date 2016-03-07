@@ -5,32 +5,23 @@ export class eduLevel implements PipeTransform {
     transform(value: number, args: string[]): any {
         switch (value) {
             case 0:
-                return 'None';
-                break;
+                return 'None';                
             case 1000:
-                return 'High School';
-                break;
+                return 'High School';                
             case 2000:
-                return 'Technical School';
-                break;
+                return 'Technical School';                
             case 3000:
                 return 'Some College';
-                break
             case 4000:
-                return 'Associates Degree';
-                break;
+                return 'Associates Degree';                
             case 5000:
-                return 'Batchelors Degree';
-                break;
+                return 'Batchelors Degree';                
             case 6000:
-                return 'Graduate Student';
-                break;
+                return 'Graduate Student';                
             case 7000:
-                return 'Masters Degree';
-                break;
+                return 'Masters Degree';                
             case 8000:
-                return 'Doctoral Degree';
-                break;
+                return 'Doctoral Degree';                
             default:
                 return 'Select'
         }

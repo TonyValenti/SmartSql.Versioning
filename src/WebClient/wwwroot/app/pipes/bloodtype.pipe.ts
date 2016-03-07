@@ -16,32 +16,23 @@ export class bloodtype implements PipeTransform {
  
         switch (value) {
             case 0:
-                return 'Unknown';
-                break;
+                return 'Unknown';                
             case 1100:
-                return 'A Positive';
-                break;
+                return 'A Positive';                
             case 1200:
-                return 'A Negative';
-                break;
+                return 'A Negative';                
             case 2100:
-                return 'B Positive';
-                break;
+                return 'B Positive';                
             case 2200:
-                return 'B Negative';
-                break;
+                return 'B Negative';                
             case 3100:
-                return 'AB Positive';
-                break;
+                return 'AB Positive';                
             case 3200:
-                return 'AB Negative';
-                break;
+                return 'AB Negative';                
             case 4100:
-                return 'O Positive';
-                break;
+                return 'O Positive';                
             case 4200:
-                return 'O Negative';
-                break;
+                return 'O Negative';                
             default:
                 return 'Select'
         }

@@ -1,4 +1,4 @@
-import { Component, Input, Inject } from 'angular2/core';
+import { Component, Input, Inject, OnInit} from 'angular2/core';
 import { FORM_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams } from 'angular2/router';
 import { Person } from '../models/Person';
@@ -9,7 +9,7 @@ import { ServerAPI } from '../services/ServerAPI.service';
     templateUrl: '../app/templates/selectedPerson.html',
     directives: [FORM_DIRECTIVES]
 })
-export class SelectedPersonDirective {
+export class SelectedPersonDirective implements OnInit {
 
     // Prop from parent component
     @Input() selectedPerson: Person;
@@ -17,8 +17,10 @@ export class SelectedPersonDirective {
     instanceId: string;
     isAdd: boolean;
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _routeParams: RouteParams) {
-        this.instanceId = this._routeParams.get('instanceId');
+    constructor( @Inject(ServerAPI) private _serverAPI, private _routeParams: RouteParams) {}
+
+    ngOnInit() {      
+        this.instanceId = this._routeParams.get('instanceId');         
     }
 
     openChangeName(event, isAdd) {

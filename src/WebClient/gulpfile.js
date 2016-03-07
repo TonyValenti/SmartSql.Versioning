@@ -1,15 +1,16 @@
-/// <binding AfterBuild='copy:css, copy:libs' />
+/// <binding BeforeBuild='default' Clean='clean' />
 var gulp = require("gulp");
 var del = require("del");
 var print = require("gulp-print");
 var merge = require("merge-stream");
-var typescript = require('gulp-typescript');
+var eventStream = require('event-stream');
+var tsc = require('gulp-typescript');
 var sourcemaps = require('gulp-sourcemaps');
 var runSequence = require('run-sequence');
 
 var dnx = require("gulp-dnx");
 
-var tscConfig = require('./tsconfig.json');
+var tsProject = tsc.createProject("./tsconfig.json");
 
 var pth = {
     npm: "./node_modules/",
@@ -59,25 +60,33 @@ gulp.task("copy:css", function () {
 });
 
 gulp.task("clean", function (cb) {
-    return del([pth.wroot + "js", pth.wroot + "lib", pth.wroot + "css", pth.wroot + 'app/**/*.js', pth.wroot + 'app/**/*.js.map'], cb);
+    return del([
+        pth.wroot + "js",
+        pth.wroot + "lib",
+        pth.wroot + "css",
+        pth.wroot + "fonts",
+        pth.wroot + 'app/**/*.js', pth.wroot + 'app/**/*.js.map'], cb);
 });
- 
+
 // TypeScript compile
-gulp.task('compile', function () {
-    return gulp
-        .src(wroot + 'app/**/*.ts')
-        .pipe(sourcemaps.init())
-        .pipe(typescript(tscConfig.compilerOptions))
-        .pipe(sourcemaps.write('.'));
+gulp.task("compile", function () {
+    return gulp.src([
+            pth.wroot + 'app/**/*.ts',
+            "typings/main.d.ts/"
+    ]).pipe(sourcemaps.init())
+        .pipe(tsc(tsProject))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(pth.wroot + 'app'));
 });
- 
+
+
 gulp.task('default', function (cb) {
-    return runSequence('clean', ['copy:libs', 'copy:js', 'copy:css'], ['watch', 'dnx-run'], cb);
+    return runSequence('clean', ['copy:libs', 'copy:css'], ['compile'], cb);
 });
 
 
 gulp.task('watch', function () {
-    gulp.watch(pth.wroot + 'app/**/*', ['compile']); 
+    gulp.watch(pth.wroot + 'app/**/*', ['compile']);
 });
 
 gulp.task('dnx-run', dnx('web'));

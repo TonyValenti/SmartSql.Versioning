@@ -6,16 +6,13 @@ export class religiousFreq implements PipeTransform {
         switch (value) {
             case 0:
                 return 'Never';
-                break;
             case 1000:
                 return 'Several times per year';
-                break;
             case 2000:
                 return 'Once or twice per month';
-                break;
             case 3000:
                 return 'Every week';
-                break;
+
             default:
                 return 'Select'
         }
