@@ -221,6 +221,9 @@ export class Likes {
             console.log(self.likesData);
             console.log(self.dislikesData);
 
+            this.checkLikesEmpty();
+            this.checkDislikesEmpty();
+
             self.addTypeLike = this.likesProps[0].prop;
         }, error => alert(`Server error. Try again later`));
     }

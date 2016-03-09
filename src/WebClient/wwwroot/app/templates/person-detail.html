@@ -1,5 +1,5 @@
 
-<div *ngIf="tempObjGovernmentId">
+<div *ngIf="selectedPerson">
 
     <div class="row">
         <div class="col-md-6 col-lg-6 text-left">
@@ -176,6 +176,7 @@
         </div>
     </div>
     <!-- /Edit Birthday -->
+
     <!-- Edit Government IDs -->
     <div *ngIf="tempObjGovernmentId" id="editGIDModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">

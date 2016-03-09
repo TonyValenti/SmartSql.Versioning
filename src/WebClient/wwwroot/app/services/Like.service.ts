@@ -27,7 +27,7 @@ export class LikeSvc {
             Values: like
         });
 
-        return this.http.post(this.apiUrl + "LikeApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityLikeApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -44,7 +44,7 @@ export class LikeSvc {
             Values: like
         });
 
-        return this.http.post(this.apiUrl + "LikeApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityLikeApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -59,7 +59,7 @@ export class LikeSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "LikeApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityLikeApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }

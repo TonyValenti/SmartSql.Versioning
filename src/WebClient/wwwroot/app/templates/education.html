@@ -1,7 +1,7 @@
 <selected-person *ngIf="selectedDude" [selectedPerson]="selectedDude"></selected-person>
 <div *ngIf="selectedDude">
     <div class="row bottom-buffer">
-        <div class="col-md-12 bottom-buffer">
+        <div class="col-md-12 bottom-buffer" *ngIf="selectedDude.education.EducationLevel">
             <div class="btn-group">
                 <a class="btn btn-default" href="#" (click)="editEduLevel($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
@@ -16,7 +16,7 @@
             <div class="clearfix"></div>
         </div>
         <div class="panel-body">
-            <div *ngIf="certifications.length === 0">No certifications</div>
+            <div  class="panel-body" *ngIf="certifications.length === 0">No certifications</div>
             <div class="row bottom-buffer" *ngFor="#cer of certifications;#i = index">
                 <div class="col-md-8 text-left columnspacing">
                     <div class="btn-group">
@@ -87,10 +87,10 @@
                     <form class="form-horizontal">
                         <div class="form-group">
 
-                            <div class="row dropdown clearfix">
+                            <div class="row dropdown clearfix" *ngIf="elvlv">
                                 <label class="col-sm-5 control-label">Education level: </label>
                                 <button class="btn btn-default dropdown-toggle col-sm-5" type="button" id="rftypesdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    {{ elvlv | eduLevel}}
+                                    {{ elvlv | eduLevel }}
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" style="left: 41%;">

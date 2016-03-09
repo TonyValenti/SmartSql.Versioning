@@ -26,7 +26,7 @@ export class IdentitySvc {
             Values: { Value: eyeColor }
         });
         
-        return this.http.post(this.apiUrl + "EyeColorApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityEyeColorApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -42,7 +42,7 @@ export class IdentitySvc {
             Values: { Value: eyeColor }
         });        
 
-        return this.http.post(this.apiUrl + "EyeColorApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityEyeColorApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -58,7 +58,7 @@ export class IdentitySvc {
             Values: { Value: hairColor }
         });
 
-        return this.http.post(this.apiUrl + "HairColorApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityHairColorApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -74,7 +74,7 @@ export class IdentitySvc {
             Values: { Value: hairColor }
         });
 
-        return this.http.post(this.apiUrl + "HairColorApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityHairColorApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -90,7 +90,7 @@ export class IdentitySvc {
             Values: { Value: ethinicity }
         });
 
-        return this.http.post(this.apiUrl + "EthnicityApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityEthnicityApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -106,7 +106,7 @@ export class IdentitySvc {
             Values: { Value: ethinicity }
         });
 
-        return this.http.post(this.apiUrl + "EthnicityApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityEthnicityApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -122,7 +122,7 @@ export class IdentitySvc {
             Values: { Value: dob }
         });
 
-        return this.http.post(this.apiUrl + "DateOfBirthApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityDateOfBirthApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -138,7 +138,7 @@ export class IdentitySvc {
             Values: { Value: dob }
         });
 
-        return this.http.post(this.apiUrl + "DateOfBirthApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityDateOfBirthApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -157,7 +157,7 @@ export class IdentitySvc {
             }
         });
 
-        return this.http.post(this.apiUrl + "GovernmentIdentificationApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityGovernmentIdentificationApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -176,7 +176,7 @@ export class IdentitySvc {
             }
         });
 
-        return this.http.post(this.apiUrl + "GovernmentIdentificationApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityGovernmentIdentificationApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -191,7 +191,7 @@ export class IdentitySvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "GovernmentIdentificationApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityGovernmentIdentificationApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }

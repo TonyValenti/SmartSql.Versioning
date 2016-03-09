@@ -27,7 +27,7 @@ export class EducationSvc {
             Values: { Value: lvl }
         });
 
-        return this.http.post(this.apiUrl + "EducationLevelApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityEducationLevelApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -44,7 +44,7 @@ export class EducationSvc {
             Values: { Value: lvl }
         });
 
-        return this.http.post(this.apiUrl + "EducationLevelApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityEducationLevelApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     } 
@@ -62,7 +62,7 @@ export class EducationSvc {
             Values: certificate
         });
 
-        return this.http.post(this.apiUrl + "CertificationApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityCertificationApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -79,7 +79,7 @@ export class EducationSvc {
             Values: certificate
         });
 
-        return this.http.post(this.apiUrl + "CertificationApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityCertificationApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -94,7 +94,7 @@ export class EducationSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "CertificationApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityCertificationApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }

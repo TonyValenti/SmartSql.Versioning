@@ -26,7 +26,7 @@ export class MedicalSvc {
             Values: { Value: sex }
         });
 
-        return this.http.post(this.apiUrl + "SexApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntitySexApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -42,7 +42,7 @@ export class MedicalSvc {
             Values: { Value: sex }
         });
 
-        return this.http.post(this.apiUrl + "BloodTypeApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityBloodTypeApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -58,7 +58,7 @@ export class MedicalSvc {
             Values: { Value: bt }
         });
 
-        return this.http.post(this.apiUrl + "BloodTypeApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityBloodTypeApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -74,7 +74,7 @@ export class MedicalSvc {
             Values: { Value: bt }
         });
 
-        return this.http.post(this.apiUrl + "BloodTypeApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityBloodTypeApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -96,7 +96,7 @@ export class MedicalSvc {
             }
         });
 
-        return this.http.post(this.apiUrl + "HeightApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityHeightApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -117,7 +117,7 @@ export class MedicalSvc {
             }
         });
 
-        return this.http.post(this.apiUrl + "HeightApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityHeightApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -138,7 +138,7 @@ export class MedicalSvc {
             }
         });
 
-        return this.http.post(this.apiUrl + "WeightApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityWeightApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -159,7 +159,7 @@ export class MedicalSvc {
             }
         });
 
-        return this.http.post(this.apiUrl + "WeightApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityWeightApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -176,7 +176,7 @@ export class MedicalSvc {
             Values: allergy
         });
 
-        return this.http.post(this.apiUrl + "AllergyApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityAllergyApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -193,7 +193,7 @@ export class MedicalSvc {
             Values: allergy
         });
 
-        return this.http.post(this.apiUrl + "AllergyApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityAllergyApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -208,7 +208,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "AllergyApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityAllergyApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -225,7 +225,7 @@ export class MedicalSvc {
             Values: medication
         });
 
-        return this.http.post(this.apiUrl + "MedicationApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityMedicationApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -242,7 +242,7 @@ export class MedicalSvc {
             Values: medication
         });
 
-        return this.http.post(this.apiUrl + "MedicationApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityMedicationApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -258,7 +258,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "MedicationApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityMedicationApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -276,7 +276,7 @@ export class MedicalSvc {
             Values: procedure
         });
 
-        return this.http.post(this.apiUrl + "ProcedureApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityProcedureApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -293,7 +293,7 @@ export class MedicalSvc {
             Values: procedure
         });
 
-        return this.http.post(this.apiUrl + "ProcedureApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityProcedureApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -309,7 +309,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "ProcedureApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityProcedureApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -326,7 +326,7 @@ export class MedicalSvc {
             Values: immunization
         });
 
-        return this.http.post(this.apiUrl + "ImmunizationApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityImmunizationApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -343,7 +343,7 @@ export class MedicalSvc {
             Values: immunization
         });
 
-        return this.http.post(this.apiUrl + "ImmunizationApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityImmunizationApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -359,7 +359,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "ImmunizationApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityImmunizationApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -376,7 +376,7 @@ export class MedicalSvc {
             Values: incident
         });
 
-        return this.http.post(this.apiUrl + "IncidentApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityIncidentApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -393,7 +393,7 @@ export class MedicalSvc {
             Values: incident
         });
 
-        return this.http.post(this.apiUrl + "IncidentApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityIncidentApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -409,7 +409,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "IncidentApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityIncidentApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -426,7 +426,7 @@ export class MedicalSvc {
             Values: condition
         });
 
-        return this.http.post(this.apiUrl + "ConditionApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityConditionApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -443,7 +443,7 @@ export class MedicalSvc {
             Values: condition
         });
 
-        return this.http.post(this.apiUrl + "ConditionApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityConditionApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -458,7 +458,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "ConditionApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityConditionApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -475,7 +475,7 @@ export class MedicalSvc {
             Values: insurance
         });
 
-        return this.http.post(this.apiUrl + "InsuranceApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityInsuranceApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -492,7 +492,7 @@ export class MedicalSvc {
             Values: insurance
         });
 
-        return this.http.post(this.apiUrl + "InsuranceApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityInsuranceApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -507,7 +507,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "InsuranceApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityInsuranceApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -522,7 +522,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "GovernmentIdentificationApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityGovernmentIdentificationApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }

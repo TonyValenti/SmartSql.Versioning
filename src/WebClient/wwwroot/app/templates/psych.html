@@ -9,7 +9,7 @@
             </div>
             <strong>Religion: </strong><span>{{psychology.Religion || ""}}</span>
         </div>
-        <div class="col-md-6 bottom-buffer">
+        <div class="col-md-6 bottom-buffer" *ngIf="psychology.ReligiousFrequency">
             <div class="btn-group">
                 <a class="btn btn-default" href="#" (click)="editRelFreq($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
@@ -269,7 +269,7 @@
                                     {{ rfv | religiousFreq}}
                                     <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu" style="left: 41%;">
+                                <ul class="dropdown-menu" style="left: 41%;" *ngIf="rf">
                                     <li *ngFor="#rf of rfVals" (click)="changeRf($event,rf)">
                                         <a href="#" [innerHtml]="rf | religiousFreq"></a>
                                     </li>

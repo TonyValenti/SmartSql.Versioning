@@ -8,7 +8,7 @@
             </div>
             <strong>Sex: </strong><span> {{selectedDude.sex === 1 ? 'Male' : (selectedDude.sex === 2 ? 'Female' : '')}}</span>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" *ngIf="selectedDude.bloodType">
             <div class="btn-group">
                 <a class="btn btn-default" href="#" (click)="openBloodType($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
@@ -563,7 +563,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
-                        <div class="row dropdown clearfix">
+                        <div class="row dropdown clearfix" *ngIf="tempBT">
                             <strong class="col-xs-4" style="padding-top:7px">Blood type : </strong>
                             <button class="btn btn-default dropdown-toggle col-xs-7" type="button" id="btdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 {{tempBT | bt}}

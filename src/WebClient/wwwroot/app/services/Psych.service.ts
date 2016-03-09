@@ -27,7 +27,7 @@ export class PsychSvc {
             Values: { Value: religion }
         });
 
-        return this.http.post(this.apiUrl + "ReligionApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityReligionApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -44,7 +44,7 @@ export class PsychSvc {
             Values: { Value: religion }
         });
 
-        return this.http.post(this.apiUrl + "ReligionApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityReligionApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -61,7 +61,7 @@ export class PsychSvc {
             Values: { Value: pa }
         });
 
-        return this.http.post(this.apiUrl + "PoliticalAffiliationApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityPoliticalAffiliationApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -78,7 +78,7 @@ export class PsychSvc {
             Values: { Value: pa }
         });
 
-        return this.http.post(this.apiUrl + "PoliticalAffiliationApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityPoliticalAffiliationApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -95,7 +95,7 @@ export class PsychSvc {
             Values: { Value: rf }
         });
 
-        return this.http.post(this.apiUrl + "ReligiousFrequencyApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityReligiousFrequencyApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -112,7 +112,7 @@ export class PsychSvc {
             Values: { Value: rf }
         });
 
-        return this.http.post(this.apiUrl + "ReligiousFrequencyApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityReligiousFrequencyApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     } 
@@ -129,7 +129,7 @@ export class PsychSvc {
             Values: ll
         });
 
-        return this.http.post(this.apiUrl + "LoveLanguageApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityLoveLanguageApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -146,7 +146,7 @@ export class PsychSvc {
             Values: ll
         });
 
-        return this.http.post(this.apiUrl + "LoveLanguageApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityLoveLanguageApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -163,7 +163,7 @@ export class PsychSvc {
             Values: al
         });
 
-        return this.http.post(this.apiUrl + "AngerLanguageApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityAngerLanguageApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -180,7 +180,7 @@ export class PsychSvc {
             Values: al
         });
 
-        return this.http.post(this.apiUrl + "AngerLanguageApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityAngerLanguageApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
