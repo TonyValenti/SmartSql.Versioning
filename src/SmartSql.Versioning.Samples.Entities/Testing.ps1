@@ -62,7 +62,7 @@ $History
 
 
 
-$GovernmentIdentifications = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/GovernmentIdentificationApi/List" -Headers $Headers -Body (ConvertTo-Json @{
+$GovernmentIdentifications = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/EntityGovernmentIdentificationApi/List" -Headers $Headers -Body (ConvertTo-Json @{
     Key = @{
         EntityId = $Person.InstanceId;
     }
@@ -74,7 +74,7 @@ $SSN = $GovernmentIdentifications | Where-Object {$_.Name -eq "Social Security N
 $SSN
 
 if (!$SSN) {
-    $SSN = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/GovernmentIdentificationApi/Add" -Headers $Headers -Body (ConvertTo-Json @{
+    $SSN = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/EntityGovernmentIdentificationApi/Add" -Headers $Headers -Body (ConvertTo-Json @{
         Key = @{
             EntityId = $Person.InstanceId;
         }
@@ -86,7 +86,7 @@ if (!$SSN) {
     $SSN
 
 
-    $SSN = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/GovernmentIdentificationApi/Update" -Headers $Headers -Body (ConvertTo-Json @{
+    $SSN = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/EntityGovernmentIdentificationApi/Update" -Headers $Headers -Body (ConvertTo-Json @{
         Key = @{
             InstanceId = $SSN.InstanceId;
         }
@@ -102,7 +102,7 @@ if (!$SSN) {
 
 
 
-$DateOfBirth = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/DateOfBirthApi/Get" -Headers $Headers -Body (ConvertTo-Json @{
+$DateOfBirth = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/EntityDateOfBirthApi/Get" -Headers $Headers -Body (ConvertTo-Json @{
     Key = @{
         EntityId = $Person.InstanceId;
     }
@@ -114,7 +114,7 @@ if ($DateOfBirth) {
 
 
 
-$DateOfBirth = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/DateOfBirthApi/Update" -Headers $Headers -Body (ConvertTo-Json @{
+$DateOfBirth = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/EntityDateOfBirthApi/Update" -Headers $Headers -Body (ConvertTo-Json @{
     Key = @{
         EntityId = $Person.InstanceId;
     }
@@ -140,7 +140,7 @@ $Details
 
 
 
- $Certification = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/CertificationApi/Add" -Headers $Headers -Body (ConvertTo-Json @{
+ $Certification = Invoke-RestMethod -Method Post -Uri "http://localhost:47503/api/EntityCertificationApi/Add" -Headers $Headers -Body (ConvertTo-Json @{
         Key = @{
             EntityId = $Person.InstanceId;
         }
