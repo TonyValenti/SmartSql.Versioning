@@ -1,4 +1,4 @@
-import {Component, Inject} from 'angular2/core';
+import {Component, Inject, AfterViewInit} from 'angular2/core';
 import {Person} from '../models/Person';
 import {ServerAPI} from '../services/ServerAPI.service';
 import { PsychSvc } from '../services/Psych.service';
@@ -13,7 +13,7 @@ import { religiousFreq } from '../pipes/religiousFreq.pipe';
     providers: [PsychSvc],
     pipes: [religiousFreq]
 })
-export class PsychologyView {
+export class PsychologyView implements AfterViewInit {
 
     selectedDude: Person;
     psychology;
@@ -60,7 +60,12 @@ export class PsychologyView {
                 self.la = lajsn
             }, error => alert(`Server error. Try again later`));
         }, error => alert(`Server error. Try again later`));
-         
+    }
+
+    ngAfterViewInit() {
+        $(".modal").on('shown.bs.modal', function () {
+            $(this).find('input:first:visible').focus();
+        }); //Focus
     }
 
     //---------------------------
@@ -182,7 +187,7 @@ export class PsychologyView {
 
     closeRelFreq(event, txtRelFreq: HTMLInputElement) {
         event.preventDefault();
- 
+
         $('#editRelFreqModal').modal('hide');
     }
 
@@ -228,7 +233,7 @@ export class PsychologyView {
     }
 
     changeAl(event) {
-        event.preventDefault(); 
+        event.preventDefault();
 
         this.isAddAL = this.psychology.AngerLanguage.r === null &&
             this.psychology.AngerLanguage.pa === null &&
@@ -263,8 +268,8 @@ export class PsychologyView {
     }
 
     choosell(event) {
-        event.preventDefault(); 
-        
+        event.preventDefault();
+
         $('#chooseLL').modal('show');
     }
 
@@ -272,5 +277,5 @@ export class PsychologyView {
         event.preventDefault();
 
         $('#chooseAL').modal('show');
-    }    
+    }
 }

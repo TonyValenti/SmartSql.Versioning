@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from 'angular2/core';
+import {Component, Inject, OnInit, AfterViewInit} from 'angular2/core';
 import {Person} from '../models/Person';
 import {eyeColors} from '../models/eyeColors';
 import {PersonDetailDirective} from '../directives/PersonDetail.directive';
@@ -10,9 +10,9 @@ import {RouteParams, Router} from 'angular2/router';
 @Component({
     selector: 'identity',
     templateUrl: '../app/templates/identityComp.html',
-    directives: [PersonDetailDirective, SelectedPersonDirective]    
+    directives: [PersonDetailDirective, SelectedPersonDirective]
 })
-export class Identity implements OnInit {
+export class Identity implements OnInit, AfterViewInit {
 
     selectedDude: Person;
     activePersonEl: HTMLElement;
@@ -27,12 +27,18 @@ export class Identity implements OnInit {
         if (!instanceId) {
             alert(`No instanceId provided ... try entering one in the url, like so: http://localhost:3000/Identity?instanceId=22fcf440-d3d5-e511-8d7c-a0b3cc47d18e`);
         }
-         
+
         // Make an Ajax call to get person from DB
         this._serverAPI.getPersonByInstanceId(instanceId).subscribe(person => {
             this.selectedDude = person;
         }, error => alert(`Server error. Try again later`));
-    } 
+    }
+
+    ngAfterViewInit() {
+        $(".modal").on('shown.bs.modal', function () {
+            $(this).find('input:first:visible').focus();
+        }); //Focus
+    }
 
     //selectDude(element, dude: Person) {
     //    this.activePersonEl = element;

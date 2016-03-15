@@ -24,10 +24,10 @@
             </div>
             <div class="col-md-6 text-left columnspacing">
                 <div class="btn-group">
-                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event, 'Shoe')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event, 'Underwear')"><i class="fa fa-pencil"></i></a>
                     <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
                 </div>
-                <strong>Shoe: </strong><span>{{clothingSizes.Shoe}}</span>
+                <strong>Underwear: </strong><span>{{clothingSizes.Underwear}}</span>
             </div>
             <div class="col-md-6 text-left columnspacing">
                 <div class="btn-group">
@@ -35,6 +35,13 @@
                     <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
                 </div>
                 <strong>Belt: </strong><span>{{clothingSizes.Belt}}</span>
+            </div>
+            <div class="col-md-6 text-left columnspacing">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event, 'Shoe')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                </div>
+                <strong>Shoe: </strong><span>{{clothingSizes.Shoe}}</span>
             </div>
             <div class="col-md-6 text-left columnspacing">
                 <div class="btn-group">
@@ -49,6 +56,15 @@
                     <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
                 </div>
                 <strong>Dress: </strong><span>{{clothingSizes.Dress}}</span>
+
+            </div>
+
+            <div class="col-md-6 text-left columnspacing">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event, 'Bra')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                </div>
+                <strong>Bra: </strong><span>{{clothingSizes.Bra}}</span>
 
             </div>
         </div>
@@ -68,7 +84,7 @@
                   <div class="form-group">
                     <label for="birthday" class="col-sm-3 control-label">{{clothingType}}: </label>
                     <div class="col-sm-9">
-                      <input placeholder="Enter {{clothingType}}" type="text" class="form-control" #txtClothing [value]="clothingSizes[clothingType]"/>
+                      <input (keyup.enter)="saveClothing($event, txtClothing.value)" placeholder="Enter {{clothingType}}" type="text" class="form-control" #txtClothing [value]="clothingSizes[clothingType]"/>
                     </div>
                   </div>
                 </form>

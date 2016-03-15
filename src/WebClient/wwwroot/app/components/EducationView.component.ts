@@ -1,4 +1,4 @@
-import { Component, Inject } from 'angular2/core';
+import { Component, Inject, AfterViewInit} from 'angular2/core';
 import { Person } from '../models/Person';
 import { ServerAPI } from '../services/ServerAPI.service';
 import { EducationSvc } from '../services/Education.service';
@@ -13,7 +13,7 @@ import { eduLevel } from '../pipes/eduLevel.pipe';
     providers: [EducationSvc],
     pipes: [eduLevel]
 })
-export class EducationView {
+export class EducationView implements AfterViewInit {
 
     selectedDude: Person;
     certifications;
@@ -50,6 +50,12 @@ export class EducationView {
             self.certifications = p.education.Certification || [];
             self.elvlv = p.education.EducationLevel;
         }, error => alert(`Server error. Try again later`));
+    }
+
+    ngAfterViewInit() {
+        $(".modal").on('shown.bs.modal', function () {
+            $(this).find('input:first:visible').focus();
+        }); //Focus
     }
 
     saveCertification(event, txtName, txtStart, txtEnd) {
@@ -159,7 +165,7 @@ export class EducationView {
 
     closeEduLevel(event) {
         event.preventDefault();
- 
+
         $('#editEduLevelModal').modal('hide');
     }
 }

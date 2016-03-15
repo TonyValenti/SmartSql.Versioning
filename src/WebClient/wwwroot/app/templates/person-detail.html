@@ -85,6 +85,7 @@
         </div>
     </div>
     <!-- /Edit Eye Color -->
+
     <!-- Edit Hair Color -->
     <div id="editHairModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
@@ -118,6 +119,7 @@
         </div>
     </div>
     <!-- /Edit Hair Color -->
+
     <!-- Edit Ethnicity -->
     <div id="editEthnicityModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
@@ -131,7 +133,7 @@
                         <div class="form-group">
                             <label for="birthday" class="col-sm-3 control-label">Ethnicity: </label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" #txtEthnicity [value]="selectedPerson.ethnicity" />
+                                <input (keyup.enter)="saveEthnicity($event, txtEthnicity.value)" type="text" class="form-control ethnicictyInp" #txtEthnicity [value]="selectedPerson.ethnicity" />
                             </div>
                         </div>
                     </form>
@@ -147,6 +149,7 @@
         </div>
     </div>
     <!-- /Edit Ethnicity -->
+
     <!-- Edit Birthday -->
     <div id="editBDayModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
@@ -160,7 +163,7 @@
                         <div class="form-group">
                             <label for="birthday" class="col-sm-3 control-label">Birthday: </label>
                             <div class="col-sm-9">
-                                <input type="date" class="form-control" placeholder="Enter date of birth" #birthday [value]="selectedPerson.dob" />
+                                <input (keyup.enter)="saveBday($event, birthday.value)" type="date" class="form-control" placeholder="Enter date of birth" #birthday [value]="selectedPerson.dob" />
                             </div>
                         </div>
                     </form>
@@ -199,7 +202,7 @@
                             <label class="control-label" for="currentGid" style="text-align:left">Value: </label>
                         </div>
                         <div class="col-lg-7">
-                            <input [(ngModel)]="tempObjGovernmentId.value" type="text" class="form-control" id="currentGid" placeholder="Enter a new {{tempSelectedGidType || 'Enter a new identification value'}}">
+                            <input (keyup.enter)="saveGid($event)" [(ngModel)]="tempObjGovernmentId.value" type="text" class="form-control" id="currentGid" placeholder="Enter a new {{tempSelectedGidType || 'Enter a new identification value'}}">
                         </div>
                     </div>
                 </div>

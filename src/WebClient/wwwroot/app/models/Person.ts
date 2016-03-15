@@ -61,7 +61,7 @@ export class Person {
                     f.InstanceId));
             }
         }
-               
+
         // Gov ids
         for (var i = 0; i < pjsn.GovernmentIdentification.length; i++) {
             governmentIds.push({
@@ -70,7 +70,7 @@ export class Person {
                 instanceId: pjsn.GovernmentIdentification[i].InstanceId
             });
         }
-       
+
         // Likes
         for (var i = 0; i < pjsn.Like.length; i++) {
             if (pjsn.Like[i].Status) {
@@ -89,7 +89,7 @@ export class Person {
                 });
             }
         }
-         
+
         // Allergies
         for (var i = 0; i < pjsn.Allergy.length; i++) {
             allergies.push({
@@ -127,7 +127,7 @@ export class Person {
                 InstanceId: pjsn.Immunization[i].InstanceId
             });
         }
-         
+
         // Incident
         for (var i = 0; i < pjsn.Incident.length; i++) {
             incidents.push({
@@ -157,12 +157,15 @@ export class Person {
         }
 
         var clothessizes = new ClothingSizes(
-            pjsn.BeltSize && pjsn.BeltSize.Value,
+            pjsn.ShirtSize && pjsn.ShirtSize.Value,
             pjsn.PantSize && pjsn.PantSize.Value,
             pjsn.ShoeSize && pjsn.ShoeSize.Value,
             pjsn.BeltSize && pjsn.BeltSize.Value,
             pjsn.HeadSize && pjsn.HeadSize.Value,
-            pjsn.DressSize && pjsn.DressSize.Value);
+            pjsn.DressSize && pjsn.DressSize.Value,
+            pjsn.UnderwearSize && pjsn.UnderwearSize.Value,
+            pjsn.BraSize && pjsn.BraSize.Value
+        );
 
 
         var psychology = {
@@ -187,9 +190,9 @@ export class Person {
         // EDUCATION
         var education = {
             EducationLevel: pjsn.EducationLevel && pjsn.EducationLevel.Value,
-            Certification : []  
+            Certification : []
         }
- 
+
         for (var i = 0; i < pjsn.Certification.length; i++) {
             pjsn.Certification[i].StartDate = new Date(pjsn.Certification[i].StartDate).toISOString().split("T")[0];
             pjsn.Certification[i].EndDate = new Date(pjsn.Certification[i].EndDate).toISOString().split("T")[0];

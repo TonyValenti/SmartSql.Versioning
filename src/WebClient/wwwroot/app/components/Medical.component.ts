@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from 'angular2/core';
+import { Component, Inject, OnInit, AfterViewInit} from 'angular2/core';
 import { ServerAPI } from '../services/ServerAPI.service';
 import { MedicalSvc } from '../services/Medical.service';
 import { SelectedPersonDirective } from '../directives/SelectedPerson.directive';
@@ -14,7 +14,7 @@ import { bloodtype } from '../pipes/bloodtype.pipe';
     directives: [SelectedPersonDirective],
     providers: [MedicalSvc]
 })
-export class Medical implements OnInit {
+export class Medical implements OnInit, AfterViewInit {
 
     selectedDude: Person;
 
@@ -85,6 +85,12 @@ export class Medical implements OnInit {
 
     constructor( @Inject(ServerAPI) private _serverAPI, private _medicalSvc: MedicalSvc, private _routeParams: RouteParams) { }
 
+    ngAfterViewInit() {
+        $(".modal").on('shown.bs.modal', function () {
+            $(this).find('input:first:visible').focus();
+        }); //Focus
+    }
+
     ngOnInit() {
         let instanceId = this._routeParams.get('instanceId');
 
@@ -92,7 +98,7 @@ export class Medical implements OnInit {
             alert(`No instanceId provided ... try entering one in the url, like so: http://localhost:3000/Identity?instanceId=22fcf440-d3d5-e511-8d7c-a0b3cc47d18e`);
         }
 
-        var self = this; 
+        var self = this;
 
         // Make an Ajax call to get person from DB .subscribe(person => { currPerson = person; }
         this._serverAPI.getPersonByInstanceId(instanceId).subscribe(p => {
@@ -111,7 +117,7 @@ export class Medical implements OnInit {
             , error => alert(`Server error. Try again later`)
             , done => console.log('getPersonByInstanceId done'));
     }
-     
+
     //--------------------------------
     //------ Add/Edit Allergies ------
     //--------------------------------

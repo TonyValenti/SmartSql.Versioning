@@ -7,7 +7,7 @@
             <a class="btn btn-primary pull-right" href="#" (click)="addLike($event,true)"><i class="fa fa-plus"></i></a>
             <div class="clearfix"></div>
         </div>
-       
+
         <div class="panel-body">
             <div *ngIf="areLikesEmpty" class="panel-body">
                 No likes
@@ -66,7 +66,7 @@
                         <div class="form-group">
                             <label for="birthday" class="col-sm-2 control-label">{{editTypeOfLike}}: </label>
                             <div class="col-sm-10">
-                                <input #txtLike placeholder="Enter {{editTypeOfLike}}" type="text" class="form-control" [value]="isEditLikes ? likesData[editTypeOfLike][likeIndex].value : dislikesData[editTypeOfLike][likeIndex].value" />
+                                <input (keyup.enter)="updateLike($event, txtLike.value)" #txtLike placeholder="Enter {{editTypeOfLike}}" type="text" class="form-control" [value]="isEditLikes ? likesData[editTypeOfLike][likeIndex].value : dislikesData[editTypeOfLike][likeIndex].value" />
                             </div>
                         </div>
                     </form>
@@ -109,7 +109,7 @@
                         <div class="row top-buffer">
                             <strong class="col-xs-5">Description: </strong>
                             <div class="col-xs-7" style="padding-left:0">
-                                <input #txtNewLike placeholder="Enter {{addTypeLike}}" type="text" class="form-control" />
+                                <input (keyup.enter)="saveNewLike($event, txtNewLike)" #txtNewLike placeholder="Enter {{addTypeLike}}" type="text" class="form-control" />
                             </div>
                         </div>
                     </form>

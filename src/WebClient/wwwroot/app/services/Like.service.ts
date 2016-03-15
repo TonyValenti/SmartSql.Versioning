@@ -11,16 +11,16 @@ export class LikeSvc {
     constructor(private http: Http) { }
 
     apiUrl = "http://localhost:47503/api/";
-  
+
     headers = new Headers({ 'Content-Type': 'application/json' });
     options = new RequestOptions({ headers: this.headers });
 
     /**
-         * Add like
-         * @param {string} entId
-         * @param {Object} like
-         * @returns
-         */
+    * Add like
+    * @param {string} entId
+    * @param {Object} like
+    * @returns
+    */
     addLike(entId: string, like: Object) {
         let body = JSON.stringify({
             Key: { EntityId: entId },
@@ -33,11 +33,11 @@ export class LikeSvc {
     }
 
     /**
-      * Update like
-      * @param {string} insId
-      * @param {Object} like
-      * @returns
-      */
+    * Update like
+    * @param {string} insId
+    * @param {Object} like
+    * @returns
+    */
     updateLike(insId: string, like: Object) {
         let body = JSON.stringify({
             Key: { instanceId: insId },

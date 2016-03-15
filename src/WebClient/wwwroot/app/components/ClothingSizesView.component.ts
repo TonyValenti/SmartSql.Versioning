@@ -1,4 +1,4 @@
-import { Component, Inject } from 'angular2/core';
+import { Component, Inject, AfterViewInit } from 'angular2/core';
 import { Person } from '../models/Person';
 import { ClothingSizes } from '../models/ClothingSizes';
 import { ServerAPI } from '../services/ServerAPI.service';
@@ -12,7 +12,7 @@ import { Router, RouteParams } from 'angular2/router';
     directives: [SelectedPersonDirective],
     providers: [ClothingSvc]
 })
-export class ClothingSizesView {
+export class ClothingSizesView implements AfterViewInit {
 
     private selectedDude: Person;
     private clothingSizes: ClothingSizes;
@@ -32,6 +32,12 @@ export class ClothingSizesView {
             self.selectedDude = p;
             self.clothingSizes = p.clothingSizes;
         }, error => alert(`Server error. Try again later`));
+    }
+
+    ngAfterViewInit() {
+        $(".modal").on('shown.bs.modal', function () {
+            $(this).find('input:first:visible').focus();
+        }); //Focus
     }
 
     editClothingSizes(event, typeOfClothing) {
@@ -58,7 +64,11 @@ export class ClothingSizesView {
             case "Dress":
                 this.clothingTypeName = "dress";
                 break;
-            default:
+            case "Bra":
+                this.clothingTypeName = "bra";
+                break;
+            case "Underwear":
+                this.clothingTypeName = "underwear";
                 break;
         }
 

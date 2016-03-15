@@ -1,4 +1,4 @@
-import {Component, Input, Inject, OnInit} from 'angular2/core';
+import {Component, Input, Inject, OnInit, AfterViewInit} from 'angular2/core';
 import {FORM_DIRECTIVES} from 'angular2/common';
 // import {NgForm}    from 'angular2/common';
 
@@ -15,7 +15,7 @@ import {IdentitySvc} from '../services/Identity.service';
     directives: [FORM_DIRECTIVES],
     providers: [IdentitySvc]
 })
-export class PersonDetailDirective implements OnInit {
+export class PersonDetailDirective implements OnInit, AfterViewInit {
 
     // Prop from parent component
     @Input() selectedPerson: Person;
@@ -31,6 +31,12 @@ export class PersonDetailDirective implements OnInit {
         }
     }
 
+    ngAfterViewInit() {
+        $(".modal").on('shown.bs.modal', function () {
+            $(this).find('input:first:visible').focus();
+        }); //Focus
+    }
+
     // Person detail props
     eyeColorsArr;
     tempEyeColor;
@@ -43,7 +49,7 @@ export class PersonDetailDirective implements OnInit {
     isAddGid = false;
     editingGidIx = -1;
     // --
-  
+
     // state
     saving = false;
 
@@ -61,7 +67,7 @@ export class PersonDetailDirective implements OnInit {
             }
         }
 
-        $('#editEyeModal').modal('show')
+        $('#editEyeModal').modal('show');
     }
 
     changeEyeColor(event, ec) {
@@ -114,7 +120,7 @@ export class PersonDetailDirective implements OnInit {
             }
         }
 
-        $('#editHairModal').modal('show')
+        $('#editHairModal').modal('show');
     }
 
     changeHairColor(event, hc) {
@@ -163,7 +169,9 @@ export class PersonDetailDirective implements OnInit {
         this.tempObjGovernmentId = { name: "", value: "" }
         this.tempSelectedGidType = "";
 
-        $('#editGIDModal').modal('show');
+        setTimeout(function () {
+            $('#editGIDModal').modal('show');
+        }, 100);
     }
 
     editGID(event, index) { //selectedGidType = this.selectedPerson.governmentId[0].name) {

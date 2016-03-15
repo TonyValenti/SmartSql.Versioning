@@ -1,4 +1,4 @@
-import { Component, Inject } from 'angular2/core';
+import { Component, Inject, AfterViewInit } from 'angular2/core';
 import { ServerAPI } from '../services/ServerAPI.service';
 import { FinanceSvc } from '../services/Finance.service';
 import { SelectedPersonDirective } from '../directives/SelectedPerson.directive';
@@ -12,8 +12,7 @@ import { Router, RouteParams } from 'angular2/router';
     directives: [SelectedPersonDirective],
     providers: [FinanceSvc]
 })
-export class FinancialList {
-
+export class FinancialList implements AfterViewInit {
     selectedDude: Person;
     financialArr: Financial[];
 
@@ -37,14 +36,25 @@ export class FinancialList {
         }, error => alert(`Server error. Try again later`));
     }
 
+    ngAfterViewInit() {
+        $(".modal").on('shown.bs.modal', function () {
+            $(this).find('input:first:visible').focus();
+        }); //Focus
+    }
+
     editFinancial(event, i, isAddFinancial) {
         event.preventDefault();
         this.selectedIndex = i;
 
         if (isAddFinancial) {
-            this.tempFinancial = new Financial("", "", "", "","");
+            this.tempFinancial = new Financial("", "", "", "", "");
         } else {
-            this.tempFinancial = new Financial(this.financialArr[i].Name, this.financialArr[i].AccountNumber, this.financialArr[i].Description, this.financialArr[i].Institution, this.financialArr[i].InstanceId);
+            this.tempFinancial = new Financial(
+                this.financialArr[i].Name,
+                this.financialArr[i].AccountNumber,
+                this.financialArr[i].Description,
+                this.financialArr[i].Institution,
+                this.financialArr[i].InstanceId);
         }
         $('#editFinancialModal').modal("show");
     }
@@ -54,10 +64,10 @@ export class FinancialList {
 
         if (this.selectedIndex === -1) {
             // is Add
-            var fin = new Financial(this.tempFinancial.AccountName,
+            var fin = new Financial(this.tempFinancial.Name,
                 this.tempFinancial.AccountNumber,
-                this.tempFinancial.AccountDescription,
-                this.tempFinancial.AccountInstitution, "");
+                this.tempFinancial.Description,
+                this.tempFinancial.Institution, "");
 
             this.financialArr.push(fin);
 
@@ -77,7 +87,7 @@ export class FinancialList {
                     //this.saving = false;
                     $('#editFinancialModal').modal('hide');
                 }, error => alert(`Server error. Try again later`));
-            }          
+            }
         }
 
         $('#editFinancialModal').modal("hide");
@@ -95,7 +105,7 @@ export class FinancialList {
         event.preventDefault();
 
         this._finSvc.archiveFinancial(this.financialArr[index].InstanceId).subscribe(result => {
-            console.log(result);  
+            console.log(result);
         }, error => alert(`Server error. Try again later`));
 
         this.financialArr.splice(index, 1);

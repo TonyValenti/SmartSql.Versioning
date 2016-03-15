@@ -75,9 +75,42 @@
                         <a class="btn btn-default" href="#" (click)="deletetMedication($event, i)"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>
-                <div class="col-md-10"><strong>{{medication.name}}</strong></div>
-                <div class="col-md-9 bottom-buffer"><span>{{medication.description || ""}}</span></div>
-                <div class="col-md-9 col-md-offset-2 bottom-buffer"><strong>{{medication.usageText || ""}}</strong></div>
+                <div class="col-md-10"><strong>{{medication.name}}</strong></div><br />
+                <div class="col-md-9 bottom-buffer">
+                    <strong [class.hidden]="!medication.description">Description:</strong><br />
+                    <span [class.hidden]="!medication.description">{{medication.description || ""}}</span>
+                </div>
+                <div class="col-md-9 col-md-offset-2 bottom-buffer">
+                    <strong [class.hidden]="!medication.usageText">Usage:</strong><br />
+                    <strong [class.hidden]="!medication.usageText">{{medication.usageText || ""}}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-medkit"></i> Immunizations</h3>
+            <a class="btn btn-primary pull-right" (click)="editImmunization($event, null, true)" href="#"><i class="fa fa-plus"></i></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <div *ngIf="selectedDude.immunizations.length === 0" class="panel-body">No immunizations</div>
+            <div [ngClass]="{'bottom-buffer' :  i < selectedDude.immunizations.length-1}" class="row" *ngFor="#immunization of selectedDude.immunizations;#i = index">
+                <div class="col-md-2">
+                    <div class="btn-group">
+                        <a class="btn btn-default" href="#" (click)="editImmunization($event, immunization, false)"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                        <a class="btn btn-default" href="#" (click)="deletetImmunization($event, i)"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <strong [class.hidden]="!immunization.Name">{{immunization.Name}}</strong>
+                </div>
+                <div class="col-md-2 bottom-buffer">
+                    <strong [class.hidden]="!immunization.Date">Date:</strong><br />
+                    <span [class.hidden]="!immunization.Date">{{immunization.Date || ""}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -99,53 +132,14 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{procedure.Name}}</strong></div>
-                <div class="col-md-8 bottom-buffer"><span>{{procedure.Description || ""}}</span></div>
-                <div class="col-md-2 bottom-buffer"><span>{{procedure.Date || ""}}</span></div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="panel panel-default">
-        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
-            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-medkit"></i> Immunizations</h3>
-            <a class="btn btn-primary pull-right" (click)="editImmunization($event, null, true)" href="#"><i class="fa fa-plus"></i></a>
-            <div class="clearfix"></div>
-        </div>
-        <div class="panel-body">
-            <div *ngIf="selectedDude.immunizations.length === 0" class="panel-body">No immunizations</div>
-            <div [ngClass]="{'bottom-buffer' :  i < selectedDude.immunizations.length-1}" class="row" *ngFor="#immunization of selectedDude.immunizations;#i = index">
-                <div class="col-md-2">
-                    <div class="btn-group">
-                        <a class="btn btn-default" href="#" (click)="editImmunization($event, immunization, false)"><i class="fa fa-pencil"></i></a>
-                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
-                        <a class="btn btn-default" href="#" (click)="deletetImmunization($event, i)"><i class="fa fa-trash"></i></a>
-                    </div>
+                <div class="col-md-8 bottom-buffer">
+                    <strong [class.hidden]="!procedure.Description">Description:</strong><br />
+                    <span>{{procedure.Description || ""}}</span>
                 </div>
-                <div class="col-md-8"><strong>{{immunization.Name}}</strong></div>
-                <div class="col-md-2 bottom-buffer"><span>{{immunization.Date || ""}}</span></div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="panel panel-default">
-        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
-            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-exclamation-triangle"></i> Incidents</h3>
-            <a class="btn btn-primary pull-right" (click)="editIncident($event, null, true)" href="#"><i class="fa fa-plus"></i></a>
-            <div class="clearfix"></div>
-        </div>
-        <div class="panel-body">
-            <div *ngIf="selectedDude.incidents.length === 0" class="panel-body">No incidents</div>
-            <div [ngClass]="{'bottom-border-gray' : i < selectedDude.incidents.length-1, 'bottom-buffer' :  i < selectedDude.incidents.length-1}" class="row" *ngFor="#incident of selectedDude.incidents;#i = index">
-                <div class="col-md-2">
-                    <div class="btn-group">
-                        <a class="btn btn-default" href="#" (click)="editIncident($event, incident, false)"><i class="fa fa-pencil"></i></a>
-                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
-                        <a class="btn btn-default" href="#" (click)="deletetIncident($event, i)"><i class="fa fa-trash"></i></a>
-                    </div>
+                <div class="col-md-2 bottom-buffer">
+                    <strong [class.hidden]="!procedure.Date">Date:</strong><br />
+                    <span>{{procedure.Date || ""}}</span>
                 </div>
-                <div class="col-md-10"><strong>{{incident.Name}}</strong></div>
-                <div class="col-md-8 bottom-buffer"><span>{{incident.Description || ""}}</span></div>
-                <div class="col-md-2 bottom-buffer"><span>{{incident.Date || ""}}</span></div>
             </div>
         </div>
     </div>
@@ -167,7 +161,39 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{condition.Name}}</strong></div>
-                <div class="col-md-9 bottom-buffer"><span>{{condition.Description || ""}}</span></div>
+                <div class="col-md-9 bottom-buffer">
+                    <strong [class.hidden]="!condition.Description">Description:</strong><br />
+                    <span>{{condition.Description || ""}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-exclamation-triangle"></i> Incidents</h3>
+            <a class="btn btn-primary pull-right" (click)="editIncident($event, null, true)" href="#"><i class="fa fa-plus"></i></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <div *ngIf="selectedDude.incidents.length === 0" class="panel-body">No incidents</div>
+            <div [ngClass]="{'bottom-border-gray' : i < selectedDude.incidents.length-1, 'bottom-buffer' :  i < selectedDude.incidents.length-1}" class="row" *ngFor="#incident of selectedDude.incidents;#i = index">
+                <div class="col-md-2">
+                    <div class="btn-group">
+                        <a class="btn btn-default" href="#" (click)="editIncident($event, incident, false)"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                        <a class="btn btn-default" href="#" (click)="deletetIncident($event, i)"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-10"><strong>{{incident.Name}}</strong></div>
+                <div class="col-md-8 bottom-buffer">
+                    <strong [class.hidden]="!incident.Description">Description:</strong><br />
+                    <span>{{incident.Description || ""}}</span>
+                </div>
+                <div class="col-md-2 bottom-buffer">
+                    <strong [class.hidden]="!incident.Date">Date:</strong><br />
+                    <span>{{incident.Date || ""}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -189,7 +215,10 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{insurance.Name}}</strong></div>
-                <div class="col-md-9 bottom-buffer"><span>{{insurance.Details || ""}}</span></div>
+                <div class="col-md-9 bottom-buffer">
+                    <strong [class.hidden]="!insurance.Details">Details:</strong><br />
+                    <span>{{insurance.Details || ""}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -211,7 +240,10 @@
                     </div>
                 </div>
                 <div class="col-md-8"><strong>{{emContact.Name}}</strong></div>
-                <div class="col-md-2 bottom-buffer"><span>{{emContact.Phone || ""}}</span></div>
+                <div class="col-md-2 bottom-buffer">
+                    <strong [class.hidden]="!emContact.Phone">Phone:</strong><br />
+                    <span>{{emContact.Phone || ""}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -240,7 +272,7 @@
                             <label class="control-label" for="currentGid" style="text-align:left">Treatment: </label>
                         </div>
                         <div class="col-md-9">
-                            <textarea [(ngModel)]="tempAllergie.treatment" class="form-control" placeholder="Enter a treatment" rows="3"></textarea>
+                            <textarea (keyup.enter)="saveAllergiee($event)" [(ngModel)]="tempAllergie.treatment" class="form-control" placeholder="Enter a treatment" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
@@ -252,7 +284,6 @@
         </div>
     </div>
     <!-- /Add/Edit Allergie -->
-
     <!-- Add/Edit Medications -->
     <div id="editMedicationModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -264,7 +295,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class=" control-label" for="medicationName" style="text-align:left">Name: </label>
+                            <label class="control-label" for="medicationName" style="text-align:left">Name: </label>
                         </div>
                         <div class="col-md-9">
                             <input [(ngModel)]="tempMedication.name" type="text" class="form-control" id="medicationName" placeholder="Enter a name">
@@ -283,7 +314,7 @@
                             <label class="control-label" for="medicationUsage" style="text-align:left">Usage: </label>
                         </div>
                         <div class="col-md-9">
-                            <input [(ngModel)]="tempMedication.usageText" type="text" class="form-control" id="medicationUsage" placeholder="Enter a usage">
+                            <input (keyup.enter)="saveMedication($event)" [(ngModel)]="tempMedication.usageText" type="text" class="form-control" id="medicationUsage" placeholder="Enter a usage">
                         </div>
                     </div>
                 </div>
@@ -306,7 +337,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class=" control-label" for="procedureName" style="text-align:left">Name: </label>
+                            <label class="control-label" for="procedureName" style="text-align:left">Name: </label>
                         </div>
                         <div class="col-md-9">
                             <input [(ngModel)]="tempProcedure.Name" type="text" class="form-control" id="procedureName" placeholder="Enter the procdedure name">
@@ -325,7 +356,7 @@
                             <label class="control-label" for="procedureDate" style="text-align:left">Date: </label>
                         </div>
                         <div class="col-md-9">
-                            <input [(ngModel)]="tempProcedure.Date" type="date" class="form-control" id="procedureDate" placeholder="Enter a date">
+                            <input (keyup.enter)="saveProcedure($event)" [(ngModel)]="tempProcedure.Date" type="date" class="form-control" id="procedureDate" placeholder="Enter a date">
                         </div>
                     </div>
                 </div>
@@ -337,7 +368,6 @@
         </div>
     </div>
     <!-- /Add/Edit Procedure -->
-
     <!-- Add/Edit Immunization -->
     <div id="editImmunizationModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -360,7 +390,7 @@
                             <label class="control-label" for="currentGid" style="text-align:left">Date: </label>
                         </div>
                         <div class="col-md-9">
-                            <input [(ngModel)]="tempImmunization.Date" type="date" class="form-control" id="immunizationName" placeholder="Enter a date">
+                            <input (keyup.enter)="saveImmunization($event)" [(ngModel)]="tempImmunization.Date" type="date" class="form-control" id="immunizationName" placeholder="Enter a date">
                         </div>
                     </div>
                 </div>
@@ -372,7 +402,6 @@
         </div>
     </div>
     <!-- /Add/Edit Immunization -->
-
     <!-- Add/Edit Incident -->
     <div id="editIncidentModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -384,7 +413,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Name: </label>
+                            <label class="control-label" style="text-align:left">Name: </label>
                         </div>
                         <div class="col-md-9">
                             <input [(ngModel)]="tempIncident.Name" type="text" class="form-control" placeholder="Enter the incident name">
@@ -403,7 +432,7 @@
                             <label class="control-label" style="text-align:left">Date: </label>
                         </div>
                         <div class="col-md-9">
-                            <input [(ngModel)]="tempIncident.Date" type="date" class="form-control" placeholder="Enter a date and time">
+                            <input (keyup.enter)="saveIncident($event)" [(ngModel)]="tempIncident.Date" type="date" class="form-control" placeholder="Enter a date and time">
                         </div>
                     </div>
                 </div>
@@ -415,7 +444,6 @@
         </div>
     </div>
     <!-- /Add/Edit Incident -->
-
     <!-- Add/Edit Condition -->
     <div id="editConditionModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -427,7 +455,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Name: </label>
+                            <label class="control-label" style="text-align:left">Name: </label>
                         </div>
                         <div class="col-md-9">
                             <input [(ngModel)]="tempCondition.Name" type="text" class="form-control" placeholder="Enter a name">
@@ -435,10 +463,10 @@
                     </div>
                     <div class="row top-buffer">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Description: </label>
+                            <label class="control-label" style="text-align:left">Description: </label>
                         </div>
                         <div class="col-md-9">
-                            <textarea [(ngModel)]="tempCondition.Description" class="form-control" placeholder="Enter a description" rows="3"></textarea>
+                            <textarea (keyup.enter)="saveCondition($event)" [(ngModel)]="tempCondition.Description" class="form-control" placeholder="Enter a description" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
@@ -461,7 +489,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Name: </label>
+                            <label class="control-label" style="text-align:left">Name: </label>
                         </div>
                         <div class="col-md-9">
                             <input [(ngModel)]="tempInsurance.Name" type="text" class="form-control" placeholder="Enter a name">
@@ -469,10 +497,10 @@
                     </div>
                     <div class="row top-buffer">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Details: </label>
+                            <label class="control-label" style="text-align:left">Details: </label>
                         </div>
                         <div class="col-md-9">
-                            <textarea [(ngModel)]="tempInsurance.Details" class="form-control" placeholder="Enter a details" rows="6"></textarea>
+                            <textarea (keyup.enter)="saveInsurance($event)" [(ngModel)]="tempInsurance.Details" class="form-control" placeholder="Enter a details" rows="6"></textarea>
                         </div>
                     </div>
                 </div>
@@ -495,7 +523,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Name: </label>
+                            <label class="control-label" style="text-align:left">Name: </label>
                         </div>
                         <div class="col-md-9">
                             <input [(ngModel)]="tempEmergencyContact.Name" type="text" class="form-control" placeholder="Enter a name">
@@ -503,10 +531,10 @@
                     </div>
                     <div class="row top-buffer">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Phone: </label>
+                            <label class="control-label" style="text-align:left">Phone: </label>
                         </div>
                         <div class="col-md-9">
-                            <input [(ngModel)]="tempEmergencyContact.Phone" type="text" class="form-control" placeholder="Enter a phone number">
+                            <input (keyup.enter)="saveEmergencyContacts($event)" [(ngModel)]="tempEmergencyContact.Phone" type="text" class="form-control" placeholder="Enter a phone number">
                         </div>
                     </div>
                 </div>
@@ -607,35 +635,29 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" style="left: 34%;width: 58%;">
-                                <li (click)="changeHeightUnit($event, 0)"><a href="#">Pounds</a></li>
+                                <li (click)="changeHeightUnit($event, 0)"><a href="#">Feet/Inches</a></li>
                                 <li (click)="changeHeightUnit($event, 1)"><a href="#">Cm</a></li>
                             </ul>
                         </div>
                         <div class="row" [class.hidden]="heightUnit === 1">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">pounds: </label>
-                                    <div class="col-sm-8">
-                                        <input placeholder="Enter feet" type="number" class="form-control" #txtFeet [value]="heightFeet" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Inches: </label>
-                                    <div class="col-sm-9">
-                                        <input type="number" max="12" class="form-control" placeholder="Enter inches" #txtInches [value]="heightInches" />
-                                    </div>
-                                </div>
-                            </form>
+
+                            <label class="col-sm-3 control-label">Feet: </label>
+                            <div class="col-sm-8" style="margin-left:14px">
+                                <input placeholder="Enter feet" type="number" class="form-control" #txtFeet [value]="heightFeet" />
+                            </div>
+                            <br />
+                            <br />
+                            <label class="col-sm-3 control-label">Inches: </label>
+                            <div class="col-sm-8" style="margin-left:14px">
+                                <input (keyup.enter)="saveHeight($event, txtFeet.value, txtInches.value, txtCm.value)" type="number" max="12" class="form-control" placeholder="Enter inches" #txtInches [value]="heightInches" />
+                            </div>
+
                         </div>
                         <div class="row" [class.hidden]="heightUnit === 0">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Cm: </label>
-                                    <div class="col-sm-8">
-                                        <input placeholder="Enter Cm" type="number" class="form-control" #txtCm [value]="heightCm" />
-                                    </div>
-                                </div>
-                            </form>
+                            <strong class="col-sm-3 control-label">Cm: </strong>
+                            <div class="col-sm-8" style="margin-left: 14px;">
+                                <input (keyup.enter)="saveHeight($event, txtFeet.value, txtInches.value, txtCm.value)" placeholder="Enter Cm" type="number" class="form-control" #txtCm [value]="heightCm" />
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -658,35 +680,31 @@
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="row dropdown clearfix bottom-buffer">
-                            <strong class="col-xs-4" style="padding-top:7px">Weight unit: </strong>
-                            <button class="btn btn-default dropdown-toggle col-xs-7" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <strong class="col-sm-4" style="padding-top:7px">Weight unit: </strong>
+                            <button style="margin-left: 14px;" class="btn btn-default dropdown-toggle col-sm-6" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 {{tempWeightUnit === 0 ? "Pounds" : "Kilograms"}}
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" style="left: 34%;width: 58%;">
+                            <ul class="dropdown-menu" style="left: 37%;width: 51%;">
                                 <li (click)="changeWeightUnit($event, 0)"><a href="#">Pounds</a></li>
                                 <li (click)="changeWeightUnit($event, 1)"><a href="#">Kilograms</a></li>
                             </ul>
                         </div>
                         <div class="row" [class.hidden]="tempWeightUnit === 1">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Pounds: </label>
-                                    <div class="col-sm-7">
-                                        <input placeholder="Enter pounds" type="number" class="form-control" #txtPounds [value]="tempWeightVal" />
-                                    </div>
-                                </div>
-                            </form>
+
+                            <label class="col-sm-4 control-label">Pounds: </label>
+                            <div class="col-sm-7">
+                                <input placeholder="Enter pounds" type="number" class="form-control" #txtPounds [value]="tempWeightVal" />
+                            </div>
+
                         </div>
                         <div class="row" [class.hidden]="tempWeightUnit === 0">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Kilograms: </label>
-                                    <div class="col-sm-7">
-                                        <input placeholder="Enter kilograms" type="number" class="form-control" #txtKg [value]="tempWeightVal" />
-                                    </div>
-                                </div>
-                            </form>
+
+                            <label class="col-sm-4 control-label">Kilograms: </label>
+                            <div class="col-sm-7">
+                                <input placeholder="Enter kilograms" type="number" class="form-control" #txtKg [value]="tempWeightVal" />
+                            </div>
+
                         </div>
                     </form>
                 </div>

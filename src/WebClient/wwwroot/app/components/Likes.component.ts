@@ -1,4 +1,4 @@
-import { Component, Inject} from 'angular2/core';
+import { Component, Inject, AfterViewInit} from 'angular2/core';
 import { ServerAPI} from '../services/ServerAPI.service';
 import { LikeSvc } from '../services/Like.service';
 import { SelectedPersonDirective} from '../directives/SelectedPerson.directive';
@@ -14,20 +14,24 @@ import { Router, RouteParams } from 'angular2/router';
     directives: [SelectedPersonDirective, FORM_DIRECTIVES, RadioControlValueAccessor],
     providers: [LikeSvc]
 })
-export class Likes {
+export class Likes implements AfterViewInit {
 
     private selectedDude: Person;
     private likesData;
     private dislikesData;
 
     LikeCategory = {
+        Animal : 50,
         Beverage: 100,
         Book: 200,
         Food: 300,
         Game: 400,
         Hobby: 500,
+        Jewelry : 550,
         Movie: 600,
         Music: 700,
+        Place: 725,
+        Plant: 750,
         Show: 800,
         Sport: 900,
         Store: 1000,
@@ -58,6 +62,18 @@ export class Likes {
 
             let icon = '';
             switch (prop) {
+                case 'Animal':
+                    icon = 'fa-paw'
+                    break;
+                case 'Plant':
+                    icon = 'fa-leaf'
+                    break;
+                case 'Place':
+                    icon = 'fa-map-marker'
+                    break;
+                case 'Jewelry':
+                    icon = 'fa-diamond'
+                    break;
                 case 'Food':
                     icon = 'fa-cutlery'
                     break;
@@ -89,10 +105,10 @@ export class Likes {
                     icon = 'fa-gamepad'
                     break;
                 case 'Hobby':
-                    icon = 'fa-list'
+                    icon = 'fa-bicycle'
                     break;
                 case 'Other':
-                    icon = 'fa-hashtag'
+                    icon = 'fa-circle-o'
                     break;
             }
             this.likesProps.push({ prop: prop, icon: icon });
@@ -104,13 +120,17 @@ export class Likes {
             self.selectedDude = p;
 
             var l = {
+                Animal:[],
                 Beverage: [],
                 Book: [],
                 Food: [],
+                Jewelry: [],
                 Game: [],
                 Hobby: [],
                 Movie: [],
                 Music: [],
+                Place: [],
+                Plant: [],
                 Show: [],
                 Sport: [],
                 Store: [],
@@ -119,7 +139,11 @@ export class Likes {
             }
 
             for (var i = 0; i < p.likes.length; i++) {
+
                 switch (p.likes[i].category) {
+                    case 50:
+                        l.Animal.push(p.likes[i]);
+                        break;
                     case 100:
                         l.Beverage.push(p.likes[i]);
                         break;
@@ -132,6 +156,9 @@ export class Likes {
                     case 400:
                         l.Game.push(p.likes[i]);
                         break;
+                    case 550:
+                        l.Jewelry.push(p.likes[i]);
+                        break;
                     case 500:
                         l.Hobby.push(p.likes[i]);
                         break;
@@ -140,6 +167,12 @@ export class Likes {
                         break;
                     case 700:
                         l.Music.push(p.likes[i]);
+                        break;
+                    case 725:
+                        l.Place.push(p.likes[i]);
+                        break;
+                    case 750:
+                        l.Plant.push(p.likes[i]);
                         break;
                     case 800:
                         l.Show.push(p.likes[i]);
@@ -161,13 +194,17 @@ export class Likes {
             self.likesData = l;
 
             var dl = {
+                Animal: [],
                 Beverage: [],
                 Book: [],
                 Food: [],
+                Jewelry: [],
                 Game: [],
                 Hobby: [],
                 Movie: [],
                 Music: [],
+                Place: [],
+                Plant: [],
                 Show: [],
                 Sport: [],
                 Store: [],
@@ -177,6 +214,9 @@ export class Likes {
 
             for (var i = 0; i < p.dislikes.length; i++) {
                 switch (p.dislikes[i].category) {
+                    case 50:
+                        dl.Animal.push(p.dislikes[i]);
+                        break;
                     case 100:
                         dl.Beverage.push(p.dislikes[i]);
                         break;
@@ -189,6 +229,9 @@ export class Likes {
                     case 400:
                         dl.Game.push(p.dislikes[i]);
                         break;
+                    case 550:
+                        dl.Jewelry.push(p.dislikes[i]);
+                        break;
                     case 500:
                         dl.Hobby.push(p.dislikes[i]);
                         break;
@@ -197,6 +240,12 @@ export class Likes {
                         break;
                     case 700:
                         dl.Music.push(p.dislikes[i]);
+                        break;
+                    case 725:
+                        dl.Place.push(p.dislikes[i]);
+                        break;
+                    case 750:
+                        dl.Plant.push(p.dislikes[i]);
                         break;
                     case 800:
                         dl.Show.push(p.dislikes[i]);
@@ -226,6 +275,12 @@ export class Likes {
 
             self.addTypeLike = this.likesProps[0].prop;
         }, error => alert(`Server error. Try again later`));
+    }
+
+    ngAfterViewInit() {
+        $(".modal").on('shown.bs.modal', function () {
+            $(this).find('input:first:visible').focus();
+        }); //Focus
     }
 
     /**
@@ -370,6 +425,8 @@ export class Likes {
     saveNewLike(event, txtNewLike) {
         event.preventDefault();
 
+        var self = this;
+
         if (this.isAddLike) {
             // Add Like
             this.likesData[this.addTypeLike].push({
@@ -385,7 +442,7 @@ export class Likes {
                     Value: txtNewLike.value
                 }
             ).subscribe(result => {
-                console.log(result);
+                self.checkLikesEmpty();
                 //this.saving = false;
                 $('#addLikesModal').modal('hide');
             }, error => alert(`Server error. Try again later`));
@@ -405,7 +462,7 @@ export class Likes {
                     Value: txtNewLike.value
                 }
             ).subscribe(result => {
-                console.log(result);
+                self.checkDislikesEmpty();
                 //this.saving = false;
                 $('#addLikesModal').modal('hide');
             }, error => alert(`Server error. Try again later`));

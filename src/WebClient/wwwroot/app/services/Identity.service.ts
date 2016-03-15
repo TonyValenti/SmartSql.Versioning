@@ -11,7 +11,7 @@ export class IdentitySvc {
     constructor(private http: Http) { }
 
     apiUrl = "http://localhost:47503/api/";
-  
+
     headers = new Headers({ 'Content-Type': 'application/json' });
     options = new RequestOptions({ headers: this.headers });
 
@@ -25,7 +25,7 @@ export class IdentitySvc {
             Key: { EntityId: entId },
             Values: { Value: eyeColor }
         });
-        
+
         return this.http.post(this.apiUrl + "EntityEyeColorApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
@@ -40,7 +40,7 @@ export class IdentitySvc {
         let body = JSON.stringify({
             Key: { EntityId: entId },
             Values: { Value: eyeColor }
-        });        
+        });
 
         return this.http.post(this.apiUrl + "EntityEyeColorApi/Update", body, this.options)
             .map(res => res.json())

@@ -1,4 +1,4 @@
-import {Component, Inject} from 'angular2/core';
+import {Component, Inject, AfterViewInit} from 'angular2/core';
 import {ServerAPI} from '../services/ServerAPI.service';
 import {SelectedPersonDirective} from '../directives/SelectedPerson.directive';
 import {Person} from '../models/Person';
@@ -8,7 +8,7 @@ import {Person} from '../models/Person';
   templateUrl: '../app/templates/dislikes.html',
   directives: [SelectedPersonDirective]
 })
-export class Dislikes {
+export class Dislikes implements AfterViewInit {
 
   selectedDude: Person;
   dislikesData;
@@ -27,6 +27,12 @@ export class Dislikes {
         }
       }
     }, error => alert(`Server error. Try again later`));
+  }
+
+  ngAfterViewInit() {
+      $(".modal").on('shown.bs.modal', function () {
+          $(this).find('input:first:visible').focus();
+      }); //Focus
   }
 
   editDisLikes(event, editTypeOfDisLike) {

@@ -9,13 +9,13 @@
             </div>
             <strong>Religion: </strong><span>{{psychology.Religion || ""}}</span>
         </div>
-        <div class="col-md-6 bottom-buffer" *ngIf="psychology.ReligiousFrequency">
+        <div class="col-md-6 bottom-buffer">
             <div class="btn-group">
                 <a class="btn btn-default" href="#" (click)="editRelFreq($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
 
-            <strong>Religious frequency: </strong><span>{{(psychology.ReligiousFrequency | religiousFreq) === 'Select'? '': psychology.ReligiousFrequency | religiousFreq}}</span>
+            <strong>Religious frequency: </strong><span *ngIf="psychology.ReligiousFrequency">{{(psychology.ReligiousFrequency | religiousFreq) === 'Select'? '': psychology.ReligiousFrequency | religiousFreq}}</span>
         </div>
         <div class="col-md-12 bottom-buffer">
             <div class="btn-group">
@@ -111,12 +111,11 @@
         </div>
     </div>
 
-
     <!-- Choose Love Lang -->
     <div id="chooseLL" class="modal fade" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <div class="modal-header">                    
+                <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Choose love language</h4>
                 </div>
@@ -147,7 +146,6 @@
                             <input type="checkbox" #wphysicakTouchCb [(ngModel)]="psychology.LoveLanguage.pt" (change)="changell($event)"> Physical Touch
                         </label>
                     </div>
-
                 </div>
 
                 <div class="modal-footer">
@@ -157,6 +155,7 @@
         </div>
     </div>
     <!-- /Choose Love Lang -->
+
     <!-- Choose Anger Lang -->
     <div id="chooseAL" class="modal fade" role="dialog">
         <div class="modal-dialog modal-sm">
@@ -196,6 +195,7 @@
         </div>
     </div>
     <!-- /Choose Anger Lang -->
+
     <!-- Edit Religion -->
     <div id="editReligionModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
@@ -210,7 +210,7 @@
                         <div class="form-group">
                             <label for="birthday" class="col-sm-3 control-label">Religion: </label>
                             <div class="col-sm-9">
-                                <input type="text" placeholder="Enter religion" class="form-control" #txtReligion [value]="psychology.Religion" />
+                                <input (keyup.enter)="saveReligion($event, txtReligion.value)" type="text" placeholder="Enter religion" class="form-control" #txtReligion [value]="psychology.Religion" />
                             </div>
                         </div>
                     </form>
@@ -223,6 +223,7 @@
         </div>
     </div>
     <!-- /Edit Religion -->
+
     <!-- Edit PolAff -->
     <div id="editPolAffModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -232,12 +233,11 @@
                     <h4 class="modal-title">Edit political affiliation</h4>
                 </div>
                 <div class="modal-body">
-
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label for="birthday" class="col-sm-4 control-label">Political affiliation: </label>
-                            <div class="col-sm-8">
-                                <input type="text" placeholder="Enter political affiliation" class="form-control" #txtPolAff [value]="psychology.PoliticalAffiliation" />
+                            <div class="col-sm-7">
+                                <input (keyup.enter)="savePolAff($event, txtPolAff.value)" type="text" placeholder="Enter political affiliation" class="form-control" #txtPolAff [value]="psychology.PoliticalAffiliation" />
                             </div>
                         </div>
                     </form>
@@ -250,6 +250,7 @@
         </div>
     </div>
     <!-- /Edit PolAff -->
+
     <!-- Edit RelFreq -->
     <div id="editRelFreqModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" style="width:430px">
@@ -269,7 +270,7 @@
                                     {{ rfv | religiousFreq}}
                                     <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu" style="left: 41%;" *ngIf="rf">
+                                <ul class="dropdown-menu" style="left: 41%;" *ngIf="rfVals">
                                     <li *ngFor="#rf of rfVals" (click)="changeRf($event,rf)">
                                         <a href="#" [innerHtml]="rf | religiousFreq"></a>
                                     </li>

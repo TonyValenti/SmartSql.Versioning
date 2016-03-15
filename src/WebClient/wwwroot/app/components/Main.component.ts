@@ -33,7 +33,7 @@ import {EducationView} from './EducationView.component';
                         <a [routerLink]="['Psychology',{instanceId : insid}]" ><i class="fa fa-lightbulb-o fa-fw"></i> Psychology</a>
                     </li>
                     <li [class.active]="router.isRouteActive(router.generate(['/Financial',{instanceId : insid}]))">
-                        <a [routerLink]="['Financial',{instanceId : insid}]"><i class="fa fa-money fa-fw"></i> Financial</a>
+                        <a [routerLink]="['Financial',{instanceId : insid}]"><i class="fa fa-money fa-fw"></i> Bank Account</a>
                     </li>
                     <li [class.active]="router.isRouteActive(router.generate(['/Education',{instanceId : insid}]))">
                         <a [routerLink]="['Education',{instanceId : insid}]"><i class="fa fa-graduation-cap fa-fw"></i> Education</a></li>

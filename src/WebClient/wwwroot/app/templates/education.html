@@ -1,12 +1,12 @@
 <selected-person *ngIf="selectedDude" [selectedPerson]="selectedDude"></selected-person>
 <div *ngIf="selectedDude">
     <div class="row bottom-buffer">
-        <div class="col-md-12 bottom-buffer" *ngIf="selectedDude.education.EducationLevel">
+        <div class="col-md-12 bottom-buffer">
             <div class="btn-group">
                 <a class="btn btn-default" href="#" (click)="editEduLevel($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
-            <strong>Education Level: </strong><span>{{(selectedDude.education.EducationLevel | eduLevel) === 'Select'? '': selectedDude.education.EducationLevel | eduLevel}}</span>
+            <strong>Education Level: </strong><span *ngIf="selectedDude.education.EducationLevel">{{(selectedDude.education.EducationLevel | eduLevel) === 'Select'? '': selectedDude.education.EducationLevel | eduLevel}}</span>
         </div>
     </div>
     <div class="panel panel-default">
@@ -35,6 +35,7 @@
             </div>
         </div>
     </div>
+
     <!-- Edit Certification -->
     <div id="editCertification" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -60,7 +61,7 @@
                         <div class="form-group">
                             <label for="txtEnd" class="col-md-3 control-label">End Date: </label>
                             <div class="col-md-9">
-                                <input type="date" class="form-control" #txtEnd [value]="selectedCert.EndDate" placeholder="End Date">
+                                <input (keyup.enter)="saveCertification($event, txtCert, txtStart, txtEnd)" type="date" class="form-control" #txtEnd [value]="selectedCert.EndDate" placeholder="End Date">
                             </div>
                         </div>
                     </form>
@@ -76,24 +77,24 @@
 
     <!-- Edit editEduLevel -->
     <div id="editEduLevelModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width:400px">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit education level</h4>
                 </div>
                 <div class="modal-body">
-                   
+
                     <form class="form-horizontal">
                         <div class="form-group">
 
-                            <div class="row dropdown clearfix" *ngIf="elvlv">
+                            <div class="row dropdown clearfix">
                                 <label class="col-sm-5 control-label">Education level: </label>
                                 <button class="btn btn-default dropdown-toggle col-sm-5" type="button" id="rftypesdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     {{ elvlv | eduLevel }}
                                     <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu" style="left: 41%;">
+                                <ul class="dropdown-menu" style="left: 44%;">
                                     <li *ngFor="#ed of elvlVals" (click)="changeEduLvl($event,ed)">
                                         <a href="#" [innerHtml]="ed | eduLevel"></a>
                                     </li>
