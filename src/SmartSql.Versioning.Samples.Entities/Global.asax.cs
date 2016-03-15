@@ -29,6 +29,7 @@ namespace SmartSql.Versioning.Samples.Entities {
             } while (StartingAssemblies != EndingAssemblies);
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
         }
     }
 }
