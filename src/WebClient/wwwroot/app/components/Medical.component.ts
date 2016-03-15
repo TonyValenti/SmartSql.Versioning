@@ -1,4 +1,6 @@
 import { Component, Inject, OnInit, AfterViewInit} from 'angular2/core';
+
+import { BaseComponent } from '../components/Base.component';
 import { ServerAPI } from '../services/ServerAPI.service';
 import { MedicalSvc } from '../services/Medical.service';
 import { SelectedPersonDirective } from '../directives/SelectedPerson.directive';
@@ -14,7 +16,7 @@ import { bloodtype } from '../pipes/bloodtype.pipe';
     directives: [SelectedPersonDirective],
     providers: [MedicalSvc]
 })
-export class Medical implements OnInit, AfterViewInit {
+export class Medical extends BaseComponent implements OnInit, AfterViewInit {
 
     selectedDude: Person;
 
@@ -83,7 +85,7 @@ export class Medical implements OnInit, AfterViewInit {
     tempWeightVal = 0;
     tempWeightUnit = 0; // pounds - 0, kilograms - 1
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _medicalSvc: MedicalSvc, private _routeParams: RouteParams) { }
+    constructor( @Inject(ServerAPI) private _serverAPI, private _medicalSvc: MedicalSvc, private _routeParams: RouteParams) { super(); }
 
     ngAfterViewInit() {
         $(".modal").on('shown.bs.modal', function () {

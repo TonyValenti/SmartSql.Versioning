@@ -59,7 +59,6 @@ import {EducationView} from './EducationView.component';
     { path: '/Education/:instanceId', name: 'Education', component: EducationView },
     { path: '/Psychology/:instanceId', name: 'Psychology', component: PsychologyView }
 ])
-
 export class Main {
     insid: string;
 

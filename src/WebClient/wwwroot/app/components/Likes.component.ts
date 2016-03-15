@@ -1,4 +1,6 @@
 import { Component, Inject, AfterViewInit} from 'angular2/core';
+
+import { BaseComponent } from '../components/Base.component';
 import { ServerAPI} from '../services/ServerAPI.service';
 import { LikeSvc } from '../services/Like.service';
 import { SelectedPersonDirective} from '../directives/SelectedPerson.directive';
@@ -14,7 +16,7 @@ import { Router, RouteParams } from 'angular2/router';
     directives: [SelectedPersonDirective, FORM_DIRECTIVES, RadioControlValueAccessor],
     providers: [LikeSvc]
 })
-export class Likes implements AfterViewInit {
+export class Likes extends BaseComponent implements AfterViewInit {
 
     private selectedDude: Person;
     private likesData;
@@ -41,7 +43,7 @@ export class Likes implements AfterViewInit {
 
     likesProps = [];
 
-    editTypeOfLike;
+    editTypeOfLike = 0;
     isEditLikes = true;
     likeIndex = 0;
 
@@ -52,6 +54,8 @@ export class Likes implements AfterViewInit {
     isAddLike = true;
 
     constructor( @Inject(ServerAPI) private _serverAPI, private _likeSvc: LikeSvc, private _routeParams: RouteParams) {
+        super();
+
         let instanceId = this._routeParams.get('instanceId');
 
         if (!instanceId) {
@@ -266,10 +270,6 @@ export class Likes implements AfterViewInit {
 
             self.dislikesData = dl;
 
-
-            console.log(self.likesData);
-            console.log(self.dislikesData);
-
             this.checkLikesEmpty();
             this.checkDislikesEmpty();
 
@@ -278,9 +278,7 @@ export class Likes implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        $(".modal").on('shown.bs.modal', function () {
-            $(this).find('input:first:visible').focus();
-        }); //Focus
+        super.ngAfterViewInit();
     }
 
     /**
@@ -353,9 +351,9 @@ export class Likes implements AfterViewInit {
         event.preventDefault();
 
         if (this.isEditLikes) {
-            txtLike.value = this.likesData[this.editTypeOfLike][this.likeIndex];
+            txtLike.value = this.likesData[this.editTypeOfLike][this.likeIndex].value;
         } else {
-            txtLike.value = this.dislikesData[this.editTypeOfLike][this.likeIndex];
+            txtLike.value = this.dislikesData[this.editTypeOfLike][this.likeIndex].value;
         }
 
         $('#editLikes').modal('hide');

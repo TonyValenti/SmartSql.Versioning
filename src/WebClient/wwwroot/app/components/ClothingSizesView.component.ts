@@ -1,4 +1,6 @@
 import { Component, Inject, AfterViewInit } from 'angular2/core';
+
+import { BaseComponent } from '../components/Base.component';
 import { Person } from '../models/Person';
 import { ClothingSizes } from '../models/ClothingSizes';
 import { ServerAPI } from '../services/ServerAPI.service';
@@ -12,7 +14,7 @@ import { Router, RouteParams } from 'angular2/router';
     directives: [SelectedPersonDirective],
     providers: [ClothingSvc]
 })
-export class ClothingSizesView implements AfterViewInit {
+export class ClothingSizesView extends BaseComponent implements AfterViewInit {
 
     private selectedDude: Person;
     private clothingSizes: ClothingSizes;
@@ -20,6 +22,8 @@ export class ClothingSizesView implements AfterViewInit {
     clothingType: string;
 
     constructor( @Inject(ServerAPI) private _serverAPI, private _clothingSvc: ClothingSvc, private _routeParams: RouteParams) {
+
+        super();
 
         let instanceId = this._routeParams.get('instanceId');
 
@@ -35,9 +39,7 @@ export class ClothingSizesView implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        $(".modal").on('shown.bs.modal', function () {
-            $(this).find('input:first:visible').focus();
-        }); //Focus
+        super.ngAfterViewInit();
     }
 
     editClothingSizes(event, typeOfClothing) {

@@ -1,4 +1,6 @@
 import {Component, Inject, OnInit, AfterViewInit} from 'angular2/core';
+
+import { BaseComponent } from '../components/Base.component';
 import {Person} from '../models/Person';
 import {eyeColors} from '../models/eyeColors';
 import {PersonDetailDirective} from '../directives/PersonDetail.directive';
@@ -12,14 +14,17 @@ import {RouteParams, Router} from 'angular2/router';
     templateUrl: '../app/templates/identityComp.html',
     directives: [PersonDetailDirective, SelectedPersonDirective]
 })
-export class Identity implements OnInit, AfterViewInit {
+export class Identity extends BaseComponent  implements OnInit, AfterViewInit {
 
     selectedDude: Person;
     activePersonEl: HTMLElement;
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _routeParams: RouteParams) { }
+    constructor( @Inject(ServerAPI) private _serverAPI, private _routeParams: RouteParams) {
+        super();
+    }
 
     ngOnInit() {
+
         let instanceId = this._routeParams.get('instanceId');
 
         console.log("Looking for Person with InstanceId: " + instanceId)
@@ -35,9 +40,7 @@ export class Identity implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        $(".modal").on('shown.bs.modal', function () {
-            $(this).find('input:first:visible').focus();
-        }); //Focus
+        super.ngAfterViewInit();
     }
 
     //selectDude(element, dude: Person) {

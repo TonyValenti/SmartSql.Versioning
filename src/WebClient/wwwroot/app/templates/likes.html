@@ -54,9 +54,9 @@
     </div>
 
     <!-- Edit Likes -->
-    <div *ngIf="likesData[editTypeOfLike]" id="editLikes" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editLikes" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" *ngIf="likesData[editTypeOfLike]">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit {{isEditLikes ? 'Liked':'Disliked'}} {{editTypeOfLike}}</h4>
@@ -79,8 +79,9 @@
         </div>
     </div>
     <!-- /Edit Likes -->
+
     <!-- Add Likes/Dislikes -->
-    <div *ngIf="addTypeLike" id="addLikesModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="addLikesModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" style="width:400px">
             <div class="modal-content">
                 <div class="modal-header">

@@ -1,4 +1,6 @@
 import { Component, Inject, AfterViewInit} from 'angular2/core';
+
+import { BaseComponent } from '../components/Base.component';
 import { Person } from '../models/Person';
 import { ServerAPI } from '../services/ServerAPI.service';
 import { EducationSvc } from '../services/Education.service';
@@ -13,7 +15,7 @@ import { eduLevel } from '../pipes/eduLevel.pipe';
     providers: [EducationSvc],
     pipes: [eduLevel]
 })
-export class EducationView implements AfterViewInit {
+export class EducationView extends BaseComponent implements AfterViewInit {
 
     selectedDude: Person;
     certifications;
@@ -37,6 +39,8 @@ export class EducationView implements AfterViewInit {
     elvlv = 0;
 
     constructor( @Inject(ServerAPI) private _serverAPI, private _eduSvc: EducationSvc, private _routeParams: RouteParams) {
+        super();
+
         let instanceId = this._routeParams.get('instanceId');
 
         if (!instanceId) {
@@ -53,9 +57,7 @@ export class EducationView implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        $(".modal").on('shown.bs.modal', function () {
-            $(this).find('input:first:visible').focus();
-        }); //Focus
+        super.ngAfterViewInit();
     }
 
     saveCertification(event, txtName, txtStart, txtEnd) {

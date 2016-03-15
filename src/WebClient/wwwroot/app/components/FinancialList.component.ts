@@ -1,6 +1,7 @@
 import { Component, Inject, AfterViewInit } from 'angular2/core';
 import { ServerAPI } from '../services/ServerAPI.service';
 import { FinanceSvc } from '../services/Finance.service';
+import { BaseComponent } from '../components/Base.component';
 import { SelectedPersonDirective } from '../directives/SelectedPerson.directive';
 import { Person } from '../models/Person';
 import { Financial } from '../models/Financial';
@@ -12,7 +13,7 @@ import { Router, RouteParams } from 'angular2/router';
     directives: [SelectedPersonDirective],
     providers: [FinanceSvc]
 })
-export class FinancialList implements AfterViewInit {
+export class FinancialList extends BaseComponent implements AfterViewInit {
     selectedDude: Person;
     financialArr: Financial[];
 
@@ -21,6 +22,8 @@ export class FinancialList implements AfterViewInit {
     tempFinancial: any = new Financial("", "", "", "", "");
 
     constructor( @Inject(ServerAPI) private _serverAPI, private _finSvc: FinanceSvc, private _routeParams: RouteParams) {
+        super();
+
         let instanceId = this._routeParams.get('instanceId');
 
         if (!instanceId) {
@@ -37,9 +40,7 @@ export class FinancialList implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        $(".modal").on('shown.bs.modal', function () {
-            $(this).find('input:first:visible').focus();
-        }); //Focus
+        super.ngAfterViewInit();
     }
 
     editFinancial(event, i, isAddFinancial) {

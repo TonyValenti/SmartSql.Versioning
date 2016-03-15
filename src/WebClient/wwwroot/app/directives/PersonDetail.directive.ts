@@ -2,6 +2,7 @@ import {Component, Input, Inject, OnInit, AfterViewInit} from 'angular2/core';
 import {FORM_DIRECTIVES} from 'angular2/common';
 // import {NgForm}    from 'angular2/common';
 
+import { BaseComponent } from '../components/Base.component';
 import {Person} from '../models/Person';
 import {eyeColors} from '../models/eyeColors';
 import {hairColors} from '../models/hairColors';
@@ -15,12 +16,12 @@ import {IdentitySvc} from '../services/Identity.service';
     directives: [FORM_DIRECTIVES],
     providers: [IdentitySvc]
 })
-export class PersonDetailDirective implements OnInit, AfterViewInit {
+export class PersonDetailDirective extends BaseComponent implements OnInit, AfterViewInit {
 
     // Prop from parent component
     @Input() selectedPerson: Person;
 
-    constructor(private _identitySvc: IdentitySvc) { }
+    constructor(private _identitySvc: IdentitySvc) { super(); }
 
     ngOnInit() {
         console.log("Working with", this.selectedPerson);
@@ -32,9 +33,7 @@ export class PersonDetailDirective implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        $(".modal").on('shown.bs.modal', function () {
-            $(this).find('input:first:visible').focus();
-        }); //Focus
+        super.ngAfterViewInit();
     }
 
     // Person detail props

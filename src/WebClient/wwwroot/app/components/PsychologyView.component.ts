@@ -1,4 +1,6 @@
 import {Component, Inject, AfterViewInit} from 'angular2/core';
+
+import { BaseComponent } from '../components/Base.component';
 import {Person} from '../models/Person';
 import {ServerAPI} from '../services/ServerAPI.service';
 import { PsychSvc } from '../services/Psych.service';
@@ -13,7 +15,7 @@ import { religiousFreq } from '../pipes/religiousFreq.pipe';
     providers: [PsychSvc],
     pipes: [religiousFreq]
 })
-export class PsychologyView implements AfterViewInit {
+export class PsychologyView extends BaseComponent implements AfterViewInit {
 
     selectedDude: Person;
     psychology;
@@ -33,6 +35,8 @@ export class PsychologyView implements AfterViewInit {
     la: Object = null;
 
     constructor( @Inject(ServerAPI) private _serverAPI, private _psychSvc: PsychSvc, private _routeParams: RouteParams) {
+        super();
+
         let instanceId = this._routeParams.get('instanceId');
 
         if (!instanceId) {
@@ -50,7 +54,7 @@ export class PsychologyView implements AfterViewInit {
             self._serverAPI.getLA().subscribe(lajsn => {
 
                 for (var prop in lajsn.Love) {
-                    lajsn.Love[prop] = lajsn.Love[prop].replace(/\n/g,'<br>').replace(new RegExp("\\[NAME\\]", 'g'), self.selectedDude.name.split(" ")[0]);
+                    lajsn.Love[prop] = lajsn.Love[prop].replace(/\n/g, '<br>').replace(new RegExp("\\[NAME\\]", 'g'), self.selectedDude.name.split(" ")[0]);
                 }
 
                 for (var prop in lajsn.Anger) {
@@ -63,9 +67,7 @@ export class PsychologyView implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        $(".modal").on('shown.bs.modal', function () {
-            $(this).find('input:first:visible').focus();
-        }); //Focus
+        super.ngAfterViewInit();
     }
 
     //---------------------------

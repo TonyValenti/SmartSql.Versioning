@@ -1,69 +1,71 @@
 import {Component, Inject, AfterViewInit} from 'angular2/core';
+
+import { BaseComponent } from '../components/Base.component';
 import {ServerAPI} from '../services/ServerAPI.service';
 import {SelectedPersonDirective} from '../directives/SelectedPerson.directive';
 import {Person} from '../models/Person';
 
 @Component({
-  selector: 'dislikes',
-  templateUrl: '../app/templates/dislikes.html',
-  directives: [SelectedPersonDirective]
+    selector: 'dislikes',
+    templateUrl: '../app/templates/dislikes.html',
+    directives: [SelectedPersonDirective]
 })
-export class Dislikes implements AfterViewInit {
+export class Dislikes extends BaseComponent implements AfterViewInit {
 
-  selectedDude: Person;
-  dislikesData;
-  dislikesProps = [];
+    selectedDude: Person;
+    dislikesData;
+    dislikesProps = [];
 
-  editTypeOfDisLike;
+    editTypeOfDisLike;
 
-  constructor( @Inject(ServerAPI) private _serverAPI) {
-    _serverAPI.getAllPeople().subscribe(people => {
-      this.selectedDude = people[0];
-      this.dislikesData = people[0].dislikes;
+    constructor( @Inject(ServerAPI) private _serverAPI) {
+        super();
 
-      for (let prop in this.dislikesData) {
-        if (this.dislikesData.hasOwnProperty(prop)) {
-          this.dislikesProps.push([prop]);
-        }
-      }
-    }, error => alert(`Server error. Try again later`));
-  }
+        _serverAPI.getAllPeople().subscribe(people => {
+            this.selectedDude = people[0];
+            this.dislikesData = people[0].dislikes;
 
-  ngAfterViewInit() {
-      $(".modal").on('shown.bs.modal', function () {
-          $(this).find('input:first:visible').focus();
-      }); //Focus
-  }
+            for (let prop in this.dislikesData) {
+                if (this.dislikesData.hasOwnProperty(prop)) {
+                    this.dislikesProps.push([prop]);
+                }
+            }
+        }, error => alert(`Server error. Try again later`));
+    }
 
-  editDisLikes(event, editTypeOfDisLike) {
-    event.preventDefault();
+    ngAfterViewInit() {
+        super.ngAfterViewInit();
+    }
 
-    this.editTypeOfDisLike = editTypeOfDisLike;
+    editDisLikes(event, editTypeOfDisLike) {
+        event.preventDefault();
 
-    $('#editDisLikes').modal('show');
-  }
+        this.editTypeOfDisLike = editTypeOfDisLike;
 
-  saveDisLike($event, newValue) {
-    event.preventDefault();
+        $('#editDisLikes').modal('show');
+    }
 
-    this.dislikesData[this.editTypeOfDisLike] = newValue;
+    saveDisLike($event, newValue) {
+        event.preventDefault();
 
-    $('#editDisLikes').modal('hide');
-  }
+        this.dislikesData[this.editTypeOfDisLike] = newValue;
 
-  closeDisLikeModal(event, txtDisLike) {
-    event.preventDefault();
+        $('#editDisLikes').modal('hide');
+    }
 
-    txtDisLike.value = this.dislikesData[this.editTypeOfDisLike];
+    closeDisLikeModal(event, txtDisLike) {
+        event.preventDefault();
 
-    $('#editDisLikes').modal('hide');
-  }
+        txtDisLike.value = this.dislikesData[this.editTypeOfDisLike];
 
-  deleteDisLikes($event, typeOfLike) {
-    event.preventDefault();
+        $('#editDisLikes').modal('hide');
+    }
 
-    this.dislikesData[typeOfLike] = "";
+    deleteDisLikes($event, typeOfLike) {
+        event.preventDefault();
 
-    $('#editDisLikes').modal('hide');
-  }
+        this.dislikesData[typeOfLike] = "";
+
+        $('#editDisLikes').modal('hide');
+    }
 }

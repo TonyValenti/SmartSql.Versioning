@@ -1,6 +1,8 @@
 import { Component, Input, Inject, OnInit, AfterViewInit} from 'angular2/core';
 import { FORM_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams } from 'angular2/router';
+
+import { BaseComponent } from '../components/Base.component';
 import { Person } from '../models/Person';
 import { ServerAPI } from '../services/ServerAPI.service';
 
@@ -9,7 +11,7 @@ import { ServerAPI } from '../services/ServerAPI.service';
     templateUrl: '../app/templates/selectedPerson.html',
     directives: [FORM_DIRECTIVES]
 })
-export class SelectedPersonDirective implements OnInit, AfterViewInit {
+export class SelectedPersonDirective extends BaseComponent implements OnInit, AfterViewInit {
 
     // Prop from parent component
     @Input() selectedPerson: Person;
@@ -17,16 +19,14 @@ export class SelectedPersonDirective implements OnInit, AfterViewInit {
     instanceId: string;
     isAdd: boolean;
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _routeParams: RouteParams) { }
+    constructor( @Inject(ServerAPI) private _serverAPI, private _routeParams: RouteParams) { super(); }
 
     ngOnInit() {
         this.instanceId = this._routeParams.get('instanceId');
     }
 
     ngAfterViewInit() {
-        $(".modal").on('shown.bs.modal', function () {
-            $(this).find('input:first:visible').focus();
-        }); //Focus
+        super.ngAfterViewInit();
     }
 
     openChangeName(event, isAdd) {
