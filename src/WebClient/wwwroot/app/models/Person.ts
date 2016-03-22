@@ -183,7 +183,7 @@ export class Person {
                 r: pjsn.AngerLanguage && pjsn.AngerLanguage.HasReactive || null,
                 pa: pjsn.AngerLanguage && pjsn.AngerLanguage.HasPassiveAggressive || null,
                 av: pjsn.AngerLanguage && pjsn.AngerLanguage.HasAvoidant || null,
-                d: pjsn.AngerLanguage && pjsn.AngerLanguage.HasDirect || null,
+                d: pjsn.AngerLanguage && pjsn.AngerLanguage.HasAssertive || null,
             }
         }
 

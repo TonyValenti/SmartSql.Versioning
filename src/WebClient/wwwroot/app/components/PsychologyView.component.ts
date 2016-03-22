@@ -237,8 +237,14 @@ export class PsychologyView extends BaseComponent implements AfterViewInit {
     //--------- Love/Anger language ---------
     //---------------------------------------
 
-    changell(event) {
+    changell(event, wordsOfAff, actsOfService, receivingGifts, qualityTime, wphysicakTouch) {
         event.preventDefault();
+
+        this.psychology.LoveLanguage.wof = wordsOfAff;
+        this.psychology.LoveLanguage.aos = actsOfService;
+        this.psychology.LoveLanguage.rg = receivingGifts;
+        this.psychology.LoveLanguage.qt = qualityTime;
+        this.psychology.LoveLanguage.pt = wphysicakTouch;
 
         this.isAddLL = this.psychology.LoveLanguage.wof === null &&
             this.psychology.LoveLanguage.aos === null &&
@@ -246,67 +252,65 @@ export class PsychologyView extends BaseComponent implements AfterViewInit {
             this.psychology.LoveLanguage.qt === null &&
             this.psychology.LoveLanguage.pt === null;
 
-        var sf = (function () {
-            console.log(JSON.stringify(this.psychology.LoveLanguage));
-            var mappedLL = {
-                HasWordsOfAffirmation: this.psychology.LoveLanguage.wof,
-                HasActsOfService: this.psychology.LoveLanguage.aos,
-                HasReceivingGifts: this.psychology.LoveLanguage.rg,
-                HasQualityTime: this.psychology.LoveLanguage.qt,
-                HasPhysicalTouch: this.psychology.LoveLanguage.pt
-            }
 
-            if (this.isAddLL) {
-                //Add
-                this._psychSvc.addLL(this.selectedDude.instanceId, mappedLL).subscribe(result => {
-                    console.log(result);
+        console.log(JSON.stringify(this.psychology.LoveLanguage));
+        var mappedLL = {
+            HasWordsOfAffirmation: this.psychology.LoveLanguage.wof,
+            HasActsOfService: this.psychology.LoveLanguage.aos,
+            HasReceivingGifts: this.psychology.LoveLanguage.rg,
+            HasQualityTime: this.psychology.LoveLanguage.qt,
+            HasPhysicalTouch: this.psychology.LoveLanguage.pt
+        }
 
-                }, error => alert(`Server error. Try again later`));
-            } else {
-                //Update
-                this._psychSvc.updateLL(this.selectedDude.instanceId, mappedLL).subscribe(result => {
-                    console.log(result);
-
-                }, error => alert(`Server error. Try again later`));
-            }
-        }).bind(this);
-
-        setTimeout(sf, 50);
+        if (this.isAddLL) {
+            //Add
+            this._psychSvc.addLL(this.selectedDude.instanceId, mappedLL).subscribe(result => {
+                console.log(result);
+                $('#chooseLL').modal('hide');
+            }, error => alert(`Server error. Try again later`));
+        } else {
+            //Update
+            this._psychSvc.updateLL(this.selectedDude.instanceId, mappedLL).subscribe(result => {
+                console.log(result);
+                $('#chooseLL').modal('hide');
+            }, error => alert(`Server error. Try again later`));
+        }
     }
 
-    changeAl(event) {
+    changeAl(event, reactive, passiveAgressive, avoidant, direct) {
         event.preventDefault();
+
+        this.psychology.AngerLanguage.r = reactive;
+        this.psychology.AngerLanguage.pa = passiveAgressive;
+        this.psychology.AngerLanguage.av = avoidant;
+        this.psychology.AngerLanguage.d = direct;
 
         this.isAddAL = this.psychology.AngerLanguage.r === null &&
             this.psychology.AngerLanguage.pa === null &&
             this.psychology.AngerLanguage.av === null &&
             this.psychology.AngerLanguage.d === null;
 
-        var sf = (function () {
-            console.log(JSON.stringify(this.psychology.AngerLanguage));
-            var mappedAL = {
-                HasReactive: this.psychology.AngerLanguage.r,
-                HasPassiveAggressive: this.psychology.AngerLanguage.pa,
-                HasAvoidant: this.psychology.AngerLanguage.av,
-                HasDirect: this.psychology.AngerLanguage.d
-            }
+        console.log(JSON.stringify(this.psychology.AngerLanguage));
+        var mappedAL = {
+            HasReactive: this.psychology.AngerLanguage.r,
+            HasPassiveAggressive: this.psychology.AngerLanguage.pa,
+            HasAvoidant: this.psychology.AngerLanguage.av,
+            HasAssertive: this.psychology.AngerLanguage.d
+        }
 
-            if (this.isAddAL) {
-                //Add
-                this._psychSvc.addAL(this.selectedDude.instanceId, mappedAL).subscribe(result => {
-                    console.log(result);
-
-                }, error => alert(`Server error. Try again later`));
-            } else {
-                //Update
-                this._psychSvc.updateAL(this.selectedDude.instanceId, mappedAL).subscribe(result => {
-                    console.log(result);
-
-                }, error => alert(`Server error. Try again later`));
-            }
-        }).bind(this);
-
-        setTimeout(sf, 50);
+        if (this.isAddAL) {
+            //Add
+            this._psychSvc.addAL(this.selectedDude.instanceId, mappedAL).subscribe(result => {
+                console.log(result);
+                $('#chooseAL').modal('hide');
+            }, error => alert(`Server error. Try again later`));
+        } else {
+            //Update
+            this._psychSvc.updateAL(this.selectedDude.instanceId, mappedAL).subscribe(result => {
+                console.log(result);
+                $('#chooseAL').modal('hide');
+            }, error => alert(`Server error. Try again later`));
+        }
     }
 
     choosell(event) {

@@ -132,34 +132,35 @@
                 <div class="modal-body">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #wordsOfAffCb [(ngModel)]="psychology.LoveLanguage.wof"/> Words of Affirmation
+                            <input type="checkbox" #wordsOfAffCb [checked]="psychology.LoveLanguage.wof"/> Words of Affirmation
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #actsOfServiceCb [(ngModel)]="psychology.LoveLanguage.aos" /> Acts of Service
+                            <input type="checkbox" #actsOfServiceCb [checked]="psychology.LoveLanguage.aos" /> Acts of Service
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #receivingGiftsCb [(ngModel)]="psychology.LoveLanguage.rg"/> Receiving Gifts
+                            <input type="checkbox" #receivingGiftsCb [checked]="psychology.LoveLanguage.rg"/> Receiving Gifts
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #qualityTimeCb [(ngModel)]="psychology.LoveLanguage.qt" /> Quality Time
+                            <input type="checkbox" #qualityTimeCb [checked]="psychology.LoveLanguage.qt" /> Quality Time
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #wphysicakTouchCb [(ngModel)]="psychology.LoveLanguage.pt" /> Physical Touch
+                            <input type="checkbox" #wphysicakTouchCb [checked]="psychology.LoveLanguage.pt" /> Physical Touch
                         </label>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="changell($event)"><i class="fa fa-floppy-o"></i> Save</button>
+                    <button type="button" class="btn btn-primary"
+                            (click)="changell($event,wordsOfAffCb.checked,actsOfServiceCb.checked,receivingGiftsCb.checked,qualityTimeCb.checked,wphysicakTouchCb.checked)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -178,22 +179,22 @@
                 <div class="modal-body">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #reactiveCb [(ngModel)]="psychology.AngerLanguage.r" />Reactive
+                            <input type="checkbox" #reactiveCb [checked]="psychology.AngerLanguage.r" />Reactive
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #passiveAgressiveCb [(ngModel)]="psychology.AngerLanguage.pa" /> Passive Aggressive
+                            <input type="checkbox" #passiveAgressiveCb [checked]="psychology.AngerLanguage.pa" /> Passive Aggressive
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #avoidantCb [(ngModel)]="psychology.AngerLanguage.av" /> Avoidant
+                            <input type="checkbox" #avoidantCb [checked]="psychology.AngerLanguage.av" /> Avoidant
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #directCb [(ngModel)]="psychology.AngerLanguage.d" /> Direct
+                            <input type="checkbox" #directCb [checked]="psychology.AngerLanguage.d" /> Direct
                         </label>
                     </div>
                 </div>
@@ -201,7 +202,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
 
-                    <button type="button" class="btn btn-primary" (click)="changeAl($event)"><i class="fa fa-floppy-o"></i> Save</button>
+                    <button type="button" class="btn btn-primary" (click)="changeAl($event,reactiveCb.checked,passiveAgressiveCb.checked,avoidantCb.checked,directCb.checked)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
