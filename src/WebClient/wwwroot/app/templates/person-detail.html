@@ -53,26 +53,36 @@
         </div>
     </div>
     <!-- Edit Eye Color -->
-    <div id="editEyeModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editEyeModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit Eye Color</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="dropdown clearfix">
-                        <strong class="col-xs-5">Eye Color: </strong>
-                        <button class="btn btn-default dropdown-toggle col-xs-7" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            {{tempEyeColor || "Select"}}
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-                            <li *ngFor="#ec of eyeColorsArr" (click)="changeEyeColor($event,ec)">
-                                <a href="#" [innerHtml]="ec"></a>
-                            </li>
-                        </ul>
-                    </div>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="birthday" class="col-sm-5 control-label">Eye Color: </label>
+                            <div class="col-sm-7">
+                                <input [(ngModel)]="tempEyeColor"
+                                       [typeahead]="eyeColorsArr"
+                                       (typeaheadOnSelect)="changeEyeColor($event)"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- [typeaheadOptionField]="'name'" <button class="btn btn-default dropdown-toggle col-xs-7" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{tempEyeColor || "Select"}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                        <li *ngFor="#ec of eyeColorsArr" (click)="changeEyeColor($event,ec)">
+                            <a href="#" [innerHtml]="ec"></a>
+                        </li>
+                    </ul>-->
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEyeModal($event)">Close</button>
@@ -85,17 +95,27 @@
         </div>
     </div>
     <!-- /Edit Eye Color -->
-
     <!-- Edit Hair Color -->
-    <div id="editHairModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editHairModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit Hair Color</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="dropdown clearfix">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="birthday" class="col-sm-5 control-label">Hair Color: </label>
+                            <div class="col-sm-7">
+                                <input [(ngModel)]="tempHairColor"
+                                       [typeahead]="hairColorsArr"
+                                       (typeaheadOnSelect)="changeHairColor($event)"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                    <!--<div class="dropdown clearfix">
                         <strong class="col-xs-5">Hair Color: </strong>
                         <button class="btn btn-default dropdown-toggle col-xs-7" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             {{tempHairColor  || "Select"}}
@@ -106,7 +126,7 @@
                                 <a href="#" [innerHtml]="hc"></a>
                             </li>
                         </ul>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeHairModal($event)">Close</button>
@@ -119,13 +139,12 @@
         </div>
     </div>
     <!-- /Edit Hair Color -->
-
     <!-- Edit Ethnicity -->
-    <div id="editEthnicityModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editEthnicityModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit Ethnicity</h4>
                 </div>
                 <div class="modal-body">
@@ -149,13 +168,12 @@
         </div>
     </div>
     <!-- /Edit Ethnicity -->
-
     <!-- Edit Birthday -->
-    <div id="editBDayModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editBDayModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit Birthday</h4>
                 </div>
                 <div class="modal-body">
@@ -179,13 +197,12 @@
         </div>
     </div>
     <!-- /Edit Birthday -->
-
     <!-- Edit Government IDs -->
-    <div *ngIf="tempObjGovernmentId" id="editGIDModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div *ngIf="tempObjGovernmentId" id="editGIDModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Government Identification</h4>
                 </div>
                 <div class="modal-body">

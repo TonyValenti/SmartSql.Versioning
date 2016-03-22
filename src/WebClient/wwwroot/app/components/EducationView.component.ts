@@ -7,6 +7,7 @@ import { EducationSvc } from '../services/Education.service';
 import { SelectedPersonDirective } from '../directives/SelectedPerson.directive';
 import { Router, RouteParams } from 'angular2/router';
 import { eduLevel } from '../pipes/eduLevel.pipe';
+import { ModalConfirmSvc} from '../common/ModalConfirmAll';
 
 @Component({
     selector: 'edu',
@@ -38,7 +39,12 @@ export class EducationView extends BaseComponent implements AfterViewInit {
     elvlVals = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000];
     elvlv = 0;
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _eduSvc: EducationSvc, private _routeParams: RouteParams) {
+    constructor(
+        @Inject(ServerAPI) private _serverAPI,
+        private _eduSvc: EducationSvc,
+        private _modalService: ModalConfirmSvc,
+        private _routeParams: RouteParams) {
+
         super();
 
         let instanceId = this._routeParams.get('instanceId');
@@ -121,11 +127,17 @@ export class EducationView extends BaseComponent implements AfterViewInit {
     deleteCertification(event, index) {
         event.preventDefault();
 
-        this._eduSvc.archiveCertificate(this.certifications[index].InstanceId).subscribe(result => {
-            console.log(result);
-        }, error => alert(`Server error. Try again later`));
+        let msg = `Do you want to delete certification?`;
 
-        this.certifications.splice(index, 1);
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._eduSvc.archiveCertificate(this.certifications[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                }, error => alert(`Server error. Try again later`));
+
+                this.certifications.splice(index, 1);
+            }
+        });
     }
 
     //---------------------------

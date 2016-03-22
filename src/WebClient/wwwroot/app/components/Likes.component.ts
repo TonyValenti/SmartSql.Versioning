@@ -8,7 +8,7 @@ import { Person} from '../models/Person';
 import { RadioControlValueAccessor} from "../directives/radio_value_accessor";
 import { FORM_DIRECTIVES} from "angular2/common";
 import { Router, RouteParams } from 'angular2/router';
-
+import { ModalConfirmSvc} from '../common/ModalConfirmAll';
 
 @Component({
     selector: 'likes',
@@ -18,9 +18,9 @@ import { Router, RouteParams } from 'angular2/router';
 })
 export class Likes extends BaseComponent implements AfterViewInit {
 
-    private selectedDude: Person;
-    private likesData;
-    private dislikesData;
+    private _selectedDude: Person;
+    private _likesData;
+    private _dislikesData;
 
     LikeCategory = {
         Animal : 50,
@@ -53,7 +53,12 @@ export class Likes extends BaseComponent implements AfterViewInit {
     addTypeLike;
     isAddLike = true;
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _likeSvc: LikeSvc, private _routeParams: RouteParams) {
+    constructor(
+        @Inject(ServerAPI) private _serverAPI,
+        private _likeSvc: LikeSvc,
+        private _routeParams: RouteParams,
+        private _modalService: ModalConfirmSvc) {
+
         super();
 
         let instanceId = this._routeParams.get('instanceId');
@@ -121,7 +126,7 @@ export class Likes extends BaseComponent implements AfterViewInit {
         var self = this;
 
         _serverAPI.getPersonByInstanceId(instanceId).subscribe(p => {
-            self.selectedDude = p;
+            self._selectedDude = p;
 
             var l = {
                 Animal:[],
@@ -195,7 +200,7 @@ export class Likes extends BaseComponent implements AfterViewInit {
                 }
             }
 
-            self.likesData = l;
+            self._likesData = l;
 
             var dl = {
                 Animal: [],
@@ -268,7 +273,7 @@ export class Likes extends BaseComponent implements AfterViewInit {
                 }
             }
 
-            self.dislikesData = dl;
+            self._dislikesData = dl;
 
             this.checkLikesEmpty();
             this.checkDislikesEmpty();
@@ -309,9 +314,9 @@ export class Likes extends BaseComponent implements AfterViewInit {
         event.preventDefault();
 
         if (this.isEditLikes) {
-            this.likesData[this.editTypeOfLike][this.likeIndex].value = newValue;
+            this._likesData[this.editTypeOfLike][this.likeIndex].value = newValue;
 
-            this._likeSvc.updateLike(this.likesData[this.editTypeOfLike][this.likeIndex].instanceId,
+            this._likeSvc.updateLike(this._likesData[this.editTypeOfLike][this.likeIndex].instanceId,
                 {
                     Status: 1,
                     Category: this.LikeCategory[this.addTypeLike],
@@ -324,9 +329,9 @@ export class Likes extends BaseComponent implements AfterViewInit {
             }, error => alert(`Server error. Try again later`));
 
         } else {
-            this.dislikesData[this.editTypeOfLike][this.likeIndex].value = newValue;
+            this._dislikesData[this.editTypeOfLike][this.likeIndex].value = newValue;
 
-            this._likeSvc.updateLike(this.dislikesData[this.editTypeOfLike][this.likeIndex].instanceId,
+            this._likeSvc.updateLike(this._dislikesData[this.editTypeOfLike][this.likeIndex].instanceId,
                 {
                     Status: 0,
                     Category: this.LikeCategory[this.addTypeLike],
@@ -351,32 +356,45 @@ export class Likes extends BaseComponent implements AfterViewInit {
         event.preventDefault();
 
         if (this.isEditLikes) {
-            txtLike.value = this.likesData[this.editTypeOfLike][this.likeIndex].value;
+            txtLike.value = this._likesData[this.editTypeOfLike][this.likeIndex].value;
         } else {
-            txtLike.value = this.dislikesData[this.editTypeOfLike][this.likeIndex].value;
+            txtLike.value = this._dislikesData[this.editTypeOfLike][this.likeIndex].value;
         }
 
         $('#editLikes').modal('hide');
     }
 
+    /**
+     * Delete like or dislike
+     * @param $event
+     * @param typeOfLike
+     * @param isEditLikesParam
+     * @param index
+     */
     deleteLikes($event, typeOfLike, isEditLikesParam, index) {
         event.preventDefault();
 
-        if (isEditLikesParam) {
-            this._likeSvc.archiveLike(this.likesData[typeOfLike][index].instanceId).subscribe(r => { console.log(r); }, error => alert(`Server error. Try again later`));
-            this.likesData[typeOfLike].splice(index, 1);
-            this.checkLikesEmpty();
+        let msg = `Do you want to delete ${typeOfLike}?`;
 
-        } else {
-            this._likeSvc.archiveLike(this.dislikesData[typeOfLike][index].instanceId).subscribe(r => { console.log(r); }, error => alert(`Server error. Try again later`));
-            this.dislikesData[typeOfLike].splice(index, 1);
-            this.checkDislikesEmpty();
-        }
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                if (isEditLikesParam) {
+                    this._likeSvc.archiveLike(this._likesData[typeOfLike][index].instanceId).subscribe(r => { console.log(r); }, error => alert(`Server error. Try again later`));
+                    this._likesData[typeOfLike].splice(index, 1);
+                    this.checkLikesEmpty();
+
+                } else {
+                    this._likeSvc.archiveLike(this._dislikesData[typeOfLike][index].instanceId).subscribe(r => { console.log(r); }, error => alert(`Server error. Try again later`));
+                    this._dislikesData[typeOfLike].splice(index, 1);
+                    this.checkDislikesEmpty();
+                }
+            }
+        });
     }
 
     checkLikesEmpty() {
-        for (let prop in this.likesData) {
-            if (this.likesData[prop].length > 0) {
+        for (let prop in this._likesData) {
+            if (this._likesData[prop].length > 0) {
                 this.areLikesEmpty = false;
                 return false;
             }
@@ -386,8 +404,8 @@ export class Likes extends BaseComponent implements AfterViewInit {
     }
 
     checkDislikesEmpty() {
-        for (let prop in this.dislikesData) {
-            if (this.dislikesData[prop].length > 0) {
+        for (let prop in this._dislikesData) {
+            if (this._dislikesData[prop].length > 0) {
                 this.areDislikesEmpty = false;
                 return false;
             }
@@ -427,13 +445,13 @@ export class Likes extends BaseComponent implements AfterViewInit {
 
         if (this.isAddLike) {
             // Add Like
-            this.likesData[this.addTypeLike].push({
+            this._likesData[this.addTypeLike].push({
                 status: 1,
                 category: this.LikeCategory[this.addTypeLike],
                 value: txtNewLike.value
             });
 
-            this._likeSvc.addLike(this.selectedDude.instanceId,
+            this._likeSvc.addLike(this._selectedDude.instanceId,
                 {
                     Status: 1,
                     Category: this.LikeCategory[this.addTypeLike],
@@ -447,13 +465,13 @@ export class Likes extends BaseComponent implements AfterViewInit {
 
         } else {
             //Add Dislike
-            this.dislikesData[this.addTypeLike].push({
+            this._dislikesData[this.addTypeLike].push({
                 status: 0,
                 category: this.LikeCategory[this.addTypeLike],
                 value: txtNewLike.value
             })
 
-            this._likeSvc.addLike(this.selectedDude.instanceId,
+            this._likeSvc.addLike(this._selectedDude.instanceId,
                 {
                     Status: 0,
                     Category: this.LikeCategory[this.addTypeLike],

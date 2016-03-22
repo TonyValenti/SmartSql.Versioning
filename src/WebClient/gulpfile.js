@@ -28,7 +28,9 @@ var libs = [
  pth.npm + "angular2/bundles/router.dev.js",
 
  pth.npm + "jquery/dist/jquery.min.js",
- pth.npm + "bootstrap/dist/js/bootstrap.min.js"
+ pth.npm + "bootstrap/dist/js/bootstrap.min.js",
+ pth.npm + "moment/moment.js",
+ pth.npm + "ng2-bootstrap/bundles/ng2-bootstrap.js"
 ];
 
 var cssFiles = [

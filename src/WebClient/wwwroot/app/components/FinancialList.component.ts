@@ -5,6 +5,8 @@ import { BaseComponent } from '../components/Base.component';
 import { SelectedPersonDirective } from '../directives/SelectedPerson.directive';
 import { Person } from '../models/Person';
 import { Financial } from '../models/Financial';
+import { ModalConfirmSvc} from '../common/ModalConfirmAll';
+
 import { Router, RouteParams } from 'angular2/router';
 
 @Component({
@@ -21,7 +23,12 @@ export class FinancialList extends BaseComponent implements AfterViewInit {
     selectedIndex = -1;
     tempFinancial: any = new Financial("", "", "", "", "");
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _finSvc: FinanceSvc, private _routeParams: RouteParams) {
+    constructor(
+        @Inject(ServerAPI) private _serverAPI,
+        private _finSvc: FinanceSvc,
+        private _modalService: ModalConfirmSvc,
+        private _routeParams: RouteParams) {
+
         super();
 
         let instanceId = this._routeParams.get('instanceId');
@@ -105,12 +112,18 @@ export class FinancialList extends BaseComponent implements AfterViewInit {
     deleteFinancial(event, index) {
         event.preventDefault();
 
-        this._finSvc.archiveFinancial(this.financialArr[index].InstanceId).subscribe(result => {
-            console.log(result);
-        }, error => alert(`Server error. Try again later`));
+        let msg = `Do you want to delete bank account?`;
 
-        this.financialArr.splice(index, 1);
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._finSvc.archiveFinancial(this.financialArr[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                }, error => alert(`Server error. Try again later`));
 
-        $('#editFinancialModal').modal("hide");
+                this.financialArr.splice(index, 1);
+
+                $('#editFinancialModal').modal("hide");
+            }
+        });
     }
 }

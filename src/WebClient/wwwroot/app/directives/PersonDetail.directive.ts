@@ -7,13 +7,15 @@ import {Person} from '../models/Person';
 import {eyeColors} from '../models/eyeColors';
 import {hairColors} from '../models/hairColors';
 import {Gidfull} from '../pipes/gidfull.pipe';
-
+import { ModalConfirmSvc} from '../common/ModalConfirmAll';
 import {IdentitySvc} from '../services/Identity.service';
+
+import {TYPEAHEAD_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
     selector: 'person-detail',
     templateUrl: '../app/templates/person-detail.html',
-    directives: [FORM_DIRECTIVES],
+    directives: [FORM_DIRECTIVES, TYPEAHEAD_DIRECTIVES],
     providers: [IdentitySvc]
 })
 export class PersonDetailDirective extends BaseComponent implements OnInit, AfterViewInit {
@@ -21,7 +23,7 @@ export class PersonDetailDirective extends BaseComponent implements OnInit, Afte
     // Prop from parent component
     @Input() selectedPerson: Person;
 
-    constructor(private _identitySvc: IdentitySvc) { super(); }
+    constructor(private _identitySvc: IdentitySvc, private _modalService: ModalConfirmSvc) { super(); }
 
     ngOnInit() {
         console.log("Working with", this.selectedPerson);
@@ -37,11 +39,11 @@ export class PersonDetailDirective extends BaseComponent implements OnInit, Afte
     }
 
     // Person detail props
-    eyeColorsArr;
-    tempEyeColor;
+    eyeColorsArr: Array<string> = ["Black", "Blue", "Gray", "Green", "Hazel", "Pink"];
+    tempEyeColor: string;
 
-    hairColorsArr;
-    tempHairColor;
+    hairColorsArr: Array<string> = ["Black", "Brown", "Blonde", "Red", "White", "Gray", "Bald", "Sandy"];
+    tempHairColor: string;
 
     tempSelectedGidType = "";
     tempObjGovernmentId = null;
@@ -58,20 +60,19 @@ export class PersonDetailDirective extends BaseComponent implements OnInit, Afte
     editEyeColor(event) {
         event.preventDefault();
         this.tempEyeColor = this.selectedPerson.eyeColor;
-        this.eyeColorsArr = [];
+        //this.eyeColorsArr = [];
 
-        for (var property in eyeColors) {
-            if (eyeColors.hasOwnProperty(property)) {
-                this.eyeColorsArr.push(eyeColors[property]);
-            }
-        }
+        //for (var property in eyeColors) {
+        //    if (eyeColors.hasOwnProperty(property)) {
+        //        this.eyeColorsArr.push(eyeColors[property]);
+        //    }
+        //}
 
         $('#editEyeModal').modal('show');
     }
 
-    changeEyeColor(event, ec) {
-        event.preventDefault();
-        this.tempEyeColor = ec;
+    changeEyeColor(event: any) {
+        this.tempEyeColor = event.item;
     }
 
     saveEyeColor(event) {
@@ -102,6 +103,8 @@ export class PersonDetailDirective extends BaseComponent implements OnInit, Afte
     }
 
     closeEyeModal(event) {
+        //this.selectedPerson.eyeColor = this.tempEyeColor;
+        this.tempEyeColor = this.selectedPerson.eyeColor;
         $('#editEyeModal').modal('hide');
     }
 
@@ -111,20 +114,19 @@ export class PersonDetailDirective extends BaseComponent implements OnInit, Afte
     editHairColor(event) {
         event.preventDefault();
         this.tempHairColor = this.selectedPerson.hairColor;
-        this.hairColorsArr = [];
+        //this.hairColorsArr = [];
 
-        for (var property in eyeColors) {
-            if (eyeColors.hasOwnProperty(property)) {
-                this.hairColorsArr.push(eyeColors[property]);
-            }
-        }
+        //for (var property in eyeColors) {
+        //    if (eyeColors.hasOwnProperty(property)) {
+        //        this.hairColorsArr.push(eyeColors[property]);
+        //    }
+        //}
 
         $('#editHairModal').modal('show');
     }
 
     changeHairColor(event, hc) {
-        event.preventDefault();
-        this.tempHairColor = hc;
+        this.tempHairColor = event.item;
     }
 
     saveHairColor(event) {
@@ -155,6 +157,8 @@ export class PersonDetailDirective extends BaseComponent implements OnInit, Afte
     }
 
     closeHairModal(event) {
+        this.tempHairColor = this.selectedPerson.hairColor;
+        //this.selectedPerson.hairColor = this.tempHairColor;
         $('#editHairModal').modal('hide');
     }
 
@@ -200,14 +204,20 @@ export class PersonDetailDirective extends BaseComponent implements OnInit, Afte
     deleteGID(event, index) {
         event.preventDefault();
 
-        this._identitySvc.archiveGovId(this.selectedPerson.governmentId[index].instanceId)
-            .subscribe(result => {
-                console.log(result);
-                $('#editGIDModal').modal('hide');
-            }, error => alert(`Server error. Try again later`));
+        let msg = `Do you want to delete government identification?`;
 
-        this.selectedPerson.governmentId.splice(index, 1);
-        this.tempObjGovernmentId = null;
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._identitySvc.archiveGovId(this.selectedPerson.governmentId[index].instanceId)
+                    .subscribe(result => {
+                        console.log(result);
+                        $('#editGIDModal').modal('hide');
+                    }, error => alert(`Server error. Try again later`));
+
+                this.selectedPerson.governmentId.splice(index, 1);
+                this.tempObjGovernmentId = null;
+            }
+        });
     }
 
     saveGid(event) {

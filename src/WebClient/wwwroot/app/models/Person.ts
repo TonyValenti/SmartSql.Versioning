@@ -167,11 +167,11 @@ export class Person {
             pjsn.BraSize && pjsn.BraSize.Value
         );
 
-
         var psychology = {
             Religion: pjsn.Religion && pjsn.Religion.Value,
             ReligiousFrequency: pjsn.ReligiousFrequency && pjsn.ReligiousFrequency.Value,
             PoliticalAffiliation: pjsn.PoliticalAffiliation && pjsn.PoliticalAffiliation.Value,
+            SexualOrientation: pjsn.SexualOrientation && pjsn.SexualOrientation.Value,
             LoveLanguage: {
                 wof: pjsn.LoveLanguage && pjsn.LoveLanguage.HasWordsOfAffirmation || null,
                 aos: pjsn.LoveLanguage && pjsn.LoveLanguage.HasActsOfService || null,

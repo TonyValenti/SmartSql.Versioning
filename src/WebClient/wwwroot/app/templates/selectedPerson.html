@@ -12,11 +12,11 @@
 </div>
 
 <!-- Edit person name -->
-<div id="editPersonNameModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+<div id="editPersonNameModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">{{ isAdd ? 'Edit person name':'Add person' }}</h4>
       </div>
       <div class="modal-body">

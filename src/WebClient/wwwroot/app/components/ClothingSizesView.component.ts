@@ -1,4 +1,5 @@
 import { Component, Inject, AfterViewInit } from 'angular2/core';
+import { Router, RouteParams } from 'angular2/router';
 
 import { BaseComponent } from '../components/Base.component';
 import { Person } from '../models/Person';
@@ -6,9 +7,8 @@ import { ClothingSizes } from '../models/ClothingSizes';
 import { ServerAPI } from '../services/ServerAPI.service';
 import { ClothingSvc } from '../services/Clothing.service';
 import { SelectedPersonDirective } from '../directives/SelectedPerson.directive';
-import { Router, RouteParams } from 'angular2/router';
 
-@Component({
+ @Component({
     selector: 'clothingSizes',
     templateUrl: '../app/templates/clothingSizes.html',
     directives: [SelectedPersonDirective],
@@ -21,7 +21,10 @@ export class ClothingSizesView extends BaseComponent implements AfterViewInit {
     clothingTypeName: string;
     clothingType: string;
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _clothingSvc: ClothingSvc, private _routeParams: RouteParams) {
+    constructor(
+        @Inject(ServerAPI) private _serverAPI,
+        private _clothingSvc: ClothingSvc,
+        private _routeParams: RouteParams) {
 
         super();
 

@@ -11,19 +11,28 @@
         </div>
         <div class="col-md-6 bottom-buffer">
             <div class="btn-group">
+                <a class="btn btn-default" href="#" (click)="editPolAff($event)"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+            </div>
+
+            <strong>Political affiliation: </strong><span>{{psychology.PoliticalAffiliation || ""}}</span>
+        </div>
+
+        <div class="col-md-6 bottom-buffer">
+            <div class="btn-group">
                 <a class="btn btn-default" href="#" (click)="editRelFreq($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
 
             <strong>Religious frequency: </strong><span *ngIf="psychology.ReligiousFrequency">{{(psychology.ReligiousFrequency | religiousFreq) === 'Select'? '': psychology.ReligiousFrequency | religiousFreq}}</span>
         </div>
-        <div class="col-md-12 bottom-buffer">
+        <div class="col-md-6 bottom-buffer">
             <div class="btn-group">
-                <a class="btn btn-default" href="#" (click)="editPolAff($event)"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-default" href="#" (click)="editSexOri($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
 
-            <strong>Political affiliation: </strong><span>{{psychology.PoliticalAffiliation || ""}}</span>
+            <strong>Sexual orientation: </strong><span>{{psychology.SexualOrientation || ""}}</span>
         </div>
     </div>
     <br>
@@ -36,7 +45,7 @@
                 </div>-->
                 <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
                     <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-heart-o fa-fw"></i> Love language</h3>
-                    <a class="btn btn-primary pull-right btn-sm" (click)="choosell($event)" href="#"><i class="fa fa-plus"></i></a>
+                    <a class="btn btn-primary pull-right btn-sm" (click)="choosell($event)" href="#"><i class="fa fa-pencil"></i></a>
                     <div class="clearfix"></div>
                 </div>
 
@@ -79,7 +88,7 @@
 
                 <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
                     <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-frown-o fa-fw"></i> Anger language</h3>
-                    <a class="btn btn-primary pull-right btn-sm" (click)="chooseal($event)" href="#"><i class="fa fa-plus"></i></a>
+                    <a class="btn btn-primary pull-right btn-sm" (click)="chooseal($event)" href="#"><i class="fa fa-pencil"></i></a>
                     <div class="clearfix"></div>
                 </div>
 
@@ -112,44 +121,45 @@
     </div>
 
     <!-- Choose Love Lang -->
-    <div id="chooseLL" class="modal fade" role="dialog">
+    <div id="chooseLL" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Choose love language</h4>
                 </div>
 
                 <div class="modal-body">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #wordsOfAffCb [(ngModel)]="psychology.LoveLanguage.wof" (change)="changell($event)" /> Words of Affirmation
+                            <input type="checkbox" #wordsOfAffCb [(ngModel)]="psychology.LoveLanguage.wof"/> Words of Affirmation
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #actsOfServiceCb [(ngModel)]="psychology.LoveLanguage.aos" (change)="changell($event)"> Acts of Service
+                            <input type="checkbox" #actsOfServiceCb [(ngModel)]="psychology.LoveLanguage.aos" /> Acts of Service
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #receivingGiftsCb [(ngModel)]="psychology.LoveLanguage.rg" (change)="changell($event)"> Receiving Gifts
+                            <input type="checkbox" #receivingGiftsCb [(ngModel)]="psychology.LoveLanguage.rg"/> Receiving Gifts
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #qualityTimeCb [(ngModel)]="psychology.LoveLanguage.qt" (change)="changell($event)"> Quality Time
+                            <input type="checkbox" #qualityTimeCb [(ngModel)]="psychology.LoveLanguage.qt" /> Quality Time
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #wphysicakTouchCb [(ngModel)]="psychology.LoveLanguage.pt" (change)="changell($event)"> Physical Touch
+                            <input type="checkbox" #wphysicakTouchCb [(ngModel)]="psychology.LoveLanguage.pt" /> Physical Touch
                         </label>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="changell($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -157,39 +167,41 @@
     <!-- /Choose Love Lang -->
 
     <!-- Choose Anger Lang -->
-    <div id="chooseAL" class="modal fade" role="dialog">
+    <div id="chooseAL" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Choose love language</h4>
                 </div>
 
                 <div class="modal-body">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #reactiveCb [(ngModel)]="psychology.AngerLanguage.r" (change)="changeAl($event)" />Reactive
+                            <input type="checkbox" #reactiveCb [(ngModel)]="psychology.AngerLanguage.r" />Reactive
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #passiveAgressiveCb [(ngModel)]="psychology.AngerLanguage.pa" (change)="changeAl($event)"> Passive Aggressive
+                            <input type="checkbox" #passiveAgressiveCb [(ngModel)]="psychology.AngerLanguage.pa" /> Passive Aggressive
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #avoidantCb [(ngModel)]="psychology.AngerLanguage.av" (change)="changeAl($event)"> Avoidant
+                            <input type="checkbox" #avoidantCb [(ngModel)]="psychology.AngerLanguage.av" /> Avoidant
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" #directCb [(ngModel)]="psychology.AngerLanguage.d" (change)="changeAl($event)"> Direct
+                            <input type="checkbox" #directCb [(ngModel)]="psychology.AngerLanguage.d" /> Direct
                         </label>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+                    <button type="button" class="btn btn-primary" (click)="changeAl($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -197,11 +209,11 @@
     <!-- /Choose Anger Lang -->
 
     <!-- Edit Religion -->
-    <div id="editReligionModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editReligionModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit religion</h4>
                 </div>
                 <div class="modal-body">
@@ -224,12 +236,40 @@
     </div>
     <!-- /Edit Religion -->
 
-    <!-- Edit PolAff -->
-    <div id="editPolAffModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <!-- Edit Sexual Orientation -->
+    <div id="editSexOriModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit sexual orientation</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Sexual orientation: </label>
+                            <div class="col-sm-7">
+                                <input (keyup.enter)="saveSexOri($event, txtSexOri.value)" type="text"
+                                       placeholder="Enter sexual orientation" class="form-control" #txtSexOri [value]="psychology.SexualOrientation" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeSexOri($event,txtSexOri)">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveSexOri($event, txtSexOri.value)"><i class="fa fa-floppy-o"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit Sexual Orientation -->
+
+    <!-- Edit PolAff -->
+    <div id="editPolAffModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit political affiliation</h4>
                 </div>
                 <div class="modal-body">
@@ -252,11 +292,11 @@
     <!-- /Edit PolAff -->
 
     <!-- Edit RelFreq -->
-    <div id="editRelFreqModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editRelFreqModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog" style="width:430px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit religious frequency</h4>
                 </div>
                 <div class="modal-body">

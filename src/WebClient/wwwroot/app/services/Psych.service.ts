@@ -50,11 +50,11 @@ export class PsychSvc {
     }
 
     /**
-   * Add Political Affiliation
-   * @param {string} entId
-   * @param {string} pa
-   * @returns
-   */
+    * Add Political Affiliation
+    * @param {string} entId
+    * @param {string} pa
+    * @returns
+    */
     addPoliticAff(entId: string, pa: string) {
         let body = JSON.stringify({
             Key: { EntityId: entId },
@@ -79,6 +79,40 @@ export class PsychSvc {
         });
 
         return this.http.post(this.apiUrl + "EntityPoliticalAffiliationApi/Update", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+     * Add Sexual Orientation
+     * @param {string} entId
+     * @param {string} sexo
+     * @returns
+     */
+    addSexualOri(entId: string, sexo: string) {
+        let body = JSON.stringify({
+            Key: { EntityId: entId },
+            Values: { Value: sexo }
+        });
+
+        return this.http.post(this.apiUrl + "EntitySexualOrientationApi/Add", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+     * Update Sexual Orientation
+     * @param {string} insId
+     * @param {string} sexo
+     * @returns
+     */
+    updateSexualOri(insId: string, sexo: string) {
+        let body = JSON.stringify({
+            Key: { EntityId: insId },
+            Values: { Value: sexo }
+        });
+
+        return this.http.post(this.apiUrl + "EntitySexualOrientationApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -115,7 +149,7 @@ export class PsychSvc {
         return this.http.post(this.apiUrl + "EntityReligiousFrequencyApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
-    } 
+    }
 
     /**
     * add Love lang

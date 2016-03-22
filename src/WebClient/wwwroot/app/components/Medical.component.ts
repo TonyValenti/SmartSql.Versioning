@@ -7,7 +7,7 @@ import { SelectedPersonDirective } from '../directives/SelectedPerson.directive'
 import { Person } from '../models/Person';
 import { Router, RouteParams } from 'angular2/router';
 import { bloodtype } from '../pipes/bloodtype.pipe';
-
+import { ModalConfirmSvc} from '../common/ModalConfirmAll';
 
 @Component({
     selector: 'medical',
@@ -85,7 +85,11 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     tempWeightVal = 0;
     tempWeightUnit = 0; // pounds - 0, kilograms - 1
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _medicalSvc: MedicalSvc, private _routeParams: RouteParams) { super(); }
+    constructor(
+        @Inject(ServerAPI) private _serverAPI,
+        private _modalService: ModalConfirmSvc,
+        private _medicalSvc: MedicalSvc,
+        private _routeParams: RouteParams) { super(); }
 
     ngAfterViewInit() {
         $(".modal").on('shown.bs.modal', function () {
@@ -170,14 +174,20 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     deletetAllergie(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveAllergy(this.selectedDude.allergies[index].instanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editAllergieModal').modal('hide');
+        let msg = `Do you want to delete Allergy?`;
 
-        }, error => alert(`Server error. Try again later`));
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveAllergy(this.selectedDude.allergies[index].instanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editAllergieModal').modal('hide');
 
-        this.selectedDude.allergies.splice(index, 1);
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.allergies.splice(index, 1);
+            }
+        });
     }
 
     closeAllergie(event) {
@@ -234,14 +244,20 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     deletetMedication(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveMedication(this.selectedDude.medications[index].instanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editMedicationModal').modal('hide');
+        let msg = `Do you want to delete Medication?`;
 
-        }, error => alert(`Server error. Try again later`));
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveMedication(this.selectedDude.medications[index].instanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editMedicationModal').modal('hide');
 
-        this.selectedDude.medications.splice(index, 1);
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.medications.splice(index, 1);
+            }
+        });
     }
 
     closeMedication(event) {
@@ -296,14 +312,20 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     deletetProcedure(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveProcedure(this.selectedDude.procedures[index].InstanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editProcedureModal').modal('hide');
+        let msg = `Do you want to delete procedure?`;
 
-        }, error => alert(`Server error. Try again later`));
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveProcedure(this.selectedDude.procedures[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editProcedureModal').modal('hide');
 
-        this.selectedDude.procedures.splice(index, 1);
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.procedures.splice(index, 1);
+            }
+        });
     }
 
     closeProcedure(event) {
@@ -361,15 +383,20 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     deletetImmunization(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveImmunization(this.selectedDude.immunizations[index].InstanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editImmunizationModal').modal('hide');
+        let msg = `Do you want to delete immunization?`;
 
-        }, error => alert(`Server error. Try again later`));
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveImmunization(this.selectedDude.immunizations[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editImmunizationModal').modal('hide');
 
-        this.selectedDude.immunizations.splice(index, 1);
+                }, error => alert(`Server error. Try again later`));
 
+                this.selectedDude.immunizations.splice(index, 1);
+            }
+        });
     }
 
     closeImmunization(event) {
@@ -429,14 +456,20 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     deletetIncident(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveIncident(this.selectedDude.incidents[index].InstanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editIncidentModal').modal('hide');
+        let msg = `Do you want to delete incident?`;
 
-        }, error => alert(`Server error. Try again later`));
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveIncident(this.selectedDude.incidents[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editIncidentModal').modal('hide');
 
-        this.selectedDude.incidents.splice(index, 1);
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.incidents.splice(index, 1);
+            }
+        });
     }
 
     closeIncident(event) {
@@ -495,13 +528,19 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     deletetCondition(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveCondition(this.selectedDude.conditions[index].InstanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editConditionModal').modal('hide');
-        }, error => alert(`Server error. Try again later`));
+        let msg = `Do you want to delete condition?`;
 
-        this.selectedDude.conditions.splice(index, 1);
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveCondition(this.selectedDude.conditions[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editConditionModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.conditions.splice(index, 1);
+            }
+        });
     }
 
     closeCondition(event) {
@@ -559,13 +598,19 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     deletetInsurance(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveInsurance(this.selectedDude.insurances[index].InstanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editInsuranceModal').modal('hide');
-        }, error => alert(`Server error. Try again later`));
+        let msg = `Do you want to delete insurance?`;
 
-        this.selectedDude.insurances.splice(index, 1);
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveInsurance(this.selectedDude.insurances[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editInsuranceModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.insurances.splice(index, 1);
+            }
+        });
     }
 
     closeInsurance(event) {
@@ -607,7 +652,13 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     deletetEmergencyContacts(event, index) {
         event.preventDefault();
 
-        this.selectedDude.emContacts.splice(index, 1);
+        let msg = `Do you want to delete contact?`;
+
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this.selectedDude.emContacts.splice(index, 1);
+            }
+        });
     }
 
     closeEmergencyContacts(event) {
@@ -720,7 +771,6 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     // ============
     // Edit Height
     // ============
-
     getHeight() {
 
         if (this.heightUnit === 0) {
@@ -816,7 +866,6 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
         this.selectedDude.height.value = this.tempHeightVal;
     }
 
-
     //========
     // Weight
     //========
@@ -854,26 +903,26 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
         this.tempWeightUnit = unit;
     }
 
-    saveWeight(event, pounds, kg) {
+    saveWeight(event, weight) {
         event.preventDefault();
 
         this.selectedDude.weight.unit = this.tempWeightUnit;
 
-        if (this.tempWeightUnit === 0) {
-            //Pounds
-            this.tempWeightVal = pounds * 1;
-        } else {
-            //Kg
-            this.tempWeightVal = kg * 1;
-        }
+        //if (this.tempWeightUnit === 0) {
+        //    //Pounds
+        //    this.tempWeightVal = pounds * 1;
+        //} else {
+        //    //Kg
+        //    this.tempWeightVal = kg * 1;
+        //}
+
+        this.tempWeightVal = weight * 1;
 
         if (!this.tempWeightVal || this.selectedDude.weight.value === this.tempWeightVal) {
             // No Change so just exit
             $('#editWeight').modal('hide');
             return;
         }
-
-        this.selectedDude.weight.value = this.tempWeightVal;
 
         //this.saving = true;
 
@@ -892,5 +941,7 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
                 $('#editWeight').modal('hide');
             }, error => alert(`Server error. Try again later`));
         }
+
+        this.selectedDude.weight.value = this.tempWeightVal;
     }
 }

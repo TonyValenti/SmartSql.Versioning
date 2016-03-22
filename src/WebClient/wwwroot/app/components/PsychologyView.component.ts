@@ -70,6 +70,46 @@ export class PsychologyView extends BaseComponent implements AfterViewInit {
         super.ngAfterViewInit();
     }
 
+    // ------------------------------
+    // ----- Sexual Orientation -----
+    // ------------------------------
+    editSexOri(event) {
+        event.preventDefault();
+        $('#editSexOriModal').modal('show');
+    }
+
+    saveSexOri(event, newSexOri) {
+        event.preventDefault();
+
+        if (!this.psychology.SexualOrientation && newSexOri) {
+            //Add
+            this._psychSvc.addSexualOri(this.selectedDude.instanceId, newSexOri).subscribe(result => {
+                console.log(result);
+                //this.saving = false;
+                $('#editSexOriModal').modal('hide');
+            }, error => alert(`Server error. Try again later`));
+        } else {
+            //Edit
+            this._psychSvc.updateSexualOri(this.selectedDude.instanceId, newSexOri).subscribe(result => {
+                console.log(result);
+                //this.saving = false;
+                $('#editSexOriModal').modal('hide');
+            }, error => alert(`Server error. Try again later`));
+        }
+
+        this.psychology.SexualOrientation = newSexOri;
+
+        $('#editSexOriModal').modal('hide');
+    }
+
+    closeSexOri(event, txtSexOri: HTMLInputElement) {
+        event.preventDefault();
+
+        txtSexOri.value = this.psychology.SexualOrientation;
+
+        $('#editSexOriModal').modal('hide');
+    }
+
     //---------------------------
     //------ Edit Religion ------
     //---------------------------

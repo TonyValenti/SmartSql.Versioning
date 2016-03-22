@@ -1,6 +1,6 @@
 <selected-person *ngIf="selectedDude" [selectedPerson]="selectedDude"></selected-person>
 
-<div *ngIf="likesData">
+<div *ngIf="_likesData">
     <div class="panel panel-default" style="min-height: 70px;">
         <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
             <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-thumbs-o-up fa-fw"></i> Likes</h3>
@@ -13,8 +13,8 @@
                 No likes
             </div>
             <div class="row">
-                <div *ngFor="#prop of likesProps" [class.hidden]="likesData[prop.prop].length === 0">
-                    <div *ngFor="#likeData of likesData[prop.prop];#i = index" class="col-md-6 text-left columnspacing">
+                <div *ngFor="#prop of likesProps" [class.hidden]="_likesData[prop.prop].length === 0">
+                    <div *ngFor="#likeData of _likesData[prop.prop];#i = index" class="col-md-6 text-left columnspacing">
                         <div class="btn-group">
                             <a class="btn btn-default" href="#" (click)="editLikes($event, prop.prop, true, i)"><i class="fa fa-pencil"></i></a>
                             <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
@@ -39,8 +39,8 @@
                 No dislikes
             </div>
             <div class="row">
-                <div *ngFor="#prop of likesProps" [class.hidden]="dislikesData[prop.prop].length === 0">
-                    <div *ngFor="#dislikeData of dislikesData[prop.prop];#i = index" class="col-md-6 text-left columnspacing">
+                <div *ngFor="#prop of likesProps" [class.hidden]="_dislikesData[prop.prop].length === 0">
+                    <div *ngFor="#dislikeData of _dislikesData[prop.prop];#i = index" class="col-md-6 text-left columnspacing">
                         <div class="btn-group">
                             <a class="btn btn-default" href="#" (click)="editLikes($event, prop.prop , false, i)"><i class="fa fa-pencil"></i></a>
                             <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
@@ -54,11 +54,11 @@
     </div>
 
     <!-- Edit Likes -->
-    <div id="editLikes" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editLikes" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content" *ngIf="likesData[editTypeOfLike]">
+            <div class="modal-content" *ngIf="_likesData[editTypeOfLike]">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit {{isEditLikes ? 'Liked':'Disliked'}} {{editTypeOfLike}}</h4>
                 </div>
                 <div class="modal-body">
@@ -81,11 +81,11 @@
     <!-- /Edit Likes -->
 
     <!-- Add Likes/Dislikes -->
-    <div id="addLikesModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="addLikesModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog" style="width:400px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Add {{isEditLikes ? 'Likes':'Dislikes'}} for {{addTypeLike}}</h4>
                 </div>
                 <div class="modal-body">

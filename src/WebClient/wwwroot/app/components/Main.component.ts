@@ -9,6 +9,7 @@ import {Dislikes} from './Dislikes.component';
 import {FinancialList} from './FinancialList.component';
 import {PsychologyView} from './PsychologyView.component';
 import {EducationView} from './EducationView.component';
+import { ModalConfirm, ModalConfirmSvc } from '../common/ModalConfirmAll';
 
 @Component({
     selector: 'main',
@@ -47,8 +48,11 @@ import {EducationView} from './EducationView.component';
                     </div>
                 </div>
             </div>
+
+            <modal-confirm></modal-confirm>
             <!-- /tabs left -->`,
-    directives: [ROUTER_DIRECTIVES]
+    directives: [ROUTER_DIRECTIVES, ModalConfirm],
+    providers: [ModalConfirmSvc]
 })
 @RouteConfig([
     { path: '/Identity/:instanceId', name: 'Identity', component: Identity, useAsDefault: true },

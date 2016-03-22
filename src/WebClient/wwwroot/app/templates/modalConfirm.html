@@ -1,0 +1,24 @@
+
+<div id="confirmationModal" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display:none">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{message}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" id="cancelButton">
+                    {{cancelText}}
+                </button>
+                <button class="btn btn-primary" id="okButton">
+                    {{okText}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
