@@ -25,6 +25,25 @@ export class ServerAPI {
     static person: Person;
 
     /**
+     * http://localhost:47503/api/EntityApi/Get
+     * @param {string} instance
+     */
+    getPersonByInstanceIdNoDetails(instanceId: string): Observable<any> {
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.post(ServerAPI.apiUrl + "EntityApi/Get",
+            JSON.stringify({
+                "Key": {
+                    "InstanceId": instanceId
+                }
+            })            ,
+            new RequestOptions({ headers: headers }))
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
      * @description Get person by Instance Id
      * @param {string} instanceId
      * @returns Person
@@ -68,39 +87,42 @@ export class ServerAPI {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        this.http.post(ServerAPI.apiUrl + '/EntityApi/List', '', { headers: headers })
-            .map(res => res.json())
-            .subscribe((plist) => {
+        var self = this;
 
-                console.log("People list: ", plist);
-
-                // If PeopleList is already in memory
-                // just return it
-                if (this.peopleList.length > 0) {
-
-                    return Observable.from(this.peopleList, function () { console.log(arguments); }).toArray();
-                }
-
-                if (localStorage.getItem("people")) {
-                    // If data is cached in localStorage, use it
-
-                    for (let personJson of JSON.parse(localStorage.getItem("people"))) {
-                        this.peopleList.push(Person.createRPerson(personJson));
-                    }
-
-                    return Observable.from(this.peopleList, function () { console.log(arguments); }).toArray();
-                    //return new Observable<Array<Person>>().share()
-
-                } else {
-                    // LocalStorage is empty
-
-                    for (let personJson of plist) {
-                        this.peopleList.push(Person.createRPerson(personJson));
-                    }
-
-                    return Observable.from(this.peopleList, function () { console.log(arguments); }).toArray();
-                };
+        // If PeopleList is already in memory
+        // just return it
+        if (self.peopleList.length > 0) {
+            return Observable.create(function (observer) {
+                observer.next(self.peopleList);
+                observer.complete();
             });
+        }
+
+        if (localStorage.getItem("people")) {
+            // If data is cached in localStorage, use it
+
+            for (let personJson of JSON.parse(localStorage.getItem("people"))) {
+                self.peopleList.push(Person.createRPerson(personJson));
+            }
+
+            return Observable.create(function (observer) {
+                observer.next(self.peopleList);
+                observer.complete();
+            });
+        } else {
+            // LocalStorage is empty
+            var httploc = this.http;
+            return Observable.create(function (observer) {
+                httploc.post(ServerAPI.apiUrl + 'EntityApi/List', '', { headers: headers })
+                    .map(res => res.json())
+                    .subscribe((people) => {
+                        self.peopleList = people;
+                        observer.next(self.peopleList);
+                        observer.complete();
+                    });
+            });
+        };
+
     }
 
     /**

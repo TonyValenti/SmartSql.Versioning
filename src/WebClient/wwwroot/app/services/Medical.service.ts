@@ -15,6 +15,8 @@ export class MedicalSvc {
     headers = new Headers({ 'Content-Type': 'application/json' });
     options = new RequestOptions({ headers: this.headers });
 
+    people;
+
     /**
      * Add Sex
      * @param {string} sex
@@ -78,8 +80,8 @@ export class MedicalSvc {
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
- 
-    
+
+
     /**
      * Add height
      * @param {string} entId
@@ -189,7 +191,7 @@ export class MedicalSvc {
       */
     updateAllergy(insId: string, allergy: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: allergy
         });
 
@@ -238,7 +240,7 @@ export class MedicalSvc {
       */
     updateMedication(insId: string, medication: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: medication
         });
 
@@ -289,7 +291,7 @@ export class MedicalSvc {
       */
     updateProcedure(insId: string, procedure: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: procedure
         });
 
@@ -339,7 +341,7 @@ export class MedicalSvc {
       */
     updateImmunization(insId: string, immunization: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: immunization
         });
 
@@ -389,7 +391,7 @@ export class MedicalSvc {
       */
     updateIncident(insId: string, incident: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: incident
         });
 
@@ -439,7 +441,7 @@ export class MedicalSvc {
       */
     updateCondition(insId: string, condition: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: condition
         });
 
@@ -464,11 +466,11 @@ export class MedicalSvc {
     }
 
     /**
-   * Add insurance
-   * @param {string} entId
-   * @param {Object} insurance
-   * @returns
-   */
+     * Add insurance
+     * @param {string} entId
+     * @param {Object} insurance
+     * @returns
+     */
     addInsurance(entId: string, insurance: Object) {
         let body = JSON.stringify({
             Key: { EntityId: entId },
@@ -481,14 +483,14 @@ export class MedicalSvc {
     }
 
     /**
-      * Update Insurance
-      * @param {string} insId
-      * @param {Object} insurance
-      * @returns
-      */
+     * Update Insurance
+     * @param {string} insId
+     * @param {Object} insurance
+     * @returns
+     */
     updateInsurance(insId: string, insurance: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: insurance
         });
 
@@ -498,10 +500,10 @@ export class MedicalSvc {
     }
 
     /**
-    * Archive insurance
-    * @param {string} instId
-    * @returns
-    */
+     * Archive insurance
+     * @param {string} instId
+     * @returns
+     */
     archiveInsurance(instId: string) {
         let body = JSON.stringify({
             Key: { InstanceId: instId }
@@ -523,6 +525,55 @@ export class MedicalSvc {
         });
 
         return this.http.post(this.apiUrl + "EntityGovernmentIdentificationApi/Archive", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+     * Add EC
+     * @param {string} entId
+     * @param {Object} EC
+     * @returns
+     */
+    addEC(entId: string, ec: Object) {
+        let body = JSON.stringify({
+            Key: { EntityId: entId },
+            Values: ec
+        });
+
+        return this.http.post(this.apiUrl + "EntityEmergencyContactApi/Add", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+     * Update EC
+     * @param {string} insId
+     * @param {Object} EC
+     * @returns
+     */
+    updateEC(insId: string, ec: Object) {
+        let body = JSON.stringify({
+            Key: { InstanceId: insId },
+            Values: ec
+        });
+
+        return this.http.post(this.apiUrl + "EntityEmergencyContactApi/Update", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+     * Archive EC
+     * @param {string} instId
+     * @returns
+     */
+    archiveEC(instId: string) {
+        let body = JSON.stringify({
+            Key: { InstanceId: instId }
+        });
+
+        return this.http.post(this.apiUrl + "EntityEmergencyContactApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }

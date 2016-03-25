@@ -28,10 +28,10 @@ export class Person {
         public medications: any,
         public procedures: any,
         public immunizations: any,
+        public emergencyContact: any[],
         public incidents: any,
         public conditions: any,
         public insurances: any,
-        public emContacts: any,
         public financials: Financial[],
         public psychology: any,
         public education: any
@@ -42,6 +42,7 @@ export class Person {
         let insurances = [];
         let conditions = [];
         let immunizations = [];
+        let emergencyContact = [];
         let incidents = [];
         let allergies = [];
         let medications = [];
@@ -125,6 +126,15 @@ export class Person {
                 Name: pjsn.Immunization[i].Name,
                 Date: pjsn.Immunization[i].Date && new Date(pjsn.Immunization[i].Date).toISOString().split("T")[0],
                 InstanceId: pjsn.Immunization[i].InstanceId
+            });
+        }
+
+        // Emergency Contact
+        for (var i = 0; i < pjsn.EmergencyContact.length; i++) {
+            emergencyContact.push({
+                EmergencyContactEntityId: pjsn.EmergencyContact[i].EmergencyContactEntityId,
+                EntityId: pjsn.EmergencyContact[i].EntityId,
+                InstanceId: pjsn.EmergencyContact[i].InstanceId
             });
         }
 
@@ -223,10 +233,10 @@ export class Person {
             medications,
             procedures,
             immunizations,
+            emergencyContact,
             incidents,
             conditions,
             insurances,
-            pjsn.EmergencyContact,
             bankAcc,
             psychology,
             education

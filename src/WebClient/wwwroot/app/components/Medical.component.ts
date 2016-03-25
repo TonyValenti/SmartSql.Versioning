@@ -9,11 +9,13 @@ import { Router, RouteParams } from 'angular2/router';
 import { bloodtype } from '../pipes/bloodtype.pipe';
 import { ModalConfirmSvc} from '../common/ModalConfirmAll';
 
+import {TYPEAHEAD_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+
 @Component({
     selector: 'medical',
     templateUrl: '../app/templates/medicalComp.html',
     pipes: [bloodtype],
-    directives: [SelectedPersonDirective],
+    directives: [SelectedPersonDirective, TYPEAHEAD_DIRECTIVES],
     providers: [MedicalSvc]
 })
 export class Medical extends BaseComponent implements OnInit, AfterViewInit {
@@ -56,8 +58,11 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     isAddInsurance = true;
 
     //emergency Contacts
-    selectedEmergencyContact;
-    tempEmergencyContact = { Name: "", Phone: "" };
+    loadingPeople = true;
+    peopleEC = [];
+    selectedEmergencyContact = null;
+    selectedECName = '';
+    tempEmergencyContact = null;
     isAddEmergencyContact = true;
 
     tempSex = 0;
@@ -119,6 +124,18 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
             self.tempWeightVal = self.selectedDude.weight && self.selectedDude.weight.value || 0;
             self.tempWeightUnit = self.selectedDude.weight && self.selectedDude.weight.unit || 0;
 
+            if (self.selectedDude.emergencyContact.length > 0) {
+                // Get the Emergency Contact
+                this._serverAPI.getPersonByInstanceIdNoDetails(self.selectedDude.emergencyContact[0].EmergencyContactEntityId).subscribe(pec => {
+                    console.log("getPersonByInstanceIdNoDetails", JSON.stringify(pec));
+                    if (pec) {
+                        self.selectedEmergencyContact = pec;
+                        self.selectedECName = pec.Name;
+                    }
+                }
+                , error => alert(`Server error. Try again later`)
+                , done => console.log('emergencyContact::getPersonByInstanceId done'));
+            }
         }
             , error => alert(`Server error. Try again later`)
             , done => console.log('getPersonByInstanceId done'));
@@ -625,44 +642,154 @@ export class Medical extends BaseComponent implements OnInit, AfterViewInit {
     editEmergencyContacts(event, emergencyContact, isAdd) {
         event.preventDefault();
 
+        $('#editEmergencyContactsModal').modal('show');
+
+        this.loadingPeople = true;
         this.isAddEmergencyContact = isAdd;
 
-        if (isAdd) {
-            this.tempEmergencyContact = { Name: "", Phone: "" };
-        } else {
-            this.tempEmergencyContact = JSON.parse(JSON.stringify(emergencyContact));
-            this.selectedEmergencyContact = emergencyContact;
-        }
+        var self = this;
 
-        $('#editEmergencyContactsModal').modal('show');
+        this._serverAPI.getAllPeople().subscribe(result => {
+            function filterByCurrent(item, index, array) {
+                return item.IsCurrent;
+            }
+
+            var filtered = result.filter(filterByCurrent);
+
+            self.peopleEC = filtered;
+
+            if (isAdd) {
+                self.selectedEmergencyContact = null;
+                self.selectedECName = '';
+                //{
+                //    "AuthorId": "",
+                //    "AuthorName": null,
+                //    "CreatedDateUtc": "",
+                //    "InstanceId": "",
+                //    "IsArchived": false,
+                //    "IsCurrent": true,
+                //    "IsOriginal": true,
+                //    "Name": "",
+                //    "RevisionDateUtc": "",
+                //    "RevisionId": ""
+                //};
+            } else {
+                self.tempEmergencyContact = JSON.parse(JSON.stringify(emergencyContact));
+                self.selectedECName = emergencyContact.Name;
+            }
+
+            self.loadingPeople = false;
+
+        }, error => alert(`Server error. Try again later`));
+
+
+    }
+
+    selectEMCont(event) {
+        this.tempEmergencyContact = JSON.parse(JSON.stringify(event.item));
+        this.selectedECName = event.item.Name;
+
+        console.log(JSON.stringify(event.item));
     }
 
     saveEmergencyContacts(event) {
         event.preventDefault();
-        if (this.isAddEmergencyContact) {
-            this.selectedDude.emContacts.push(this.tempEmergencyContact);
+        this.selectedEmergencyContact = JSON.parse(JSON.stringify(this.tempEmergencyContact));
+
+        var newEC = {
+            "EmergencyContactEntityId": this.selectedEmergencyContact.InstanceId,
+            "EntityId": this.selectedDude.instanceId,
+            "InstanceId": null,
+            "RevisionId": null,
+            "AuthorId": null,
+            "AuthorName": null,
+            "RevisionDateUtc": null,
+            "CreatedDateUtc": null,
+            "IsArchived": false,
+            "IsCurrent": true,
+            "IsOriginal": true
+        };
+
+        console.log('New EC', newEC);
+
+        var self = this;
+        if (this.isAddEmergencyContact){
+            this._medicalSvc.addEC(this.selectedDude.instanceId, newEC).subscribe(result => {
+                console.log("newEC", result);
+
+                self.selectedDude.emergencyContact = [{
+                    EmergencyContactEntityId: result.EmergencyContactEntityId,
+                    EntityId: result.EntityId,
+                    InstanceId: result.InstanceId
+                }];
+
+                // Get the Emergency Contact
+                self._serverAPI.getPersonByInstanceIdNoDetails(result.EmergencyContactEntityId).subscribe(pec => {
+                    console.log("getPersonByInstanceIdNoDetails", JSON.stringify(pec));
+                    if (pec) {
+                        self.selectedEmergencyContact = pec;
+                        self.selectedECName = pec.Name;
+                    }
+                }
+                    , error => alert(`Server error. Try again later`)
+                    , done => console.log('emergencyContact::getPersonByInstanceId done'));
+
+                $('#editEmergencyContactsModal').modal('hide');
+
+            }, error => alert(`Server error. Try again later`));
         } else {
-            this.selectedEmergencyContact.Name = this.tempEmergencyContact.Name;
-            this.selectedEmergencyContact.Phone = this.tempEmergencyContact.Phone;
+            this._medicalSvc.updateEC(this.selectedDude.emergencyContact[0].InstanceId, newEC).subscribe(result => {
+
+                console.log("newEC", result);
+
+                // Get the Emergency Contact
+                self._serverAPI.getPersonByInstanceIdNoDetails(result.EmergencyContactEntityId).subscribe(pec => {
+                    console.log("getPersonByInstanceIdNoDetails", JSON.stringify(pec));
+                    if (pec) {
+                        self.selectedEmergencyContact = pec;
+                        self.selectedECName = pec.Name;
+                    }
+                }
+                    , error => alert(`Server error. Try again later`)
+                    , done => console.log('emergencyContact::getPersonByInstanceId done'));
+
+                $('#editEmergencyContactsModal').modal('hide');
+
+            }, error => alert(`Server error. Try again later`));
         }
 
-        $('#editEmergencyContactsModal').modal('hide');
     }
 
-    deletetEmergencyContacts(event, index) {
+    deletetEmergencyContacts(event) {
         event.preventDefault();
 
         let msg = `Do you want to delete contact?`;
 
+        var self = this;
+
         this._modalService.activate(msg).then(responseOK => {
             if (responseOK) {
-                this.selectedDude.emContacts.splice(index, 1);
+                self._medicalSvc.archiveEC(self.selectedDude.emergencyContact[0].InstanceId).subscribe(result => {
+
+                    self.selectedDude.emergencyContact = null;
+                    self.selectedEmergencyContact = null;
+                    self.tempEmergencyContact = null;
+                    self.selectedECName = null;
+
+                    console.log(result);
+                    $('#editEmergencyContactsModal').modal('hide');
+
+                }, error => alert(`Server error. Try again later`));
+
             }
         });
     }
 
     closeEmergencyContacts(event) {
         event.preventDefault();
+
+        this.selectedDude.emergencyContact = JSON.parse(JSON.stringify(this.tempEmergencyContact));;
+        this.selectedEmergencyContact = JSON.parse(JSON.stringify(this.tempEmergencyContact));;
 
         $('#editEmergencyContactsModal').modal('hide');
     }

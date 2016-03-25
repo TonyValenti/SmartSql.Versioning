@@ -230,23 +230,20 @@
             <div class="clearfix"></div>
         </div>
         <div class="panel-body">
-            <div *ngIf="selectedDude.emContacts.length === 0" class="panel-body">No Emergency Contacts</div>
-            <div [ngClass]="{'bottom-buffer' :  i < selectedDude.emContacts.length-1}" class="row" *ngFor="#emContact of selectedDude.emContacts;#i = index">
+            <div *ngIf="!selectedEmergencyContact" class="panel-body">No Emergency Contacts</div>
+            <div *ngIf="selectedEmergencyContact" class="row">
                 <div class="col-md-2">
                     <div class="btn-group">
-                        <a class="btn btn-default" href="#" (click)="editEmergencyContacts($event, emContact, false)"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default" href="#" (click)="editEmergencyContacts($event, selectedEmergencyContact, false)"><i class="fa fa-pencil"></i></a>
                         <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
-                        <a class="btn btn-default" href="#" (click)="deletetEmergencyContacts($event, i)"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-default" href="#" (click)="deletetEmergencyContacts($event)"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>
-                <div class="col-md-8"><strong>{{emContact.Name}}</strong></div>
-                <div class="col-md-2 bottom-buffer">
-                    <strong [class.hidden]="!emContact.Phone">Phone:</strong><br />
-                    <span>{{emContact.Phone || ""}}</span>
-                </div>
+                <div class="col-md-8"><strong>{{selectedEmergencyContact.Name}}</strong></div>
             </div>
         </div>
     </div>
+
     <!-- *************************************** -->
     <!-- ************ EDIT MODALS ************** -->
     <!-- *************************************** -->
@@ -518,23 +515,27 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">{{isAddEmergencyContacts ? "Add" : "Edit"}} Emergency Contact</h4>
+                    <h4 class="modal-title">{{isAddEmergencyContact ? "Add" : "Edit"}} Emergency Contact</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-2">
-                            <label class="control-label" style="text-align:left">Name: </label>
+                        <div class="jumbotron" [hidden]="!loadingPeople">
+                            <div class="container text-center">
+                                <i class="fa fa-4x fa-cog fa-spin"></i>
+                                <h3>Please wait loading ....</h3>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <input [(ngModel)]="tempEmergencyContact.Name" type="text" class="form-control" placeholder="Enter a name">
-                        </div>
-                    </div>
-                    <div class="row top-buffer">
-                        <div class="col-md-2">
-                            <label class="control-label" style="text-align:left">Phone: </label>
-                        </div>
-                        <div class="col-md-9">
-                            <input (keyup.enter)="saveEmergencyContacts($event)" [(ngModel)]="tempEmergencyContact.Phone" type="text" class="form-control" placeholder="Enter a phone number">
+
+                        <label class="control-label col-lg-2" [hidden]="loadingPeople">Contact: </label>
+
+                        <div class="form-group col-md-10" [hidden]="loadingPeople">
+                            <input [(ngModel)]="selectedECName"
+                                   [typeahead]="peopleEC"
+                                   [typeaheadOptionsLimit]="7"
+                                   [typeaheadOptionField]="'Name'"
+                                   (typeaheadOnSelect)="selectEMCont($event)"
+                                   placeholder="Start by typing a name"
+                                   class="form-control">
                         </div>
                     </div>
                 </div>
