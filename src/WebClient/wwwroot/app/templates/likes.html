@@ -54,7 +54,7 @@
     </div>
 
     <!-- Edit Likes -->
-    <div id="editLikes" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+    <!--<div id="editLikes" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content" *ngIf="_likesData[editTypeOfLike]">
                 <div class="modal-header">
@@ -66,7 +66,7 @@
                         <div class="form-group">
                             <label for="birthday" class="col-sm-2 control-label">{{editTypeOfLike}}: </label>
                             <div class="col-sm-10">
-                                <input (keyup.enter)="updateLike($event, txtLike.value)" #txtLike placeholder="Enter {{editTypeOfLike}}" type="text" class="form-control" [value]="isEditLikes ? likesData[editTypeOfLike][likeIndex].value : dislikesData[editTypeOfLike][likeIndex].value" />
+                                <input (keyup.enter)="updateLike($event, txtLike.value)" #txtLike placeholder="Enter {{editTypeOfLike}}" type="text" class="form-control" [value]="isEditLikes ? _likesData[editTypeOfLike][likeIndex].value : _dislikesData[editTypeOfLike][likeIndex].value" />
                             </div>
                         </div>
                     </form>
@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <!-- /Edit Likes -->
 
     <!-- Add Likes/Dislikes -->
@@ -86,7 +86,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Add {{isEditLikes ? 'Likes':'Dislikes'}} for {{addTypeLike}}</h4>
+                    <h4 class="modal-title">{{inEditMode ? 'Edit' : 'Add'}} {{isEditLikes ? 'Likes':'Dislikes'}} for {{inEditMode ? editTypeOfLike : addTypeLike}}</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
@@ -104,20 +104,29 @@
                         </div>
                         <div class="row top-buffer">
                             <strong class="col-xs-5">Toggle like: </strong>
-                            <a class="btn col-xs-3" [class.btn-success]="isAddLike" [class.btn-danger]="!isAddLike" href="#" (click)="toggleLikeDislike($event)"><i [class.fa-thumbs-o-up]="isAddLike" [class.fa-thumbs-o-down]="!isAddLike" class="fa"></i> {{isAddLike ? "Like":"Dislike"}} </a>
+                            <a class="btn col-xs-3" [class.btn-success]="isAddLike" [class.btn-danger]="!isAddLike" href="#" (click)="toggleLikeDislike($event)">
+                                <i [class.fa-thumbs-o-up]="isAddLike" [class.fa-thumbs-o-down]="!isAddLike" class="fa"></i> {{isAddLike ? "Like":"Dislike"}}
+                            </a>
+                            <!--<a class="btn col-xs-3"
+                               [class.btn-success]="inEditMode ? isEditLikes : isAddLike"
+                               [class.btn-danger]="inEditMode ? !isEditLikes : !isAddLike"
+                               (click)="inEditMode ? isEditLikes = !isEditLikes : isAddLike = !isAddLike">
+                                <i [class.fa-thumbs-o-up]="inEditMode ? isEditLikes : isAddLike"
+                                   [class.fa-thumbs-o-down]="inEditMode ? !isEditLikes : isAddLike" class="fa"></i> {{isAddLike ? "Like":"Dislike"}}
+                            </a>-->
                         </div>
 
                         <div class="row top-buffer">
                             <strong class="col-xs-5">Description: </strong>
                             <div class="col-xs-7" style="padding-left:0">
-                                <input (keyup.enter)="saveNewLike($event, txtNewLike)" #txtNewLike placeholder="Enter {{addTypeLike}}" type="text" class="form-control" />
+                                <input [value]="inEditMode ? (isEditLikes ? _likesData[editTypeOfLike][likeIndex].value : _dislikesData[editTypeOfLike][likeIndex].value) : ''" (keyup.enter)="saveNewLike($event, txtLike)" #txtLike placeholder="Enter {{inEditMode ? editTypeOfLike : addTypeLike}}" type="text" class="form-control" />
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeAddLike($event,txtNewLike)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveNewLike($event,txtNewLike)">Add {{isAddLike ? "Like":"Dislike"}}</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeLike($event,txtLike)">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveLike($event,txtLike)">{{inEditMode ? 'Update' : 'Add'}} {{isAddLike ? 'Like':'Dislike'}}</button>
                 </div>
             </div>
         </div>

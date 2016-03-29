@@ -23,13 +23,13 @@ export class Likes extends BaseComponent implements AfterViewInit {
     private _dislikesData;
 
     LikeCategory = {
-        Animal : 50,
+        Animal: 50,
         Beverage: 100,
         Book: 200,
         Food: 300,
         Game: 400,
         Hobby: 500,
-        Jewelry : 550,
+        Jewelry: 550,
         Movie: 600,
         Music: 700,
         Place: 725,
@@ -43,7 +43,7 @@ export class Likes extends BaseComponent implements AfterViewInit {
 
     likesProps = [];
 
-    editTypeOfLike = 0;
+    editTypeOfLike: string;
     isEditLikes = true;
     likeIndex = 0;
 
@@ -51,7 +51,10 @@ export class Likes extends BaseComponent implements AfterViewInit {
     areDislikesEmpty = false;
 
     addTypeLike;
+    origEditType: string;
     isAddLike = true;
+
+    inEditMode = false;
 
     constructor(
         @Inject(ServerAPI) private _serverAPI,
@@ -129,7 +132,7 @@ export class Likes extends BaseComponent implements AfterViewInit {
             self._selectedDude = p;
 
             var l = {
-                Animal:[],
+                Animal: [],
                 Beverage: [],
                 Book: [],
                 Food: [],
@@ -296,72 +299,17 @@ export class Likes extends BaseComponent implements AfterViewInit {
     editLikes(event, editTypeOfLike, isEditLikesParam, i) {
         event.preventDefault();
 
+        this.inEditMode = true;
         this.likeIndex = i;
+        this.isAddLike = isEditLikesParam;
         this.isEditLikes = isEditLikesParam;
         this.editTypeOfLike = editTypeOfLike;
+        this.addTypeLike = editTypeOfLike;
+        this.origEditType = editTypeOfLike;
 
         setTimeout(function () {
-            $('#editLikes').modal('show');
+            $('#addLikesModal').modal('show');
         }, 50)
-    }
-
-    /**
-     * Update Like/Dislike
-     * @param event
-     * @param newValue
-     */
-    updateLike(event, newValue) {
-        event.preventDefault();
-
-        if (this.isEditLikes) {
-            this._likesData[this.editTypeOfLike][this.likeIndex].value = newValue;
-
-            this._likeSvc.updateLike(this._likesData[this.editTypeOfLike][this.likeIndex].instanceId,
-                {
-                    Status: 1,
-                    Category: this.LikeCategory[this.addTypeLike],
-                    Value: newValue
-                }
-            ).subscribe(result => {
-                console.log(result);
-                //this.saving = false;
-                $('#editLikes').modal('hide');
-            }, error => alert(`Server error. Try again later`));
-
-        } else {
-            this._dislikesData[this.editTypeOfLike][this.likeIndex].value = newValue;
-
-            this._likeSvc.updateLike(this._dislikesData[this.editTypeOfLike][this.likeIndex].instanceId,
-                {
-                    Status: 0,
-                    Category: this.LikeCategory[this.addTypeLike],
-                    Value: newValue
-                }
-            ).subscribe(result => {
-                console.log(result);
-                //this.saving = false;
-                $('#editLikes').modal('hide');
-            }, error => alert(`Server error. Try again later`));
-        }
-
-        $('#editLikes').modal('hide');
-    }
-
-    /**
-     * Close popup
-     * @param event
-     * @param txtLike
-     */
-    closeLikeModal(event, txtLike) {
-        event.preventDefault();
-
-        if (this.isEditLikes) {
-            txtLike.value = this._likesData[this.editTypeOfLike][this.likeIndex].value;
-        } else {
-            txtLike.value = this._dislikesData[this.editTypeOfLike][this.likeIndex].value;
-        }
-
-        $('#editLikes').modal('hide');
     }
 
     /**
@@ -417,19 +365,37 @@ export class Likes extends BaseComponent implements AfterViewInit {
     addLike($event, isLike) {
         event.preventDefault();
 
+        this.inEditMode = false;
         this.isAddLike = isLike;
+
         $('#addLikesModal').modal('show');
     }
 
-    changeAddTypeLike(event, likeProp) {
+    changeAddTypeLike(event, likeProp: string) {
         event.preventDefault();
+
+        //if (this.inEditMode) {
+        //    this.editTypeOfLike = likeProp;
+        //} else {
         this.addTypeLike = likeProp;
+        //};
     }
 
-    closeAddLike(event, txtNewLike) {
+    closeLike(event, txtLike) {
         event.preventDefault();
 
-        txtNewLike.value = '';
+        if (this.inEditMode) {
+            //EDIT
+            if (this.isEditLikes) {
+                txtLike.value = this._likesData[this.editTypeOfLike][this.likeIndex].value;
+            } else {
+                txtLike.value = this._dislikesData[this.editTypeOfLike][this.likeIndex].value;
+            }
+        } else {
+            //ADD NEW
+            txtLike.value = '';
+        }
+
         $('#addLikesModal').modal('hide');
     }
 
@@ -438,54 +404,105 @@ export class Likes extends BaseComponent implements AfterViewInit {
      * @param event
      * @param txtNewLike
      */
-    saveNewLike(event, txtNewLike) {
+    saveLike(event, txtNewLike) {
         event.preventDefault();
 
         var self = this;
+        var itemArr;
 
-        if (this.isAddLike) {
-            // Add Like
-            this._likesData[this.addTypeLike].push({
-                status: 1,
-                category: this.LikeCategory[this.addTypeLike],
-                value: txtNewLike.value
-            });
+        if (this.inEditMode) {
+            this.inEditMode = false;
 
-            this._likeSvc.addLike(this._selectedDude.instanceId,
-                {
-                    Status: 1,
-                    Category: this.LikeCategory[this.addTypeLike],
-                    Value: txtNewLike.value
-                }
-            ).subscribe(result => {
-                self.checkLikesEmpty();
-                //this.saving = false;
-                $('#addLikesModal').modal('hide');
-            }, error => alert(`Server error. Try again later`));
+            //Check if item transfered from likes to dislikes and viceversa
+            // or category changed
+            if (this.addTypeLike !== this.origEditType || this.isAddLike !== this.isEditLikes) {
 
+                itemArr = this[this.isEditLikes ? "_likesData" : "_dislikesData"][this.origEditType].splice(this.likeIndex, 1);
+                this[this.isAddLike ? "_likesData" : "_dislikesData"][this.addTypeLike].push(itemArr[0]);
+                this.likeIndex = this[this.isAddLike ? "_likesData" : "_dislikesData"][this.addTypeLike].length - 1
+            }
+
+            //EDIT
+            if (this.isAddLike) {
+
+                this._likesData[this.origEditType][this.likeIndex].value = txtNewLike.value;
+
+                this._likeSvc.updateLike(this._likesData[this.addTypeLike][this.likeIndex].instanceId,
+                    {
+                        Status: 1,
+                        Category: this.LikeCategory[this.addTypeLike],
+                        Value: txtNewLike.value
+                    }
+                ).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+
+                    $('#addLikesModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+
+            } else {
+
+                this._dislikesData[this.addTypeLike][this.likeIndex].value = txtNewLike.value;
+
+                this._likeSvc.updateLike(this._dislikesData[this.addTypeLike][this.likeIndex].instanceId,
+                    {
+                        Status: 0,
+                        Category: this.LikeCategory[this.addTypeLike],
+                        Value: txtNewLike.value
+                    }
+                ).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+
+                    $('#addLikesModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+
+            }
         } else {
-            //Add Dislike
-            this._dislikesData[this.addTypeLike].push({
-                status: 0,
-                category: this.LikeCategory[this.addTypeLike],
-                value: txtNewLike.value
-            })
+            //ADD NEW
+            if (this.isAddLike) {
+                // Add Like
+                this._likesData[this.addTypeLike].push({
+                    status: 1,
+                    category: this.LikeCategory[this.addTypeLike],
+                    value: txtNewLike.value
+                });
 
-            this._likeSvc.addLike(this._selectedDude.instanceId,
-                {
-                    Status: 0,
-                    Category: this.LikeCategory[this.addTypeLike],
-                    Value: txtNewLike.value
-                }
-            ).subscribe(result => {
-                self.checkDislikesEmpty();
-                //this.saving = false;
-                $('#addLikesModal').modal('hide');
-            }, error => alert(`Server error. Try again later`));
+                this._likeSvc.addLike(this._selectedDude.instanceId,
+                    {
+                        Status: 1,
+                        Category: this.LikeCategory[this.addTypeLike],
+                        Value: txtNewLike.value
+                    }
+                ).subscribe(result => {
+                    self.checkLikesEmpty();
+                    //this.saving = false;
+                    $('#addLikesModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+
+            } else {
+                //Add Dislike
+                this._dislikesData[this.addTypeLike].push({
+                    status: 0,
+                    category: this.LikeCategory[this.addTypeLike],
+                    value: txtNewLike.value
+                })
+
+                this._likeSvc.addLike(this._selectedDude.instanceId,
+                    {
+                        Status: 0,
+                        Category: this.LikeCategory[this.addTypeLike],
+                        Value: txtNewLike.value
+                    }
+                ).subscribe(result => {
+                    self.checkDislikesEmpty();
+                    //this.saving = false;
+                    $('#addLikesModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+            }
         }
 
         txtNewLike.value = '';
-
     }
 
     toggleLikeDislike(event) {
