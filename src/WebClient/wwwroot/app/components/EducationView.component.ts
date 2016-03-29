@@ -20,7 +20,7 @@ export class EducationView extends BaseComponent implements AfterViewInit {
 
     selectedDude: Person;
     certifications;
-    selectedCert = { Name: "", StartDate: "", EndDate: "" };
+    selectedCert = { Name: "", StartDate: "", EndDate: "", Issuer: "", InstanceId: "" };
     origCert;
     isAdd;
 
@@ -66,37 +66,49 @@ export class EducationView extends BaseComponent implements AfterViewInit {
         super.ngAfterViewInit();
     }
 
-    saveCertification(event, txtName, txtStart, txtEnd) {
+    saveCertification(event, txtName, txtIssuedBy, txtStart, txtEnd) {
         event.preventDefault();
 
         if (this.isAdd) {
-            var newCertification = { Name: txtName.value, StartDate: txtStart.value, EndDate: txtEnd.value, InstanceId: "" };
+            // Add new certificate
+            var newCertification = { Name: txtName.value, Issuer: txtIssuedBy.value, StartDate: txtStart.value, EndDate: txtEnd.value, InstanceId: "" };
             this.certifications.push(newCertification);
             txtName.value = "";
+            txtIssuedBy.value = "";
             txtStart.value = "";
             txtEnd.value = "";
 
             this._eduSvc.addCertificate(this.selectedDude.instanceId, newCertification).subscribe(result => {
                 console.log(result);
                 //this.saving = false;
-                $('#editFinancialModal').modal('hide');
+
             }, error => alert(`Server error. Try again later`));
 
         } else {
+            // Editing existing certificate
             this.selectedCert.Name = txtName.value;
+            this.selectedCert.Issuer = txtIssuedBy.value;
             this.selectedCert.StartDate = txtStart.value;
             this.selectedCert.EndDate = txtEnd.value;
+
+            this._eduSvc.updateCertificate(this.selectedCert.InstanceId, this.selectedCert).subscribe(result => {
+                console.log(result);
+                //this.saving = false;
+
+            }, error => alert(`Server error. Try again later`));
         }
 
         $('#editCertification').modal('hide');
     }
 
     editAddCertification(event, index) {
+        //Open Edit/Add dialog
+
         event.preventDefault();
 
         if (index === -1) {
             this.isAdd = true;
-            this.selectedCert = { Name: "", StartDate: "", EndDate: "" };
+            this.selectedCert = { Name: "", StartDate: "", EndDate: "", Issuer: "", InstanceId: "" };
         } else {
             this.isAdd = false;
             //this.origCert = JSON.parse(JSON.stringify(this.certifications[index]));
@@ -106,15 +118,17 @@ export class EducationView extends BaseComponent implements AfterViewInit {
         $('#editCertification').modal('show');
     }
 
-    closeCertModal(event, txtName, txtStart, txtEnd) {
+    closeCertModal(event, txtName, txtIssuedBy, txtStart, txtEnd) {
         event.preventDefault();
 
         if (this.isAdd) {
             txtName.value = "";
+            txtIssuedBy.value = "";
             txtStart.value = "";
             txtEnd.value = "";
         } else {
             txtName.value = this.selectedCert.Name;
+            txtIssuedBy.value = this.selectedCert.Issuer;
             txtStart.value = this.selectedCert.StartDate;
             txtEnd.value = this.selectedCert.EndDate;
         }

@@ -11,16 +11,16 @@ export class EducationSvc {
     constructor(private http: Http) { }
 
     apiUrl = "http://localhost:47503/api/";
-  
+
     headers = new Headers({ 'Content-Type': 'application/json' });
     options = new RequestOptions({ headers: this.headers });
 
     /**
-  * Add Religious frequency
-  * @param {string} entId
-  * @param {number} lvl
-  * @returns
-  */
+    * Add Religious frequency
+    * @param {string} entId
+    * @param {number} lvl
+    * @returns
+    */
     addEducationLvl(entId: string, lvl: number) {
         let body = JSON.stringify({
             Key: { EntityId: entId },
@@ -47,7 +47,7 @@ export class EducationSvc {
         return this.http.post(this.apiUrl + "EntityEducationLevelApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
-    } 
+    }
 
 
     /**

@@ -11,26 +11,33 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
-            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-graduation"></i> Certifications</h3>
+            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-graduation-cap"></i> Certifications</h3>
             <a class="btn btn-primary pull-right" (click)="editAddCertification($event, -1)" href="#"><i class="fa fa-plus"></i></a>
             <div class="clearfix"></div>
         </div>
         <div class="panel-body">
-            <div  class="panel-body" *ngIf="certifications.length === 0">No certifications</div>
-            <div class="row bottom-buffer" *ngFor="#cer of certifications;#i = index">
-                <div class="col-md-8 text-left columnspacing">
-                    <div class="btn-group">
-                        <a class="btn btn-default" href="#" (click)="editAddCertification($event, i)"><i class="fa fa-pencil"></i></a>
-                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
-                        <a class="btn btn-default" href="#" (click)="deleteCertification($event, i)"><i class="fa fa-trash"></i></a>
+            <div class="panel-body" *ngIf="certifications.length === 0">No certifications</div>
+            <div class="bottom-buffer" *ngFor="#cer of certifications;#i = index">
+                <div class="row">
+                    <div class="col-md-6 text-left columnspacing">
+                        <div class="btn-group">
+                            <a class="btn btn-default" href="#" (click)="editAddCertification($event, i)"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                            <a class="btn btn-default" href="#" (click)="deleteCertification($event, i)"><i class="fa fa-trash"></i></a>
+                        </div>
+                        <strong>Name: </strong><span>{{cer.Name}}</span>
                     </div>
-                    <strong>Name: </strong><span>{{cer.Name}}</span>
+                    <div class="col-md-6 text-left columnspacing">
+                        <strong>Issued By: </strong><span>{{cer.Issuer}}</span>
+                    </div>
                 </div>
-                <div class="col-md-2 text-left columnspacing">
-                    <strong>Start: </strong><span>{{cer.StartDate}}</span>
-                </div>
-                <div class="col-md-2 text-left columnspacing">
-                    <strong>End: </strong><span>{{cer.EndDate}}</span>
+                <div class="row">
+                    <div class="col-md-4 text-left columnspacing" style="margin-left: 117px">
+                        <strong>Issued On: </strong><span>{{cer.StartDate}}</span>
+                    </div>
+                    <div class="col-md-4 text-left columnspacing" style="margin-left: 42px">
+                        <strong>Valid Until: </strong><span>{{cer.EndDate}}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,7 +49,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Certificate</h4>
+                    <h4 class="modal-title">{{isAdd ? "Add" : "Edit"}} Certificate</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
@@ -50,6 +57,12 @@
                             <label for="txtCert" class="col-sm-3 control-label">Name: </label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" placeholder="Enter certificate name" #txtCert [value]="selectedCert.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtCert" class="col-sm-3 control-label">Issed by: </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Issued by" #txtIssuedBy [value]="selectedCert.Issuer" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -67,14 +80,13 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeCertModal($event,txtCert,txtStart,txtEnd)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveCertification($event, txtCert, txtStart, txtEnd)"><i class="fa fa-floppy-o"></i> Save</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeCertModal($event, txtCert , txtIssuedBy, txtStart, txtEnd)">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveCertification($event, txtCert, txtIssuedBy, txtStart, txtEnd)"><i class="fa fa-floppy-o"></i> {{isAdd ? "Save" : "Update"}}</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Edit Certififcations -->
-
     <!-- Edit editEduLevel -->
     <div id="editEduLevelModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog" style="width:400px">
