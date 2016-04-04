@@ -138,9 +138,12 @@ namespace SmartSql.Versioning.Samples.Entities.Data {
             ret.PhoneNumber = new EntityPhoneNumberApiController().ListWebMethod(ChildListRequest);
 
             ret.Certification = new EntityCertificationApiController().ListWebMethod(ChildListRequest);
+            ret.Degree = new EntityDegreeApiController().ListWebMethod(ChildListRequest);
+            ret.School = new EntitySchoolApiController().ListWebMethod(ChildListRequest);
             ret.EducationLevel = new EntityEducationLevelApiController().GetWebMethod(ChildItemRequest);
+ 
 
-            ret.BankAccount = new EntityBankAccountApiController().ListWebMethod(ChildListRequest);
+        ret.BankAccount = new EntityBankAccountApiController().ListWebMethod(ChildListRequest);
 
             ret.DateOfBirth = new EntityDateOfBirthApiController().GetWebMethod(ChildItemRequest);
             ret.Ethnicity = new EntityEthnicityApiController().GetWebMethod(ChildItemRequest);

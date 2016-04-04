@@ -200,15 +200,29 @@ export class Person {
         // EDUCATION
         var education = {
             EducationLevel: pjsn.EducationLevel && pjsn.EducationLevel.Value,
-            Certification : []
+            Certification : [],
+            Degrees : [],
+            Schools: []
         }
 
         for (var i = 0; i < pjsn.Certification.length; i++) {
             pjsn.Certification[i].StartDate = new Date(pjsn.Certification[i].StartDate).toISOString().split("T")[0];
             pjsn.Certification[i].EndDate = new Date(pjsn.Certification[i].EndDate).toISOString().split("T")[0];
         }
-
         education.Certification = pjsn.Certification;
+     
+        for (var i = 0; i < pjsn.Degree.length; i++) {
+            pjsn.Degree[i].IssueDate = new Date(pjsn.Degree[i].IssueDate).toISOString().split("T")[0];
+        }
+        education.Degrees = pjsn.Degree;
+
+
+        for (var i = 0; i < pjsn.School.length; i++) {
+            pjsn.School[i].StartDate = new Date(pjsn.School[i].StartDate).toISOString().split("T")[0];
+            pjsn.School[i].EndDate = new Date(pjsn.School[i].EndDate).toISOString().split("T")[0];
+        }
+        education.Schools = pjsn.School;
+        // ==
 
         return new Person(
             pjsn.Entity.Name,

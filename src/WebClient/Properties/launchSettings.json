@@ -11,7 +11,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:3000/Identity/37e717c8-32e1-e511-8d81-a0b3cc47d18e",
+      "launchUrl": "http://localhost:3000/Identity/AA0C3903-04F7-E511-88DF-7C5CF863440C",
       "environmentVariables": {
         "Hosting:Environment": "Development"
       }
@@ -20,7 +20,7 @@
       "commandName": "web",
       "workingDirectory": "F:\\Repos\\SmartSql.Versioning\\src\\WebClient\\wwwroot",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:3000/Identity/3ae717c8-32e1-e511-8d81-a0b3cc47d18e",
+      "launchUrl": "http://localhost:3000/Identity/AA0C3903-04F7-E511-88DF-7C5CF863440C",
       "environmentVariables": {
         "Hosting:Environment": "Development"
       }

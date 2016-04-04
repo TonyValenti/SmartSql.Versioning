@@ -67,7 +67,7 @@ export class Main {
     insid: string;
 
     constructor(private router: Router) {
-        this.insid = "37e717c8-32e1-e511-8d81-a0b3cc47d18e";
+        this.insid = "AA0C3903-04F7-E511-88DF-7C5CF863440C";
 
         router.subscribe((val) => console.log("Navigating to: " + val))
     }

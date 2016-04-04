@@ -43,13 +43,75 @@
         </div>
     </div>
 
+    <div class="panel panel-default">
+        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-file-text"></i> Degrees</h3>
+            <a class="btn btn-primary pull-right" (click)="editAddDegree($event, -1)" href="#"><i class="fa fa-plus"></i></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <div class="panel-body" *ngIf="degrees.length === 0">No degrees</div>
+            <div class="bottom-buffer" *ngFor="#deg of degrees;#i = index">
+                <div class="row">
+                    <div class="col-md-6 text-left columnspacing">
+                        <div class="btn-group">
+                            <a class="btn btn-default" href="#" (click)="editAddDegree($event, i)"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                            <a class="btn btn-default" href="#" (click)="deleteDegree($event, i)"><i class="fa fa-trash"></i></a>
+                        </div>
+                        <strong>Name: </strong><span>{{deg.Name}}</span>
+                    </div>
+                    <div class="col-md-6 text-left columnspacing">
+                        <strong>Issued By: </strong><span>{{deg.Issuer}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 text-left columnspacing" style="margin-left: 117px">
+                        <strong>Issued On: </strong><span>{{deg.IssueDate}}</span>
+                    </div>                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-book"></i> Schools</h3>
+            <a class="btn btn-primary pull-right" (click)="editAddSchool($event, -1)" href="#"><i class="fa fa-plus"></i></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <div class="panel-body" *ngIf="schools.length === 0">No schools</div>
+            <div class="bottom-buffer" *ngFor="#sc of schools;#i = index">
+                <div class="row">
+                    <div class="col-md-12 text-left columnspacing">
+                        <div class="btn-group">
+                            <a class="btn btn-default" href="#" (click)="editAddSchool($event, i)"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                            <a class="btn btn-default" href="#" (click)="deleteSchool($event, i)"><i class="fa fa-trash"></i></a>
+                        </div>
+                        <strong>Name: </strong><span>{{sc.SchoolName}}</span>
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-md-4 text-left columnspacing" style="margin-left: 117px">
+                        <strong>Starded On: </strong><span>{{sc.StartDate}}</span>
+                    </div>
+                    <div class="col-md-4 text-left columnspacing" style="margin-left: 42px">
+                        <strong>Finished On: </strong><span>{{sc.EndDate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Edit Certification -->
     <div id="editCertification" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">{{isAdd ? "Add" : "Edit"}} Certificate</h4>
+                    <h4 class="modal-title">{{isAddCert ? "Add" : "Edit"}} Certificate</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
@@ -60,9 +122,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="txtCert" class="col-sm-3 control-label">Issed by: </label>
+                            <label for="txtIssuedBy" class="col-sm-3 control-label">Issed by: </label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" placeholder="Issued by" #txtIssuedBy [value]="selectedCert.Issuer" />
+                                <input id="txtIssuedBy" type="text" class="form-control" placeholder="Issued by" #txtIssuedBy [value]="selectedCert.Issuer" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -81,12 +143,91 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeCertModal($event, txtCert , txtIssuedBy, txtStart, txtEnd)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveCertification($event, txtCert, txtIssuedBy, txtStart, txtEnd)"><i class="fa fa-floppy-o"></i> {{isAdd ? "Save" : "Update"}}</button>
+                    <button type="button" class="btn btn-primary" (click)="saveCertification($event, txtCert, txtIssuedBy, txtStart, txtEnd)"><i class="fa fa-floppy-o"></i> {{isAddCert ? "Save" : "Update"}}</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Edit Certififcations -->
+
+    <!-- Edit Degrees -->
+    <div id="editDegrees" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{isAddDeg ? "Add" : "Edit"}} Degree</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="txtDeg" class="col-sm-3 control-label">Name: </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Enter degree name" #txtDeg [value]="selectedDeg.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtDegIssuedBy" class="col-sm-3 control-label">Issed by: </label>
+                            <div class="col-sm-9">
+                                <input id="txtDegIssuedBy" type="text" class="form-control" placeholder="Issued by" #txtDegIssuedBy [value]="selectedDeg.Issuer" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtStart" class="col-sm-3 control-label">Issue Date: </label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" #txtIssueDate [value]="selectedDeg.IssueDate" placeholder="Issue Date">
+                            </div>
+                        </div>                       
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeDegModal($event, txtDeg , txtDegIssuedBy, txtIssueDate)">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveDegree($event, txtDeg, txtDegIssuedBy, txtIssueDate)"><i class="fa fa-floppy-o"></i> {{isAddDeg ? "Save" : "Update"}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit Degrees -->
+
+    <!-- Edit Schools -->
+    <div id="editSchool" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{isAddSchool ? "Add" : "Edit"}} School</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="txtCert" class="col-sm-3 control-label">Name: </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Enter school name" #txtSchool [value]="selectedSchool.SchoolName" />
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label for="txtStart" class="col-sm-3 control-label">Start Date: </label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" #txtStart [value]="selectedSchool.StartDate" placeholder="Start Date">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtEnd" class="col-md-3 control-label">End Date: </label>
+                            <div class="col-md-9">
+                                <input (keyup.enter)="saveSchool($event, txtSchool, txtStart, txtEnd)" type="date" class="form-control" #txtEnd [value]="selectedSchool.EndDate" placeholder="End Date">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeSchoolModal($event, txtSchool, txtStart, txtEnd)">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveSchool($event, txtSchool, txtStart, txtEnd)"><i class="fa fa-floppy-o"></i> {{isAddSchool ? "Save" : "Update"}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit Schools -->
+
     <!-- Edit editEduLevel -->
     <div id="editEduLevelModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog" style="width:400px">

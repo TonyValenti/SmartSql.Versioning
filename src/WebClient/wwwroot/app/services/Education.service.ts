@@ -99,6 +99,104 @@ export class EducationSvc {
             .catch(this.logAndPassOn);
     }
 
+    /**
+     * Add Degree
+     * @param {string} entId
+     * @param {Object} degree
+     * @returns
+     */
+    addDegree(entId: string, degree: Object) {
+        let body = JSON.stringify({
+            Key: { EntityId: entId },
+            Values: degree
+        });
+
+        return this.http.post(this.apiUrl + "EntityDegreeApi/Add", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+      * Update Degree
+      * @param {string} insId
+      * @param {Object} degree
+      * @returns
+      */
+    updateDegree(insId: string, degree: Object) {
+        let body = JSON.stringify({
+            Key: { InstanceId: insId },
+            Values: degree
+        });
+
+        return this.http.post(this.apiUrl + "EntityDegreeApi/Update", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+    * Archive Degree
+    * @param {string} instId
+    * @returns
+    */
+    archiveDegree(instId: string) {
+        let body = JSON.stringify({
+            Key: { InstanceId: instId }
+        });
+
+        return this.http.post(this.apiUrl + "EntityDegreeApi/Archive", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+
+    /**
+     * Add School
+     * @param {string} entId
+     * @param {Object} school
+     * @returns
+     */
+    addSchool(entId: string, school: Object) {
+        let body = JSON.stringify({
+            Key: { EntityId: entId },
+            Values: school
+        });
+
+        return this.http.post(this.apiUrl + "EntitySchoolApi/Add", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+      * Update School
+      * @param {string} insId
+      * @param {Object} school
+      * @returns
+      */
+    updateSchool(insId: string, school: Object) {
+        let body = JSON.stringify({
+            Key: { InstanceId: insId },
+            Values: school
+        });
+
+        return this.http.post(this.apiUrl + "EntitySchoolApi/Update", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+    * Archive School
+    * @param {string} instId
+    * @returns
+    */
+    archiveSchool(instId: string) {
+        let body = JSON.stringify({
+            Key: { InstanceId: instId }
+        });
+
+        return this.http.post(this.apiUrl + "EntitySchoolApi/Archive", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
     private logAndPassOn(error: Error) {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
