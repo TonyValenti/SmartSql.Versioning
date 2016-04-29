@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import { RouteConfig, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 
 import {Identity} from './Identity.component';
 import {Medical} from './Medical.component';
@@ -9,6 +9,7 @@ import {Dislikes} from './Dislikes.component';
 import {FinancialList} from './FinancialList.component';
 import {PsychologyView} from './PsychologyView.component';
 import {EducationView} from './EducationView.component';
+import { ModalConfirm, ModalConfirmSvc } from '../common/ModalConfirmAll';
 
 @Component({
     selector: 'main',
@@ -33,7 +34,7 @@ import {EducationView} from './EducationView.component';
                         <a [routerLink]="['Psychology',{instanceId : insid}]" ><i class="fa fa-lightbulb-o fa-fw"></i> Psychology</a>
                     </li>
                     <li [class.active]="router.isRouteActive(router.generate(['/Financial',{instanceId : insid}]))">
-                        <a [routerLink]="['Financial',{instanceId : insid}]"><i class="fa fa-money fa-fw"></i> Financial</a>
+                        <a [routerLink]="['Financial',{instanceId : insid}]"><i class="fa fa-money fa-fw"></i> Bank Account</a>
                     </li>
                     <li [class.active]="router.isRouteActive(router.generate(['/Education',{instanceId : insid}]))">
                         <a [routerLink]="['Education',{instanceId : insid}]"><i class="fa fa-graduation-cap fa-fw"></i> Education</a></li>
@@ -47,8 +48,11 @@ import {EducationView} from './EducationView.component';
                     </div>
                 </div>
             </div>
+
+            <modal-confirm></modal-confirm>
             <!-- /tabs left -->`,
-    directives: [ROUTER_DIRECTIVES]
+    directives: [ROUTER_DIRECTIVES, ModalConfirm],
+    providers: [ModalConfirmSvc]
 })
 @RouteConfig([
     { path: '/Identity/:instanceId', name: 'Identity', component: Identity, useAsDefault: true },
@@ -59,12 +63,11 @@ import {EducationView} from './EducationView.component';
     { path: '/Education/:instanceId', name: 'Education', component: EducationView },
     { path: '/Psychology/:instanceId', name: 'Psychology', component: PsychologyView }
 ])
-
 export class Main {
     insid: string;
 
     constructor(private router: Router) {
-        this.insid = "22fcf440-d3d5-e511-8d7c-a0b3cc47d18e";
+        this.insid = "AA0C3903-04F7-E511-88DF-7C5CF863440C";
 
         router.subscribe((val) => console.log("Navigating to: " + val))
     }

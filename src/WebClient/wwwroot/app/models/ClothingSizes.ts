@@ -8,6 +8,8 @@ export class ClothingSizes {
         public Shoe: string,
         public Belt: string,
         public Head: string,
-        public Dress: string
+        public Dress: string,
+        public Underwear: string,
+        public Bra : string
     ) { }
 }

@@ -1,48 +1,56 @@
-import {Component, Input, Inject, OnInit} from 'angular2/core';
+import {Component, Input, Inject, OnInit, AfterViewInit} from 'angular2/core';
 import {FORM_DIRECTIVES} from 'angular2/common';
 // import {NgForm}    from 'angular2/common';
 
+import { BaseComponent } from '../components/Base.component';
 import {Person} from '../models/Person';
 import {eyeColors} from '../models/eyeColors';
 import {hairColors} from '../models/hairColors';
 import {Gidfull} from '../pipes/gidfull.pipe';
-
+import { ModalConfirmSvc} from '../common/ModalConfirmAll';
 import {IdentitySvc} from '../services/Identity.service';
+
+import {TYPEAHEAD_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
     selector: 'person-detail',
     templateUrl: '../app/templates/person-detail.html',
-    pipes: [Gidfull],
-    directives: [FORM_DIRECTIVES],
+    directives: [FORM_DIRECTIVES, TYPEAHEAD_DIRECTIVES],
     providers: [IdentitySvc]
 })
-export class PersonDetailDirective implements OnInit {
+export class PersonDetailDirective extends BaseComponent implements OnInit, AfterViewInit {
 
     // Prop from parent component
     @Input() selectedPerson: Person;
 
-    constructor(private _identitySvc: IdentitySvc) { }
+    constructor(private _identitySvc: IdentitySvc, private _modalService: ModalConfirmSvc) { super(); }
 
     ngOnInit() {
         console.log("Working with", this.selectedPerson);
 
-        this.tempObjGovernmentId = this.selectedPerson.governmentId && JSON.parse(JSON.stringify(this.selectedPerson.governmentId[0]));
-        this.tempSelectedGidType = this.tempObjGovernmentId.name;
+        if (this.selectedPerson.governmentId.length) {
+            this.tempObjGovernmentId = JSON.parse(JSON.stringify(this.selectedPerson.governmentId[0]));
+            this.tempSelectedGidType = this.tempObjGovernmentId && this.tempObjGovernmentId.name;
+        }
+    }
+
+    ngAfterViewInit() {
+        super.ngAfterViewInit();
     }
 
     // Person detail props
-    eyeColorsArr;
-    tempEyeColor;
+    eyeColorsArr: Array<string> = ["Black", "Blue", "Gray", "Green", "Hazel", "Pink"];
+    tempEyeColor: string;
 
-    hairColorsArr;
-    tempHairColor;
+    hairColorsArr: Array<string> = ["Black", "Brown", "Blonde", "Red", "White", "Gray", "Bald", "Sandy"];
+    tempHairColor: string;
 
     tempSelectedGidType = "";
     tempObjGovernmentId = null;
     isAddGid = false;
     editingGidIx = -1;
     // --
-  
+
     // state
     saving = false;
 
@@ -52,20 +60,19 @@ export class PersonDetailDirective implements OnInit {
     editEyeColor(event) {
         event.preventDefault();
         this.tempEyeColor = this.selectedPerson.eyeColor;
-        this.eyeColorsArr = [];
+        //this.eyeColorsArr = [];
 
-        for (var property in eyeColors) {
-            if (eyeColors.hasOwnProperty(property)) {
-                this.eyeColorsArr.push(eyeColors[property]);
-            }
-        }
+        //for (var property in eyeColors) {
+        //    if (eyeColors.hasOwnProperty(property)) {
+        //        this.eyeColorsArr.push(eyeColors[property]);
+        //    }
+        //}
 
-        $('#editEyeModal').modal('show')
+        $('#editEyeModal').modal('show');
     }
 
-    changeEyeColor(event, ec) {
-        event.preventDefault();
-        this.tempEyeColor = ec;
+    changeEyeColor(event: any) {
+        this.tempEyeColor = event.item;
     }
 
     saveEyeColor(event) {
@@ -96,6 +103,8 @@ export class PersonDetailDirective implements OnInit {
     }
 
     closeEyeModal(event) {
+        //this.selectedPerson.eyeColor = this.tempEyeColor;
+        this.tempEyeColor = this.selectedPerson.eyeColor;
         $('#editEyeModal').modal('hide');
     }
 
@@ -105,20 +114,19 @@ export class PersonDetailDirective implements OnInit {
     editHairColor(event) {
         event.preventDefault();
         this.tempHairColor = this.selectedPerson.hairColor;
-        this.hairColorsArr = [];
+        //this.hairColorsArr = [];
 
-        for (var property in eyeColors) {
-            if (eyeColors.hasOwnProperty(property)) {
-                this.hairColorsArr.push(eyeColors[property]);
-            }
-        }
+        //for (var property in eyeColors) {
+        //    if (eyeColors.hasOwnProperty(property)) {
+        //        this.hairColorsArr.push(eyeColors[property]);
+        //    }
+        //}
 
-        $('#editHairModal').modal('show')
+        $('#editHairModal').modal('show');
     }
 
     changeHairColor(event, hc) {
-        event.preventDefault();
-        this.tempHairColor = hc;
+        this.tempHairColor = event.item;
     }
 
     saveHairColor(event) {
@@ -149,6 +157,8 @@ export class PersonDetailDirective implements OnInit {
     }
 
     closeHairModal(event) {
+        this.tempHairColor = this.selectedPerson.hairColor;
+        //this.selectedPerson.hairColor = this.tempHairColor;
         $('#editHairModal').modal('hide');
     }
 
@@ -162,7 +172,9 @@ export class PersonDetailDirective implements OnInit {
         this.tempObjGovernmentId = { name: "", value: "" }
         this.tempSelectedGidType = "";
 
-        $('#editGIDModal').modal('show');
+        setTimeout(function () {
+            $('#editGIDModal').modal('show');
+        }, 100);
     }
 
     editGID(event, index) { //selectedGidType = this.selectedPerson.governmentId[0].name) {
@@ -192,14 +204,20 @@ export class PersonDetailDirective implements OnInit {
     deleteGID(event, index) {
         event.preventDefault();
 
-        this._identitySvc.archiveGovId(this.selectedPerson.governmentId[index].instanceId)
-            .subscribe(result => {
-                console.log(result);
-                $('#editGIDModal').modal('hide');
-            }, error => alert(`Server error. Try again later`));
+        let msg = `Do you want to delete government identification?`;
 
-        this.selectedPerson.governmentId.splice(index, 1);
-        this.tempObjGovernmentId = null;
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._identitySvc.archiveGovId(this.selectedPerson.governmentId[index].instanceId)
+                    .subscribe(result => {
+                        console.log(result);
+                        $('#editGIDModal').modal('hide');
+                    }, error => alert(`Server error. Try again later`));
+
+                this.selectedPerson.governmentId.splice(index, 1);
+                this.tempObjGovernmentId = null;
+            }
+        });
     }
 
     saveGid(event) {

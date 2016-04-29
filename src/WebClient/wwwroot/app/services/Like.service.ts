@@ -11,40 +11,40 @@ export class LikeSvc {
     constructor(private http: Http) { }
 
     apiUrl = "http://localhost:47503/api/";
-  
+
     headers = new Headers({ 'Content-Type': 'application/json' });
     options = new RequestOptions({ headers: this.headers });
 
     /**
-         * Add like
-         * @param {string} entId
-         * @param {Object} like
-         * @returns
-         */
+    * Add like
+    * @param {string} entId
+    * @param {Object} like
+    * @returns
+    */
     addLike(entId: string, like: Object) {
         let body = JSON.stringify({
             Key: { EntityId: entId },
             Values: like
         });
 
-        return this.http.post(this.apiUrl + "LikeApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityLikeApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
 
     /**
-      * Update like
-      * @param {string} insId
-      * @param {Object} like
-      * @returns
-      */
+    * Update like
+    * @param {string} insId
+    * @param {Object} like
+    * @returns
+    */
     updateLike(insId: string, like: Object) {
         let body = JSON.stringify({
             Key: { instanceId: insId },
             Values: like
         });
 
-        return this.http.post(this.apiUrl + "LikeApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityLikeApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -59,7 +59,7 @@ export class LikeSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "LikeApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityLikeApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }

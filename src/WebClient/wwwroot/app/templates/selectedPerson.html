@@ -3,7 +3,7 @@
         <a class="btn btn-sm btn-default" style="float: left" href="#" role="button"><strong>{{selectedPerson.initials()}}</strong></a>
         <h4 class="text-left col-md-5" style="margin-top:5px">{{selectedPerson.name}}</h4>
         <div class="btn-group" style="float:left">
-            <a class="btn btn-default" href="#" (click)="openChangeName($event,false)"><i class="fa fa-pencil" ></i></a> 
+            <a class="btn btn-default" href="#" (click)="openChangeName($event,false)"><i class="fa fa-pencil" ></i></a>
             <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             <a class="btn btn-default" href="#"><i class="fa fa-trash"></i></a>
             <a class="btn btn-default" href="#" (click)="openChangeName($event,true)"><i class="fa fa-plus"></i></a>
@@ -12,11 +12,11 @@
 </div>
 
 <!-- Edit person name -->
-<div id="editPersonNameModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+<div id="editPersonNameModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">{{ isAdd ? 'Edit person name':'Add person' }}</h4>
       </div>
       <div class="modal-body">
@@ -24,15 +24,15 @@
           <div class="form-group">
             <label for="birthday" class="col-sm-2 control-label">Name: </label>
             <div class="col-sm-10">
-              <input [class.hidden]="!isAdd" type="text" class="form-control" #txtAddName placeholder="Ente Name"/>
-              <input [class.hidden]="isAdd" type="text" class="form-control" #txtName [value]="selectedPerson.name" />
+              <input (keyup.enter)="changeName($event, txtName.value, txtAddName.value)" [class.hidden]="!isAdd" type="text" class="form-control" #txtAddName placeholder="Ente Name"/>
+              <input (keyup.enter)="changeName($event, txtName.value, txtAddName.value)" [class.hidden]="isAdd" type="text" class="form-control" #txtName [value]="selectedPerson.name" />
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeChangeName($event, txtName)">Close</button>
-        <button type="button" class="btn btn-primary" (click)="changeName($event, txtName.value, txtAddName.value)">Save changes</button>
+        <button type="button" class="btn btn-primary" (click)="changeName($event, txtName.value, txtAddName.value)"><i class="fa fa-floppy-o"></i> Save</button>
       </div>
     </div>
   </div>

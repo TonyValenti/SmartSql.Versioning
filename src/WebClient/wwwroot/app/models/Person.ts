@@ -28,10 +28,10 @@ export class Person {
         public medications: any,
         public procedures: any,
         public immunizations: any,
+        public emergencyContact: any[],
         public incidents: any,
         public conditions: any,
         public insurances: any,
-        public emContacts: any,
         public financials: Financial[],
         public psychology: any,
         public education: any
@@ -42,6 +42,7 @@ export class Person {
         let insurances = [];
         let conditions = [];
         let immunizations = [];
+        let emergencyContact = [];
         let incidents = [];
         let allergies = [];
         let medications = [];
@@ -61,7 +62,7 @@ export class Person {
                     f.InstanceId));
             }
         }
-               
+
         // Gov ids
         for (var i = 0; i < pjsn.GovernmentIdentification.length; i++) {
             governmentIds.push({
@@ -70,7 +71,7 @@ export class Person {
                 instanceId: pjsn.GovernmentIdentification[i].InstanceId
             });
         }
-       
+
         // Likes
         for (var i = 0; i < pjsn.Like.length; i++) {
             if (pjsn.Like[i].Status) {
@@ -89,7 +90,7 @@ export class Person {
                 });
             }
         }
-         
+
         // Allergies
         for (var i = 0; i < pjsn.Allergy.length; i++) {
             allergies.push({
@@ -127,7 +128,16 @@ export class Person {
                 InstanceId: pjsn.Immunization[i].InstanceId
             });
         }
-         
+
+        // Emergency Contact
+        for (var i = 0; i < pjsn.EmergencyContact.length; i++) {
+            emergencyContact.push({
+                EmergencyContactEntityId: pjsn.EmergencyContact[i].EmergencyContactEntityId,
+                EntityId: pjsn.EmergencyContact[i].EntityId,
+                InstanceId: pjsn.EmergencyContact[i].InstanceId
+            });
+        }
+
         // Incident
         for (var i = 0; i < pjsn.Incident.length; i++) {
             incidents.push({
@@ -157,18 +167,21 @@ export class Person {
         }
 
         var clothessizes = new ClothingSizes(
-            pjsn.BeltSize && pjsn.BeltSize.Value,
+            pjsn.ShirtSize && pjsn.ShirtSize.Value,
             pjsn.PantSize && pjsn.PantSize.Value,
             pjsn.ShoeSize && pjsn.ShoeSize.Value,
             pjsn.BeltSize && pjsn.BeltSize.Value,
             pjsn.HeadSize && pjsn.HeadSize.Value,
-            pjsn.DressSize && pjsn.DressSize.Value);
-
+            pjsn.DressSize && pjsn.DressSize.Value,
+            pjsn.UnderwearSize && pjsn.UnderwearSize.Value,
+            pjsn.BraSize && pjsn.BraSize.Value
+        );
 
         var psychology = {
             Religion: pjsn.Religion && pjsn.Religion.Value,
             ReligiousFrequency: pjsn.ReligiousFrequency && pjsn.ReligiousFrequency.Value,
             PoliticalAffiliation: pjsn.PoliticalAffiliation && pjsn.PoliticalAffiliation.Value,
+            SexualOrientation: pjsn.SexualOrientation && pjsn.SexualOrientation.Value,
             LoveLanguage: {
                 wof: pjsn.LoveLanguage && pjsn.LoveLanguage.HasWordsOfAffirmation || null,
                 aos: pjsn.LoveLanguage && pjsn.LoveLanguage.HasActsOfService || null,
@@ -177,25 +190,39 @@ export class Person {
                 pt: pjsn.LoveLanguage && pjsn.LoveLanguage.HasPhysicalTouch || null
             },
             AngerLanguage: {
-                r: pjsn.LoveLanguageAngerLanguage && pjsn.AngerLanguage.HasReactive || null,
+                r: pjsn.AngerLanguage && pjsn.AngerLanguage.HasReactive || null,
                 pa: pjsn.AngerLanguage && pjsn.AngerLanguage.HasPassiveAggressive || null,
                 av: pjsn.AngerLanguage && pjsn.AngerLanguage.HasAvoidant || null,
-                d: pjsn.AngerLanguage && pjsn.AngerLanguage.HasDirect || null,
+                d: pjsn.AngerLanguage && pjsn.AngerLanguage.HasAssertive || null,
             }
         }
 
         // EDUCATION
         var education = {
             EducationLevel: pjsn.EducationLevel && pjsn.EducationLevel.Value,
-            Certification : []  
+            Certification : [],
+            Degrees : [],
+            Schools: []
         }
- 
+
         for (var i = 0; i < pjsn.Certification.length; i++) {
             pjsn.Certification[i].StartDate = new Date(pjsn.Certification[i].StartDate).toISOString().split("T")[0];
             pjsn.Certification[i].EndDate = new Date(pjsn.Certification[i].EndDate).toISOString().split("T")[0];
         }
-
         education.Certification = pjsn.Certification;
+     
+        for (var i = 0; i < pjsn.Degree.length; i++) {
+            pjsn.Degree[i].IssueDate = new Date(pjsn.Degree[i].IssueDate).toISOString().split("T")[0];
+        }
+        education.Degrees = pjsn.Degree;
+
+
+        for (var i = 0; i < pjsn.School.length; i++) {
+            pjsn.School[i].StartDate = new Date(pjsn.School[i].StartDate).toISOString().split("T")[0];
+            pjsn.School[i].EndDate = new Date(pjsn.School[i].EndDate).toISOString().split("T")[0];
+        }
+        education.Schools = pjsn.School;
+        // ==
 
         return new Person(
             pjsn.Entity.Name,
@@ -220,10 +247,10 @@ export class Person {
             medications,
             procedures,
             immunizations,
+            emergencyContact,
             incidents,
             conditions,
             insurances,
-            pjsn.EmergencyContact,
             bankAcc,
             psychology,
             education

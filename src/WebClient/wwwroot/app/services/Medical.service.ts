@@ -15,6 +15,8 @@ export class MedicalSvc {
     headers = new Headers({ 'Content-Type': 'application/json' });
     options = new RequestOptions({ headers: this.headers });
 
+    people;
+
     /**
      * Add Sex
      * @param {string} sex
@@ -26,7 +28,7 @@ export class MedicalSvc {
             Values: { Value: sex }
         });
 
-        return this.http.post(this.apiUrl + "SexApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntitySexApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -42,7 +44,7 @@ export class MedicalSvc {
             Values: { Value: sex }
         });
 
-        return this.http.post(this.apiUrl + "BloodTypeApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityBloodTypeApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -58,7 +60,7 @@ export class MedicalSvc {
             Values: { Value: bt }
         });
 
-        return this.http.post(this.apiUrl + "BloodTypeApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityBloodTypeApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -74,12 +76,12 @@ export class MedicalSvc {
             Values: { Value: bt }
         });
 
-        return this.http.post(this.apiUrl + "BloodTypeApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityBloodTypeApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
- 
-    
+
+
     /**
      * Add height
      * @param {string} entId
@@ -96,7 +98,7 @@ export class MedicalSvc {
             }
         });
 
-        return this.http.post(this.apiUrl + "HeightApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityHeightApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -117,7 +119,7 @@ export class MedicalSvc {
             }
         });
 
-        return this.http.post(this.apiUrl + "HeightApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityHeightApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -138,7 +140,7 @@ export class MedicalSvc {
             }
         });
 
-        return this.http.post(this.apiUrl + "WeightApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityWeightApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -159,7 +161,7 @@ export class MedicalSvc {
             }
         });
 
-        return this.http.post(this.apiUrl + "WeightApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityWeightApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -176,7 +178,7 @@ export class MedicalSvc {
             Values: allergy
         });
 
-        return this.http.post(this.apiUrl + "AllergyApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityAllergyApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -189,11 +191,11 @@ export class MedicalSvc {
       */
     updateAllergy(insId: string, allergy: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: allergy
         });
 
-        return this.http.post(this.apiUrl + "AllergyApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityAllergyApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -208,7 +210,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "AllergyApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityAllergyApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -225,7 +227,7 @@ export class MedicalSvc {
             Values: medication
         });
 
-        return this.http.post(this.apiUrl + "MedicationApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityMedicationApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -238,11 +240,11 @@ export class MedicalSvc {
       */
     updateMedication(insId: string, medication: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: medication
         });
 
-        return this.http.post(this.apiUrl + "MedicationApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityMedicationApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -258,7 +260,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "MedicationApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityMedicationApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -276,7 +278,7 @@ export class MedicalSvc {
             Values: procedure
         });
 
-        return this.http.post(this.apiUrl + "ProcedureApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityProcedureApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -289,11 +291,11 @@ export class MedicalSvc {
       */
     updateProcedure(insId: string, procedure: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: procedure
         });
 
-        return this.http.post(this.apiUrl + "ProcedureApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityProcedureApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -309,7 +311,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "ProcedureApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityProcedureApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -326,7 +328,7 @@ export class MedicalSvc {
             Values: immunization
         });
 
-        return this.http.post(this.apiUrl + "ImmunizationApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityImmunizationApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -339,11 +341,11 @@ export class MedicalSvc {
       */
     updateImmunization(insId: string, immunization: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: immunization
         });
 
-        return this.http.post(this.apiUrl + "ImmunizationApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityImmunizationApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -359,7 +361,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "ImmunizationApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityImmunizationApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -376,7 +378,7 @@ export class MedicalSvc {
             Values: incident
         });
 
-        return this.http.post(this.apiUrl + "IncidentApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityIncidentApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -389,11 +391,11 @@ export class MedicalSvc {
       */
     updateIncident(insId: string, incident: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: incident
         });
 
-        return this.http.post(this.apiUrl + "IncidentApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityIncidentApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -409,7 +411,7 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "IncidentApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityIncidentApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -426,7 +428,7 @@ export class MedicalSvc {
             Values: condition
         });
 
-        return this.http.post(this.apiUrl + "ConditionApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityConditionApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -439,11 +441,11 @@ export class MedicalSvc {
       */
     updateCondition(insId: string, condition: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: condition
         });
 
-        return this.http.post(this.apiUrl + "ConditionApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityConditionApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -458,56 +460,56 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "ConditionApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityConditionApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
 
     /**
-   * Add insurance
-   * @param {string} entId
-   * @param {Object} insurance
-   * @returns
-   */
+     * Add insurance
+     * @param {string} entId
+     * @param {Object} insurance
+     * @returns
+     */
     addInsurance(entId: string, insurance: Object) {
         let body = JSON.stringify({
             Key: { EntityId: entId },
             Values: insurance
         });
 
-        return this.http.post(this.apiUrl + "InsuranceApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityInsuranceApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
 
     /**
-      * Update Insurance
-      * @param {string} insId
-      * @param {Object} insurance
-      * @returns
-      */
+     * Update Insurance
+     * @param {string} insId
+     * @param {Object} insurance
+     * @returns
+     */
     updateInsurance(insId: string, insurance: Object) {
         let body = JSON.stringify({
-            Key: { instanceId: insId },
+            Key: { InstanceId: insId },
             Values: insurance
         });
 
-        return this.http.post(this.apiUrl + "InsuranceApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityInsuranceApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
 
     /**
-    * Archive insurance
-    * @param {string} instId
-    * @returns
-    */
+     * Archive insurance
+     * @param {string} instId
+     * @returns
+     */
     archiveInsurance(instId: string) {
         let body = JSON.stringify({
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "InsuranceApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityInsuranceApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -522,7 +524,56 @@ export class MedicalSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "GovernmentIdentificationApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityGovernmentIdentificationApi/Archive", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+     * Add EC
+     * @param {string} entId
+     * @param {Object} EC
+     * @returns
+     */
+    addEC(entId: string, ec: Object) {
+        let body = JSON.stringify({
+            Key: { EntityId: entId },
+            Values: ec
+        });
+
+        return this.http.post(this.apiUrl + "EntityEmergencyContactApi/Add", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+     * Update EC
+     * @param {string} insId
+     * @param {Object} EC
+     * @returns
+     */
+    updateEC(insId: string, ec: Object) {
+        let body = JSON.stringify({
+            Key: { InstanceId: insId },
+            Values: ec
+        });
+
+        return this.http.post(this.apiUrl + "EntityEmergencyContactApi/Update", body, this.options)
+            .map(res => res.json())
+            .catch(this.logAndPassOn);
+    }
+
+    /**
+     * Archive EC
+     * @param {string} instId
+     * @returns
+     */
+    archiveEC(instId: string) {
+        let body = JSON.stringify({
+            Key: { InstanceId: instId }
+        });
+
+        return this.http.post(this.apiUrl + "EntityEmergencyContactApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }

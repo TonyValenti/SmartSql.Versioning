@@ -1,20 +1,24 @@
-import { Component, Inject, OnInit } from 'angular2/core';
+import { Component, Inject, OnInit, AfterViewInit} from 'angular2/core';
+
+import { BaseComponent } from '../components/Base.component';
 import { ServerAPI } from '../services/ServerAPI.service';
 import { MedicalSvc } from '../services/Medical.service';
 import { SelectedPersonDirective } from '../directives/SelectedPerson.directive';
 import { Person } from '../models/Person';
 import { Router, RouteParams } from 'angular2/router';
 import { bloodtype } from '../pipes/bloodtype.pipe';
+import { ModalConfirmSvc} from '../common/ModalConfirmAll';
 
+import {TYPEAHEAD_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
     selector: 'medical',
     templateUrl: '../app/templates/medicalComp.html',
     pipes: [bloodtype],
-    directives: [SelectedPersonDirective],
+    directives: [SelectedPersonDirective, TYPEAHEAD_DIRECTIVES],
     providers: [MedicalSvc]
 })
-export class Medical implements OnInit {
+export class Medical extends BaseComponent implements OnInit, AfterViewInit {
 
     selectedDude: Person;
 
@@ -54,8 +58,11 @@ export class Medical implements OnInit {
     isAddInsurance = true;
 
     //emergency Contacts
-    selectedEmergencyContact;
-    tempEmergencyContact = { Name: "", Phone: "" };
+    loadingPeople = true;
+    peopleEC = [];
+    selectedEmergencyContact = null;
+    selectedECName = '';
+    tempEmergencyContact = null;
     isAddEmergencyContact = true;
 
     tempSex = 0;
@@ -83,7 +90,17 @@ export class Medical implements OnInit {
     tempWeightVal = 0;
     tempWeightUnit = 0; // pounds - 0, kilograms - 1
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _medicalSvc: MedicalSvc, private _routeParams: RouteParams) { }
+    constructor(
+        @Inject(ServerAPI) private _serverAPI,
+        private _modalService: ModalConfirmSvc,
+        private _medicalSvc: MedicalSvc,
+        private _routeParams: RouteParams) { super(); }
+
+    ngAfterViewInit() {
+        $(".modal").on('shown.bs.modal', function () {
+            $(this).find('input:first:visible').focus();
+        }); //Focus
+    }
 
     ngOnInit() {
         let instanceId = this._routeParams.get('instanceId');
@@ -92,7 +109,7 @@ export class Medical implements OnInit {
             alert(`No instanceId provided ... try entering one in the url, like so: http://localhost:3000/Identity?instanceId=22fcf440-d3d5-e511-8d7c-a0b3cc47d18e`);
         }
 
-        var self = this; 
+        var self = this;
 
         // Make an Ajax call to get person from DB .subscribe(person => { currPerson = person; }
         this._serverAPI.getPersonByInstanceId(instanceId).subscribe(p => {
@@ -107,11 +124,23 @@ export class Medical implements OnInit {
             self.tempWeightVal = self.selectedDude.weight && self.selectedDude.weight.value || 0;
             self.tempWeightUnit = self.selectedDude.weight && self.selectedDude.weight.unit || 0;
 
+            if (self.selectedDude.emergencyContact.length > 0) {
+                // Get the Emergency Contact
+                this._serverAPI.getPersonByInstanceIdNoDetails(self.selectedDude.emergencyContact[0].EmergencyContactEntityId).subscribe(pec => {
+                    console.log("getPersonByInstanceIdNoDetails", JSON.stringify(pec));
+                    if (pec) {
+                        self.selectedEmergencyContact = pec;
+                        self.selectedECName = pec.Name;
+                    }
+                }
+                , error => alert(`Server error. Try again later`)
+                , done => console.log('emergencyContact::getPersonByInstanceId done'));
+            }
         }
             , error => alert(`Server error. Try again later`)
             , done => console.log('getPersonByInstanceId done'));
     }
-     
+
     //--------------------------------
     //------ Add/Edit Allergies ------
     //--------------------------------
@@ -162,14 +191,20 @@ export class Medical implements OnInit {
     deletetAllergie(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveAllergy(this.selectedDude.allergies[index].instanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editAllergieModal').modal('hide');
+        let msg = `Do you want to delete Allergy?`;
 
-        }, error => alert(`Server error. Try again later`));
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveAllergy(this.selectedDude.allergies[index].instanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editAllergieModal').modal('hide');
 
-        this.selectedDude.allergies.splice(index, 1);
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.allergies.splice(index, 1);
+            }
+        });
     }
 
     closeAllergie(event) {
@@ -226,14 +261,20 @@ export class Medical implements OnInit {
     deletetMedication(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveMedication(this.selectedDude.medications[index].instanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editMedicationModal').modal('hide');
+        let msg = `Do you want to delete Medication?`;
 
-        }, error => alert(`Server error. Try again later`));
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveMedication(this.selectedDude.medications[index].instanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editMedicationModal').modal('hide');
 
-        this.selectedDude.medications.splice(index, 1);
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.medications.splice(index, 1);
+            }
+        });
     }
 
     closeMedication(event) {
@@ -288,14 +329,20 @@ export class Medical implements OnInit {
     deletetProcedure(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveProcedure(this.selectedDude.procedures[index].InstanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editProcedureModal').modal('hide');
+        let msg = `Do you want to delete procedure?`;
 
-        }, error => alert(`Server error. Try again later`));
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveProcedure(this.selectedDude.procedures[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editProcedureModal').modal('hide');
 
-        this.selectedDude.procedures.splice(index, 1);
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.procedures.splice(index, 1);
+            }
+        });
     }
 
     closeProcedure(event) {
@@ -353,15 +400,20 @@ export class Medical implements OnInit {
     deletetImmunization(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveImmunization(this.selectedDude.immunizations[index].InstanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editImmunizationModal').modal('hide');
+        let msg = `Do you want to delete immunization?`;
 
-        }, error => alert(`Server error. Try again later`));
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveImmunization(this.selectedDude.immunizations[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editImmunizationModal').modal('hide');
 
-        this.selectedDude.immunizations.splice(index, 1);
+                }, error => alert(`Server error. Try again later`));
 
+                this.selectedDude.immunizations.splice(index, 1);
+            }
+        });
     }
 
     closeImmunization(event) {
@@ -421,14 +473,20 @@ export class Medical implements OnInit {
     deletetIncident(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveIncident(this.selectedDude.incidents[index].InstanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editIncidentModal').modal('hide');
+        let msg = `Do you want to delete incident?`;
 
-        }, error => alert(`Server error. Try again later`));
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveIncident(this.selectedDude.incidents[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editIncidentModal').modal('hide');
 
-        this.selectedDude.incidents.splice(index, 1);
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.incidents.splice(index, 1);
+            }
+        });
     }
 
     closeIncident(event) {
@@ -487,13 +545,19 @@ export class Medical implements OnInit {
     deletetCondition(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveCondition(this.selectedDude.conditions[index].InstanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editConditionModal').modal('hide');
-        }, error => alert(`Server error. Try again later`));
+        let msg = `Do you want to delete condition?`;
 
-        this.selectedDude.conditions.splice(index, 1);
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveCondition(this.selectedDude.conditions[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editConditionModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.conditions.splice(index, 1);
+            }
+        });
     }
 
     closeCondition(event) {
@@ -551,13 +615,19 @@ export class Medical implements OnInit {
     deletetInsurance(event, index) {
         event.preventDefault();
 
-        this._medicalSvc.archiveInsurance(this.selectedDude.insurances[index].InstanceId).subscribe(result => {
-            console.log(result);
-            //this.saving = false;
-            $('#editInsuranceModal').modal('hide');
-        }, error => alert(`Server error. Try again later`));
+        let msg = `Do you want to delete insurance?`;
 
-        this.selectedDude.insurances.splice(index, 1);
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                this._medicalSvc.archiveInsurance(this.selectedDude.insurances[index].InstanceId).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+                    $('#editInsuranceModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+
+                this.selectedDude.insurances.splice(index, 1);
+            }
+        });
     }
 
     closeInsurance(event) {
@@ -572,38 +642,154 @@ export class Medical implements OnInit {
     editEmergencyContacts(event, emergencyContact, isAdd) {
         event.preventDefault();
 
+        $('#editEmergencyContactsModal').modal('show');
+
+        this.loadingPeople = true;
         this.isAddEmergencyContact = isAdd;
 
-        if (isAdd) {
-            this.tempEmergencyContact = { Name: "", Phone: "" };
-        } else {
-            this.tempEmergencyContact = JSON.parse(JSON.stringify(emergencyContact));
-            this.selectedEmergencyContact = emergencyContact;
-        }
+        var self = this;
 
-        $('#editEmergencyContactsModal').modal('show');
+        this._serverAPI.getAllPeople().subscribe(result => {
+            function filterByCurrent(item, index, array) {
+                return item.IsCurrent;
+            }
+
+            var filtered = result.filter(filterByCurrent);
+
+            self.peopleEC = filtered;
+
+            if (isAdd) {
+                self.selectedEmergencyContact = null;
+                self.selectedECName = '';
+                //{
+                //    "AuthorId": "",
+                //    "AuthorName": null,
+                //    "CreatedDateUtc": "",
+                //    "InstanceId": "",
+                //    "IsArchived": false,
+                //    "IsCurrent": true,
+                //    "IsOriginal": true,
+                //    "Name": "",
+                //    "RevisionDateUtc": "",
+                //    "RevisionId": ""
+                //};
+            } else {
+                self.tempEmergencyContact = JSON.parse(JSON.stringify(emergencyContact));
+                self.selectedECName = emergencyContact.Name;
+            }
+
+            self.loadingPeople = false;
+
+        }, error => alert(`Server error. Try again later`));
+
+
+    }
+
+    selectEMCont(event) {
+        this.tempEmergencyContact = JSON.parse(JSON.stringify(event.item));
+        this.selectedECName = event.item.Name;
+
+        console.log(JSON.stringify(event.item));
     }
 
     saveEmergencyContacts(event) {
         event.preventDefault();
-        if (this.isAddEmergencyContact) {
-            this.selectedDude.emContacts.push(this.tempEmergencyContact);
+        this.selectedEmergencyContact = JSON.parse(JSON.stringify(this.tempEmergencyContact));
+
+        var newEC = {
+            "EmergencyContactEntityId": this.selectedEmergencyContact.InstanceId,
+            "EntityId": this.selectedDude.instanceId,
+            "InstanceId": null,
+            "RevisionId": null,
+            "AuthorId": null,
+            "AuthorName": null,
+            "RevisionDateUtc": null,
+            "CreatedDateUtc": null,
+            "IsArchived": false,
+            "IsCurrent": true,
+            "IsOriginal": true
+        };
+
+        console.log('New EC', newEC);
+
+        var self = this;
+        if (this.isAddEmergencyContact){
+            this._medicalSvc.addEC(this.selectedDude.instanceId, newEC).subscribe(result => {
+                console.log("newEC", result);
+
+                self.selectedDude.emergencyContact = [{
+                    EmergencyContactEntityId: result.EmergencyContactEntityId,
+                    EntityId: result.EntityId,
+                    InstanceId: result.InstanceId
+                }];
+
+                // Get the Emergency Contact
+                self._serverAPI.getPersonByInstanceIdNoDetails(result.EmergencyContactEntityId).subscribe(pec => {
+                    console.log("getPersonByInstanceIdNoDetails", JSON.stringify(pec));
+                    if (pec) {
+                        self.selectedEmergencyContact = pec;
+                        self.selectedECName = pec.Name;
+                    }
+                }
+                    , error => alert(`Server error. Try again later`)
+                    , done => console.log('emergencyContact::getPersonByInstanceId done'));
+
+                $('#editEmergencyContactsModal').modal('hide');
+
+            }, error => alert(`Server error. Try again later`));
         } else {
-            this.selectedEmergencyContact.Name = this.tempEmergencyContact.Name;
-            this.selectedEmergencyContact.Phone = this.tempEmergencyContact.Phone;
+            this._medicalSvc.updateEC(this.selectedDude.emergencyContact[0].InstanceId, newEC).subscribe(result => {
+
+                console.log("newEC", result);
+
+                // Get the Emergency Contact
+                self._serverAPI.getPersonByInstanceIdNoDetails(result.EmergencyContactEntityId).subscribe(pec => {
+                    console.log("getPersonByInstanceIdNoDetails", JSON.stringify(pec));
+                    if (pec) {
+                        self.selectedEmergencyContact = pec;
+                        self.selectedECName = pec.Name;
+                    }
+                }
+                    , error => alert(`Server error. Try again later`)
+                    , done => console.log('emergencyContact::getPersonByInstanceId done'));
+
+                $('#editEmergencyContactsModal').modal('hide');
+
+            }, error => alert(`Server error. Try again later`));
         }
 
-        $('#editEmergencyContactsModal').modal('hide');
     }
 
-    deletetEmergencyContacts(event, index) {
+    deletetEmergencyContacts(event) {
         event.preventDefault();
 
-        this.selectedDude.emContacts.splice(index, 1);
+        let msg = `Do you want to delete contact?`;
+
+        var self = this;
+
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                self._medicalSvc.archiveEC(self.selectedDude.emergencyContact[0].InstanceId).subscribe(result => {
+
+                    self.selectedDude.emergencyContact = null;
+                    self.selectedEmergencyContact = null;
+                    self.tempEmergencyContact = null;
+                    self.selectedECName = null;
+
+                    console.log(result);
+                    $('#editEmergencyContactsModal').modal('hide');
+
+                }, error => alert(`Server error. Try again later`));
+
+            }
+        });
     }
 
     closeEmergencyContacts(event) {
         event.preventDefault();
+
+        this.selectedDude.emergencyContact = JSON.parse(JSON.stringify(this.tempEmergencyContact));;
+        this.selectedEmergencyContact = JSON.parse(JSON.stringify(this.tempEmergencyContact));;
 
         $('#editEmergencyContactsModal').modal('hide');
     }
@@ -712,7 +898,6 @@ export class Medical implements OnInit {
     // ============
     // Edit Height
     // ============
-
     getHeight() {
 
         if (this.heightUnit === 0) {
@@ -721,7 +906,7 @@ export class Medical implements OnInit {
             this.heightInches = this.selectedDude.height.value % 12;
 
             if (this.heightFeet === 0 && this.heightInches === 0) {
-                return 'Empty';
+                return '';
             } else {
                 return this.heightFeet + ' ft ' + this.heightInches + ' in';
             }
@@ -730,7 +915,7 @@ export class Medical implements OnInit {
             this.heightCm = this.selectedDude.height.value;
 
             if (this.heightCm === 0) {
-                return 'Empty'
+                return ''
             } else {
                 return this.heightCm + ' Cm';
             }
@@ -808,7 +993,6 @@ export class Medical implements OnInit {
         this.selectedDude.height.value = this.tempHeightVal;
     }
 
-
     //========
     // Weight
     //========
@@ -816,14 +1000,14 @@ export class Medical implements OnInit {
         if (this.tempWeightUnit === 0) {
             // Pounds
             if (this.selectedDude.weight.value === 0) {
-                return 'Empty';
+                return '';
             } else {
                 return this.selectedDude.weight.value + ' pounds';
             }
         } else {
             // Kg
             if (this.selectedDude.weight.value === 0) {
-                return 'Empty';
+                return '';
             } else {
                 return this.selectedDude.weight.value + ' Kg';
             }
@@ -846,26 +1030,26 @@ export class Medical implements OnInit {
         this.tempWeightUnit = unit;
     }
 
-    saveWeight(event, pounds, kg) {
+    saveWeight(event, weight) {
         event.preventDefault();
 
         this.selectedDude.weight.unit = this.tempWeightUnit;
 
-        if (this.tempWeightUnit === 0) {
-            //Pounds
-            this.tempWeightVal = pounds * 1;
-        } else {
-            //Kg
-            this.tempWeightVal = kg * 1;
-        }
+        //if (this.tempWeightUnit === 0) {
+        //    //Pounds
+        //    this.tempWeightVal = pounds * 1;
+        //} else {
+        //    //Kg
+        //    this.tempWeightVal = kg * 1;
+        //}
+
+        this.tempWeightVal = weight * 1;
 
         if (!this.tempWeightVal || this.selectedDude.weight.value === this.tempWeightVal) {
             // No Change so just exit
             $('#editWeight').modal('hide');
             return;
         }
-
-        this.selectedDude.weight.value = this.tempWeightVal;
 
         //this.saving = true;
 
@@ -884,5 +1068,7 @@ export class Medical implements OnInit {
                 $('#editWeight').modal('hide');
             }, error => alert(`Server error. Try again later`));
         }
+
+        this.selectedDude.weight.value = this.tempWeightVal;
     }
 }

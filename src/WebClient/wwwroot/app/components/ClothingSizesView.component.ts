@@ -1,25 +1,32 @@
-import { Component, Inject } from 'angular2/core';
+import { Component, Inject, AfterViewInit } from 'angular2/core';
+import { Router, RouteParams } from 'angular2/router';
+
+import { BaseComponent } from '../components/Base.component';
 import { Person } from '../models/Person';
 import { ClothingSizes } from '../models/ClothingSizes';
 import { ServerAPI } from '../services/ServerAPI.service';
 import { ClothingSvc } from '../services/Clothing.service';
 import { SelectedPersonDirective } from '../directives/SelectedPerson.directive';
-import { Router, RouteParams } from 'angular2/router';
 
-@Component({
+ @Component({
     selector: 'clothingSizes',
     templateUrl: '../app/templates/clothingSizes.html',
     directives: [SelectedPersonDirective],
     providers: [ClothingSvc]
 })
-export class ClothingSizesView {
+export class ClothingSizesView extends BaseComponent implements AfterViewInit {
 
     private selectedDude: Person;
     private clothingSizes: ClothingSizes;
     clothingTypeName: string;
     clothingType: string;
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _clothingSvc: ClothingSvc, private _routeParams: RouteParams) {
+    constructor(
+        @Inject(ServerAPI) private _serverAPI,
+        private _clothingSvc: ClothingSvc,
+        private _routeParams: RouteParams) {
+
+        super();
 
         let instanceId = this._routeParams.get('instanceId');
 
@@ -32,6 +39,10 @@ export class ClothingSizesView {
             self.selectedDude = p;
             self.clothingSizes = p.clothingSizes;
         }, error => alert(`Server error. Try again later`));
+    }
+
+    ngAfterViewInit() {
+        super.ngAfterViewInit();
     }
 
     editClothingSizes(event, typeOfClothing) {
@@ -58,7 +69,11 @@ export class ClothingSizesView {
             case "Dress":
                 this.clothingTypeName = "dress";
                 break;
-            default:
+            case "Bra":
+                this.clothingTypeName = "bra";
+                break;
+            case "Underwear":
+                this.clothingTypeName = "underwear";
                 break;
         }
 

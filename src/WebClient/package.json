@@ -11,28 +11,30 @@
   },
   "license": "ISC",
   "dependencies": {
-    "angular2": "2.0.0-beta.6",
+    "angular2": "2.0.0-beta.13",
     "bootstrap": "^3.3.6",
     "connect-history-api-fallback": "^1.1.0",
     "es6-promise": "^3.0.2",
-    "es6-shim": "^0.33.3",
+    "es6-shim": "^0.35.0",
     "font-awesome": "^4.5.0",
     "jquery": "^2.2.0",
     "jshint": "^2.9.1",
+    "moment": "^2.12.0",
+    "ng2-bootstrap": "1.0.10",
     "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.0",
-    "systemjs": "0.19.20",
-    "zone.js": "0.5.14"
+    "rxjs": "5.0.0-beta.2",
+    "systemjs": "0.19.25",
+    "zone.js": "0.6.6"
   },
   "devDependencies": {
-    "typings": "^0.6.8",
-    "concurrently": "^1.0.0",
-    "lite-server": "^2.0.1",
-    "typescript": "^1.7.5",
+    "typings": "^0.7.11",
+    "concurrently": "^2.0.0",
+    "lite-server": "^2.1.0",
+    "typescript": "^1.8.9",
     "browser-sync": "^2.10.0",
     "del": "^2.2.0",
     "gulp": "^3.9.0",
-    "gulp-typescript": "^2.10.0",
+    "gulp-typescript": "^2.12.1",
     "gulp-concat": "2.6.0",
     "gulp-cssmin": "0.1.7",
     "gulp-uglify": "1.5.1",
@@ -49,11 +51,11 @@
     "gulp-order": "^1.1.1",
     "gulp-rename": "^1.2.0",
     "gulp-dnx": "^0.3.0",
+    "event-stream": "3.3.2",
     "jshint-stylish": "^2.1.0",
     "gulp-plumber": "^1.1.0",
     "run-sequence": "^1.1.5",
     "merge-stream": "^1.0.0",
-    "tsconfig-glob": "^0.3.3"
+    "tsconfig-glob": "^0.4.1"
   }
 }
-   

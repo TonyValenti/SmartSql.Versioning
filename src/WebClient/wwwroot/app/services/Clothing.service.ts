@@ -21,13 +21,13 @@ export class ClothingSvc {
      * @param {string} string
      * @returns
      */
-    addClothingSize(entId: string, val: string, apiName : string) {
+    addClothingSize(entId: string, val: string, apiName: string) {
         let body = JSON.stringify({
             Key: { EntityId: entId },
             Values: { Value: val }
         });
 
-        return this.http.post(this.apiUrl + apiName + "/Add", body, this.options)
+        return this.http.post(this.apiUrl + 'Entity' + apiName + "/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -44,7 +44,7 @@ export class ClothingSvc {
             Values: { Value: val }
         });
 
-        return this.http.post(this.apiUrl + apiName + "/Update", body, this.options)
+        return this.http.post(this.apiUrl + 'Entity' + apiName + "/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }

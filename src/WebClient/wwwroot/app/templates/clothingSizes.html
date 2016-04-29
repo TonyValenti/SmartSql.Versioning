@@ -2,8 +2,8 @@
 
 <div *ngIf=clothingSizes>
 <div class="panel panel-default">
-    <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
-        <h3 class="panel-title"><i class="fa fa-arrows fa-fw"></i> Clothing sizes</h3>
+    <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;height:55px">
+        <h3 class="panel-title" style="padding-top:8px"><i class="fa fa-arrows fa-fw"></i> Clothing sizes</h3>
     </div>
 
     <div class="panel-body">
@@ -24,10 +24,10 @@
             </div>
             <div class="col-md-6 text-left columnspacing">
                 <div class="btn-group">
-                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event, 'Shoe')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event, 'Underwear')"><i class="fa fa-pencil"></i></a>
                     <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
                 </div>
-                <strong>Shoe: </strong><span>{{clothingSizes.Shoe}}</span>
+                <strong>Underwear: </strong><span>{{clothingSizes.Underwear}}</span>
             </div>
             <div class="col-md-6 text-left columnspacing">
                 <div class="btn-group">
@@ -35,6 +35,13 @@
                     <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
                 </div>
                 <strong>Belt: </strong><span>{{clothingSizes.Belt}}</span>
+            </div>
+            <div class="col-md-6 text-left columnspacing">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event, 'Shoe')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                </div>
+                <strong>Shoe: </strong><span>{{clothingSizes.Shoe}}</span>
             </div>
             <div class="col-md-6 text-left columnspacing">
                 <div class="btn-group">
@@ -51,16 +58,25 @@
                 <strong>Dress: </strong><span>{{clothingSizes.Dress}}</span>
 
             </div>
+
+            <div class="col-md-6 text-left columnspacing">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="#" (click)="editClothingSizes($event, 'Bra')"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                </div>
+                <strong>Bra: </strong><span>{{clothingSizes.Bra}}</span>
+
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Edit Clothing -->
-<div id="editClothingSize" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+<div id="editClothingSize" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Edit {{clothingTypeName}} size</h4>
             </div>
             <div class="modal-body">
@@ -68,14 +84,14 @@
                   <div class="form-group">
                     <label for="birthday" class="col-sm-3 control-label">{{clothingType}}: </label>
                     <div class="col-sm-9">
-                      <input placeholder="Enter {{clothingType}}" type="text" class="form-control" #txtClothing [value]="clothingSizes[clothingType]"/>
+                      <input (keyup.enter)="saveClothing($event, txtClothing.value)" placeholder="Enter {{clothingType}}" type="text" class="form-control" #txtClothing [value]="clothingSizes[clothingType]"/>
                     </div>
                   </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeClothingModal($event, txtClothing)">Close</button>
-                <button type="button" class="btn btn-primary" (click)="saveClothing($event, txtClothing.value)">Save changes</button>
+                <button type="button" class="btn btn-primary" (click)="saveClothing($event, txtClothing.value)"><i class="fa fa-floppy-o"></i> Save</button>
             </div>
         </div>
     </div>

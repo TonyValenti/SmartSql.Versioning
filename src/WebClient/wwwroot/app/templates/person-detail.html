@@ -1,66 +1,80 @@
-<div class="row">
-    <div class="col-md-6 col-lg-6 text-left">
-        <div class="btn-group">
-            <a class="btn btn-default" href="#" (click)="editEyeColor($event)"><i class="fa fa-pencil"></i></a>
-            <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+
+<div *ngIf="selectedPerson">
+
+    <div class="row">
+        <div class="col-md-6 col-lg-6 text-left">
+            <div class="btn-group">
+                <a class="btn btn-default" href="#" (click)="editEyeColor($event)"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+            </div>
+            <strong>Eye Color: </strong><span>{{selectedPerson.eyeColor || ""}}</span>
+            <br>
+            <br>
+            <div class="btn-group">
+                <a class="btn btn-default" href="#" (click)="editHairColor($event)"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+            </div>
+            <strong>Hair Color: </strong><span>{{selectedPerson.hairColor || ""}}</span>
         </div>
-        <strong>Eye Color: </strong><span>{{selectedPerson.eyeColor || "Empty"}}</span>
-        <br>
-        <br>
-        <div class="btn-group">
-            <a class="btn btn-default" href="#" (click)="editHairColor($event)"><i class="fa fa-pencil"></i></a>
-            <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+        <div class="col-md-6 col-lg-6 text-left">
+            <div class="btn-group">
+                <a class="btn btn-default" href="#" (click)="editEthnicity($event)"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+            </div>
+            <strong>Ethnicity: </strong><span>{{selectedPerson.ethnicity || ""}}</span>
+            <br>
+            <br>
+            <div class="btn-group">
+                <a class="btn btn-default" href="#" (click)="editBDay($event)"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+            </div>
+            <strong>Date of Birth: </strong><span>{{selectedPerson.dob || ""}}</span>
         </div>
-        <strong>Hair Color: </strong><span>{{selectedPerson.hairColor || "Empty"}}</span>
     </div>
-    <div class="col-md-6 col-lg-6 text-left">
-        <div class="btn-group">
-            <a class="btn btn-default" href="#" (click)="editEthnicity($event)"><i class="fa fa-pencil"></i></a>
-            <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+    <br>
+    <div class="panel panel-default" style="min-height: 150px;">
+        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-credit-card"></i> Government Identification</h3>
+            <a class="btn btn-primary pull-right" (click)="addGID($event)" href="#"><i class="fa fa-plus"></i></a>
+            <div class="clearfix"></div>
         </div>
-        <strong>Ethnicity: </strong><span>{{selectedPerson.ethnicity || "Empty"}}</span>
-        <br>
-        <br>
-        <div class="btn-group">
-            <a class="btn btn-default" href="#" (click)="editBDay($event)"><i class="fa fa-pencil"></i></a>
-            <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
-        </div>
-        <strong>Date of Birth: </strong><span>{{selectedPerson.dob || "Empty"}}</span>
-    </div>
-</div>
-<br>
-<div class="panel panel-default" style="min-height: 150px;">
-    <div *ngIf="selectedPerson.governmentId.length === 0">No government identification</div>
-    <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
-        <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-credit-card"></i> Government Identification</h3>
-        <a class="btn btn-primary pull-right" (click)="addGID($event)" href="#"><i class="fa fa-plus"></i></a>
-        <div class="clearfix"></div>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div *ngFor="#gitem of selectedPerson.governmentId;#i = index" class="col-md-6 col-lg-6 text-left columnspacing">
-                <div class="btn-group">
-                    <a (click)="editGID($event, i)" class="btn btn-default" href="#"><i class="fa fa-pencil"></i></a>
-                    <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
-                    <a (click)="deleteGID($event, i)" class="btn btn-default" href="#"><i class="fa fa-trash"></i></a>
+        <div class="panel-body">
+            <div class="panel-body" *ngIf="selectedPerson.governmentId.length === 0">No government identification</div>
+            <div class="row">
+                <div *ngFor="#gitem of selectedPerson.governmentId;#i = index" class="col-md-6 col-lg-6 text-left columnspacing">
+                    <div class="btn-group">
+                        <a (click)="editGID($event, i)" class="btn btn-default" href="#"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                        <a (click)="deleteGID($event, i)" class="btn btn-default" href="#"><i class="fa fa-trash"></i></a>
+                    </div>
+                    <strong>{{gitem.name}} :</strong><span> {{gitem.value || ""}}</span>
                 </div>
-                <strong>{{gitem.name}} :</strong><span> {{gitem.value || "Empty"}}</span>
             </div>
         </div>
     </div>
-</div>
-<!-- Edit Eye Color -->
-<div id="editEyeModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Eye Color</h4>
-            </div>
-            <div class="modal-body">
-                <div class="dropdown clearfix">
-                    <strong class="col-xs-5">Eye Color: </strong>
-                    <button class="btn btn-default dropdown-toggle col-xs-7" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <!-- Edit Eye Color -->
+    <div id="editEyeModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Eye Color</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="birthday" class="col-sm-5 control-label">Eye Color: </label>
+                            <div class="col-sm-7">
+                                <input [(ngModel)]="tempEyeColor"
+                                       [typeahead]="eyeColorsArr"
+                                       (typeaheadOnSelect)="changeEyeColor($event)"
+                                       class="form-control">
+
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- [typeaheadOptionField]="'name'" <button class="btn btn-default dropdown-toggle col-xs-7" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         {{tempEyeColor || "Select"}}
                         <span class="caret"></span>
                     </button>
@@ -68,145 +82,154 @@
                         <li *ngFor="#ec of eyeColorsArr" (click)="changeEyeColor($event,ec)">
                             <a href="#" [innerHtml]="ec"></a>
                         </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEyeModal($event)">Close</button>
-                <button type="button" class="btn btn-primary" (click)="saveEyeColor($event)">
-                    <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
-                    <span [class.hidden]="saving">Save changes</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /Edit Eye Color -->
+                    </ul>-->
 
-<!-- Edit Hair Color -->
-<div id="editHairModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Hair Color</h4>
-            </div>
-            <div class="modal-body">
-                <div class="dropdown clearfix">
-                    <strong class="col-xs-5">Hair Color: </strong>
-                    <button class="btn btn-default dropdown-toggle col-xs-7" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        {{tempHairColor  || "Select"}}
-                        <span class="caret"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEyeModal($event)">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveEyeColor($event)">
+                        <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
+                        <span [class.hidden]="saving"><i class="fa fa-floppy-o"></i> Save</span>
                     </button>
-                    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-                        <li *ngFor="#hc of hairColorsArr" (click)="changeHairColor($event,hc)">
-                            <a href="#" [innerHtml]="hc"></a>
-                        </li>
-                    </ul>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeHairModal($event)">Close</button>
-                <button type="button" class="btn btn-primary" (click)="saveHairColor($event)">
-                    <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
-                    <span [class.hidden]="saving">Save changes</span>
-                </button>
             </div>
         </div>
     </div>
-</div>
-<!-- /Edit Hair Color -->
-
-<!-- Edit Ethnicity -->
-<div id="editEthnicityModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Ethnicity</h4>
+    <!-- /Edit Eye Color -->
+    <!-- Edit Hair Color -->
+    <div id="editHairModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Hair Color</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="birthday" class="col-sm-5 control-label">Hair Color: </label>
+                            <div class="col-sm-7">
+                                <input [(ngModel)]="tempHairColor"
+                                       [typeahead]="hairColorsArr"
+                                       (typeaheadOnSelect)="changeHairColor($event)"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                    <!--<div class="dropdown clearfix">
+                        <strong class="col-xs-5">Hair Color: </strong>
+                        <button class="btn btn-default dropdown-toggle col-xs-7" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {{tempHairColor  || "Select"}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                            <li *ngFor="#hc of hairColorsArr" (click)="changeHairColor($event,hc)">
+                                <a href="#" [innerHtml]="hc"></a>
+                            </li>
+                        </ul>
+                    </div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeHairModal($event)">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveHairColor($event)">
+                        <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
+                        <span [class.hidden]="saving"><i class="fa fa-floppy-o"></i> Save</span>
+                    </button>
+                </div>
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="birthday" class="col-sm-3 control-label">Ethnicity: </label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" #txtEthnicity [value]="selectedPerson.ethnicity" />
+        </div>
+    </div>
+    <!-- /Edit Hair Color -->
+    <!-- Edit Ethnicity -->
+    <div id="editEthnicityModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Ethnicity</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="birthday" class="col-sm-3 control-label">Ethnicity: </label>
+                            <div class="col-sm-9">
+                                <input (keyup.enter)="saveEthnicity($event, txtEthnicity.value)" type="text" class="form-control ethnicictyInp" #txtEthnicity [value]="selectedPerson.ethnicity" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEthnicityModal($event,txtEthnicity)">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveEthnicity($event, txtEthnicity.value)">
+                        <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
+                        <span [class.hidden]="saving"><i class="fa fa-floppy-o"></i> Save</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit Ethnicity -->
+    <!-- Edit Birthday -->
+    <div id="editBDayModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Birthday</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="birthday" class="col-sm-3 control-label">Birthday: </label>
+                            <div class="col-sm-9">
+                                <input (keyup.enter)="saveBday($event, birthday.value)" type="date" class="form-control" placeholder="Enter date of birth" #birthday [value]="selectedPerson.dob" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeBdayyModal($event,birthday)">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveBday($event,birthday.value)">
+                        <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
+                        <span [class.hidden]="saving"><i class="fa fa-floppy-o"></i> Save</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit Birthday -->
+    <!-- Edit Government IDs -->
+    <div *ngIf="tempObjGovernmentId" id="editGIDModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Government Identification</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row top-buffer">
+                        <div class="col-lg-4">
+                            <label class="control-label" for="currentGid" style="text-align:left">Identification Type: </label>
+                        </div>
+                        <div class="col-lg-7">
+                            <input [(ngModel)]="tempObjGovernmentId.name" type="text" class="form-control" id="currentGid" placeholder="Enter a new identification type">
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEthnicityModal($event,txtEthnicity)">Close</button>
-                <button type="button" class="btn btn-primary" (click)="saveEthnicity($event, txtEthnicity.value)">
-                    <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
-                    <span [class.hidden]="saving">Save changes</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /Edit Ethnicity -->
-
-<!-- Edit Birthday -->
-<div id="editBDayModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Birthday</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="birthday" class="col-sm-3 control-label">Birthday: </label>
-                        <div class="col-sm-9">
-                            <input type="date" class="form-control" placeholder="Enter date of birth" #birthday [value]="selectedPerson.dob" />
+                    <div class="row top-buffer">
+                        <div class="col-lg-4">
+                            <label class="control-label" for="currentGid" style="text-align:left">Value: </label>
+                        </div>
+                        <div class="col-lg-7">
+                            <input (keyup.enter)="saveGid($event)" [(ngModel)]="tempObjGovernmentId.value" type="text" class="form-control" id="currentGid" placeholder="Enter a new {{tempSelectedGidType || 'Enter a new identification value'}}">
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeBdayyModal($event,birthday)">Close</button>
-                <button type="button" class="btn btn-primary" (click)="saveBday($event,birthday.value)">
-                    <span [class.hidden]="!saving"><i class='fa fa-lg fa-cog fa-spin'></i> Saving</span>
-                    <span [class.hidden]="saving">Save changes</span>
-                </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeGidModal($event) ">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveGid($event) "><i class="fa fa-floppy-o"></i> Save</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- /Edit Birthday -->
 
-<!-- Edit Government IDs -->
-<div *ngIf="tempObjGovernmentId" id="editGIDModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Government Identification</h4>
-            </div>
-            <div class="modal-body">                
-                <div class="row top-buffer">
-                    <div class="col-lg-4">
-                        <label class="control-label" for="currentGid" style="text-align:left">Identification Type: </label>
-                    </div>
-                    <div class="col-lg-7">
-                        <input [(ngModel)]="tempObjGovernmentId.name" type="text" class="form-control" id="currentGid" placeholder="Enter a new identification type">
-                    </div>
-                </div>
-                <div class="row top-buffer">
-                    <div class="col-lg-4">
-                        <label class="control-label" for="currentGid" style="text-align:left">Value: </label>
-                    </div>
-                    <div class="col-lg-7">
-                        <input [(ngModel)]="tempObjGovernmentId.value" type="text" class="form-control" id="currentGid" placeholder="Enter a new {{tempSelectedGidType || 'Enter a new identification value'}}">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeGidModal($event) ">Close</button>
-                <button type="button" class="btn btn-primary" (click)="saveGid($event) ">Save changes</button>
-            </div>
-        </div>
-    </div>
 </div>

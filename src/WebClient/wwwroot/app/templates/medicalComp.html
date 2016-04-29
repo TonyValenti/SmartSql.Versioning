@@ -6,14 +6,14 @@
                 <a class="btn btn-default" href="#" (click)="openEditSex($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
-            <strong>Sex: </strong><span> {{selectedDude.sex === 1 ? 'Male' : (selectedDude.sex === 2 ? 'Female' : 'Empty')}}</span>
+            <strong>Sex: </strong><span> {{selectedDude.sex === 1 ? 'Male' : (selectedDude.sex === 2 ? 'Female' : '')}}</span>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" *ngIf="selectedDude.bloodType">
             <div class="btn-group">
                 <a class="btn btn-default" href="#" (click)="openBloodType($event)"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
             </div>
-            <strong>Blood Type: </strong><span> {{ (selectedDude.bloodType | bt) === 'Select' ? 'Empty' : selectedDude.bloodType | bt}}</span>
+            <strong>Blood Type: </strong><span> {{ (selectedDude.bloodType | bt) === 'Select' ? '' : selectedDude.bloodType | bt}}</span>
         </div>
     </div>
     <div class="row bottom-buffer">
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{allergie.name}}</strong></div>
-                <div class="col-md-9 bottom-buffer"><span>{{allergie.treatment || "Empty"}}</span></div>
+                <div class="col-md-9 bottom-buffer"><span>{{allergie.treatment || ""}}</span></div>
             </div>
         </div>
     </div>
@@ -75,9 +75,42 @@
                         <a class="btn btn-default" href="#" (click)="deletetMedication($event, i)"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>
-                <div class="col-md-10"><strong>{{medication.name}}</strong></div>
-                <div class="col-md-9 bottom-buffer"><span>{{medication.description || "Empty"}}</span></div>
-                <div class="col-md-9 col-md-offset-2 bottom-buffer"><strong>{{medication.usageText || "Empty"}}</strong></div>
+                <div class="col-md-10"><strong>{{medication.name}}</strong></div><br />
+                <div class="col-md-9 bottom-buffer">
+                    <strong [class.hidden]="!medication.description">Description:</strong><br />
+                    <span [class.hidden]="!medication.description">{{medication.description || ""}}</span>
+                </div>
+                <div class="col-md-9 col-md-offset-2 bottom-buffer">
+                    <strong [class.hidden]="!medication.usageText">Usage:</strong><br />
+                    <strong [class.hidden]="!medication.usageText">{{medication.usageText || ""}}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-medkit"></i> Immunizations</h3>
+            <a class="btn btn-primary pull-right" (click)="editImmunization($event, null, true)" href="#"><i class="fa fa-plus"></i></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <div *ngIf="selectedDude.immunizations.length === 0" class="panel-body">No immunizations</div>
+            <div [ngClass]="{'bottom-buffer' :  i < selectedDude.immunizations.length-1}" class="row" *ngFor="#immunization of selectedDude.immunizations;#i = index">
+                <div class="col-md-2">
+                    <div class="btn-group">
+                        <a class="btn btn-default" href="#" (click)="editImmunization($event, immunization, false)"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                        <a class="btn btn-default" href="#" (click)="deletetImmunization($event, i)"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <strong [class.hidden]="!immunization.Name">{{immunization.Name}}</strong>
+                </div>
+                <div class="col-md-2 bottom-buffer">
+                    <strong [class.hidden]="!immunization.Date">Date:</strong><br />
+                    <span [class.hidden]="!immunization.Date">{{immunization.Date || ""}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -99,53 +132,14 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{procedure.Name}}</strong></div>
-                <div class="col-md-8 bottom-buffer"><span>{{procedure.Description || "Empty"}}</span></div>
-                <div class="col-md-2 bottom-buffer"><span>{{procedure.Date || "Empty"}}</span></div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="panel panel-default">
-        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
-            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-medkit"></i> Immunizations</h3>
-            <a class="btn btn-primary pull-right" (click)="editImmunization($event, null, true)" href="#"><i class="fa fa-plus"></i></a>
-            <div class="clearfix"></div>
-        </div>
-        <div class="panel-body">
-            <div *ngIf="selectedDude.immunizations.length === 0" class="panel-body">No immunizations</div>
-            <div [ngClass]="{'bottom-buffer' :  i < selectedDude.immunizations.length-1}" class="row" *ngFor="#immunization of selectedDude.immunizations;#i = index">
-                <div class="col-md-2">
-                    <div class="btn-group">
-                        <a class="btn btn-default" href="#" (click)="editImmunization($event, immunization, false)"><i class="fa fa-pencil"></i></a>
-                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
-                        <a class="btn btn-default" href="#" (click)="deletetImmunization($event, i)"><i class="fa fa-trash"></i></a>
-                    </div>
+                <div class="col-md-8 bottom-buffer">
+                    <strong [class.hidden]="!procedure.Description">Description:</strong><br />
+                    <span>{{procedure.Description || ""}}</span>
                 </div>
-                <div class="col-md-8"><strong>{{immunization.Name}}</strong></div>
-                <div class="col-md-2 bottom-buffer"><span>{{immunization.Date || "Empty"}}</span></div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="panel panel-default">
-        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
-            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-exclamation-triangle"></i> Incidents</h3>
-            <a class="btn btn-primary pull-right" (click)="editIncident($event, null, true)" href="#"><i class="fa fa-plus"></i></a>
-            <div class="clearfix"></div>
-        </div>
-        <div class="panel-body">
-            <div *ngIf="selectedDude.incidents.length === 0" class="panel-body">No incidents</div>
-            <div [ngClass]="{'bottom-border-gray' : i < selectedDude.incidents.length-1, 'bottom-buffer' :  i < selectedDude.incidents.length-1}" class="row" *ngFor="#incident of selectedDude.incidents;#i = index">
-                <div class="col-md-2">
-                    <div class="btn-group">
-                        <a class="btn btn-default" href="#" (click)="editIncident($event, incident, false)"><i class="fa fa-pencil"></i></a>
-                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
-                        <a class="btn btn-default" href="#" (click)="deletetIncident($event, i)"><i class="fa fa-trash"></i></a>
-                    </div>
+                <div class="col-md-2 bottom-buffer">
+                    <strong [class.hidden]="!procedure.Date">Date:</strong><br />
+                    <span>{{procedure.Date || ""}}</span>
                 </div>
-                <div class="col-md-10"><strong>{{incident.Name}}</strong></div>
-                <div class="col-md-8 bottom-buffer"><span>{{incident.Description || "Empty"}}</span></div>
-                <div class="col-md-2 bottom-buffer"><span>{{incident.Date || "Empty"}}</span></div>
             </div>
         </div>
     </div>
@@ -167,7 +161,39 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{condition.Name}}</strong></div>
-                <div class="col-md-9 bottom-buffer"><span>{{condition.Description || "Empty"}}</span></div>
+                <div class="col-md-9 bottom-buffer">
+                    <strong [class.hidden]="!condition.Description">Description:</strong><br />
+                    <span>{{condition.Description || ""}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="border-bottom-style: solid;border-bottom-color: green;">
+            <h3 class="panel-title pull-left" style="padding-top: 8px"><i class="fa fa-exclamation-triangle"></i> Incidents</h3>
+            <a class="btn btn-primary pull-right" (click)="editIncident($event, null, true)" href="#"><i class="fa fa-plus"></i></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <div *ngIf="selectedDude.incidents.length === 0" class="panel-body">No incidents</div>
+            <div [ngClass]="{'bottom-border-gray' : i < selectedDude.incidents.length-1, 'bottom-buffer' :  i < selectedDude.incidents.length-1}" class="row" *ngFor="#incident of selectedDude.incidents;#i = index">
+                <div class="col-md-2">
+                    <div class="btn-group">
+                        <a class="btn btn-default" href="#" (click)="editIncident($event, incident, false)"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
+                        <a class="btn btn-default" href="#" (click)="deletetIncident($event, i)"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-10"><strong>{{incident.Name}}</strong></div>
+                <div class="col-md-8 bottom-buffer">
+                    <strong [class.hidden]="!incident.Description">Description:</strong><br />
+                    <span>{{incident.Description || ""}}</span>
+                </div>
+                <div class="col-md-2 bottom-buffer">
+                    <strong [class.hidden]="!incident.Date">Date:</strong><br />
+                    <span>{{incident.Date || ""}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -189,7 +215,10 @@
                     </div>
                 </div>
                 <div class="col-md-10"><strong>{{insurance.Name}}</strong></div>
-                <div class="col-md-9 bottom-buffer"><span>{{insurance.Details || "Empty"}}</span></div>
+                <div class="col-md-9 bottom-buffer">
+                    <strong [class.hidden]="!insurance.Details">Details:</strong><br />
+                    <span>{{insurance.Details || ""}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -201,30 +230,30 @@
             <div class="clearfix"></div>
         </div>
         <div class="panel-body">
-            <div *ngIf="selectedDude.emContacts.length === 0" class="panel-body">No Emergency Contacts</div>
-            <div [ngClass]="{'bottom-buffer' :  i < selectedDude.emContacts.length-1}" class="row" *ngFor="#emContact of selectedDude.emContacts;#i = index">
+            <div *ngIf="!selectedEmergencyContact" class="panel-body">No Emergency Contacts</div>
+            <div *ngIf="selectedEmergencyContact" class="row">
                 <div class="col-md-2">
                     <div class="btn-group">
-                        <a class="btn btn-default" href="#" (click)="editEmergencyContacts($event, emContact, false)"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default" href="#" (click)="editEmergencyContacts($event, selectedEmergencyContact, false)"><i class="fa fa-pencil"></i></a>
                         <a class="btn btn-default" href="#"><i class="fa fa-history"></i></a>
-                        <a class="btn btn-default" href="#" (click)="deletetEmergencyContacts($event, i)"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-default" href="#" (click)="deletetEmergencyContacts($event)"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>
-                <div class="col-md-8"><strong>{{emContact.Name}}</strong></div>
-                <div class="col-md-2 bottom-buffer"><span>{{emContact.Phone || "Empty"}}</span></div>
+                <div class="col-md-8"><strong>{{selectedEmergencyContact.Name}}</strong></div>
             </div>
         </div>
     </div>
+
     <!-- *************************************** -->
     <!-- ************ EDIT MODALS ************** -->
     <!-- *************************************** -->
     <!-- Add/Edit Allergie -->
-    <div id="editAllergieModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editAllergieModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">{{isAddAllergie ? "Add" : "Edit"}} Allergie</h4>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{isAddAllergie ? "Add" : "Edit"}} Allergy</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -240,31 +269,30 @@
                             <label class="control-label" for="currentGid" style="text-align:left">Treatment: </label>
                         </div>
                         <div class="col-md-9">
-                            <textarea [(ngModel)]="tempAllergie.treatment" class="form-control" placeholder="Enter a treatment" rows="3"></textarea>
+                            <textarea (keyup.enter)="saveAllergiee($event)" [(ngModel)]="tempAllergie.treatment" class="form-control" placeholder="Enter a treatment" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeAllergie($event) ">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveAllergiee($event)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveAllergiee($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Add/Edit Allergie -->
-
     <!-- Add/Edit Medications -->
-    <div id="editMedicationModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editMedicationModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">{{isAddMedication ? "Add" : "Edit"}} Medication</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class=" control-label" for="medicationName" style="text-align:left">Name: </label>
+                            <label class="control-label" for="medicationName" style="text-align:left">Name: </label>
                         </div>
                         <div class="col-md-9">
                             <input [(ngModel)]="tempMedication.name" type="text" class="form-control" id="medicationName" placeholder="Enter a name">
@@ -283,30 +311,30 @@
                             <label class="control-label" for="medicationUsage" style="text-align:left">Usage: </label>
                         </div>
                         <div class="col-md-9">
-                            <input [(ngModel)]="tempMedication.usageText" type="text" class="form-control" id="medicationUsage" placeholder="Enter a usage">
+                            <input (keyup.enter)="saveMedication($event)" [(ngModel)]="tempMedication.usageText" type="text" class="form-control" id="medicationUsage" placeholder="Enter a usage">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeMedication($event) ">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveMedication($event) ">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveMedication($event) "><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Add/Edit Medications -->
     <!-- Add/Edit Procedure -->
-    <div id="editProcedureModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editProcedureModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">{{isAddProcedure ? "Add" : "Edit"}} Procedure</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class=" control-label" for="procedureName" style="text-align:left">Name: </label>
+                            <label class="control-label" for="procedureName" style="text-align:left">Name: </label>
                         </div>
                         <div class="col-md-9">
                             <input [(ngModel)]="tempProcedure.Name" type="text" class="form-control" id="procedureName" placeholder="Enter the procdedure name">
@@ -325,25 +353,24 @@
                             <label class="control-label" for="procedureDate" style="text-align:left">Date: </label>
                         </div>
                         <div class="col-md-9">
-                            <input [(ngModel)]="tempProcedure.Date" type="date" class="form-control" id="procedureDate" placeholder="Enter a date">
+                            <input (keyup.enter)="saveProcedure($event)" [(ngModel)]="tempProcedure.Date" type="date" class="form-control" id="procedureDate" placeholder="Enter a date">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeProcedure($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveProcedure($event) ">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveProcedure($event) "><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Add/Edit Procedure -->
-
     <!-- Add/Edit Immunization -->
-    <div id="editImmunizationModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editImmunizationModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">{{isAddImmunization ? "Add" : "Edit"}} Immunization</h4>
                 </div>
                 <div class="modal-body">
@@ -360,31 +387,30 @@
                             <label class="control-label" for="currentGid" style="text-align:left">Date: </label>
                         </div>
                         <div class="col-md-9">
-                            <input [(ngModel)]="tempImmunization.Date" type="date" class="form-control" id="immunizationName" placeholder="Enter a date">
+                            <input (keyup.enter)="saveImmunization($event)" [(ngModel)]="tempImmunization.Date" type="date" class="form-control" id="immunizationName" placeholder="Enter a date">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeImmunization($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveImmunization($event)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveImmunization($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Add/Edit Immunization -->
-
     <!-- Add/Edit Incident -->
-    <div id="editIncidentModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editIncidentModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">{{isAddIncident ? "Add" : "Edit"}} Incident</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Name: </label>
+                            <label class="control-label" style="text-align:left">Name: </label>
                         </div>
                         <div class="col-md-9">
                             <input [(ngModel)]="tempIncident.Name" type="text" class="form-control" placeholder="Enter the incident name">
@@ -403,31 +429,30 @@
                             <label class="control-label" style="text-align:left">Date: </label>
                         </div>
                         <div class="col-md-9">
-                            <input [(ngModel)]="tempIncident.Date" type="date" class="form-control" placeholder="Enter a date and time">
+                            <input (keyup.enter)="saveIncident($event)" [(ngModel)]="tempIncident.Date" type="date" class="form-control" placeholder="Enter a date and time">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeIncident($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveIncident($event) ">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveIncident($event) "><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Add/Edit Incident -->
-
     <!-- Add/Edit Condition -->
-    <div id="editConditionModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editConditionModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">{{isAddCondition ? "Add" : "Edit"}} Condition</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Name: </label>
+                            <label class="control-label" style="text-align:left">Name: </label>
                         </div>
                         <div class="col-md-9">
                             <input [(ngModel)]="tempCondition.Name" type="text" class="form-control" placeholder="Enter a name">
@@ -435,33 +460,33 @@
                     </div>
                     <div class="row top-buffer">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Description: </label>
+                            <label class="control-label" style="text-align:left">Description: </label>
                         </div>
                         <div class="col-md-9">
-                            <textarea [(ngModel)]="tempCondition.Description" class="form-control" placeholder="Enter a description" rows="3"></textarea>
+                            <textarea (keyup.enter)="saveCondition($event)" [(ngModel)]="tempCondition.Description" class="form-control" placeholder="Enter a description" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeCondition($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveCondition($event)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveCondition($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Add/Edit Condition -->
     <!-- Add/Edit Insurance -->
-    <div id="editInsuranceModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editInsuranceModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">{{isAddInsurance ? "Add" : "Edit"}} Insurance</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Name: </label>
+                            <label class="control-label" style="text-align:left">Name: </label>
                         </div>
                         <div class="col-md-9">
                             <input [(ngModel)]="tempInsurance.Name" type="text" class="form-control" placeholder="Enter a name">
@@ -469,61 +494,65 @@
                     </div>
                     <div class="row top-buffer">
                         <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Details: </label>
+                            <label class="control-label" style="text-align:left">Details: </label>
                         </div>
                         <div class="col-md-9">
-                            <textarea [(ngModel)]="tempInsurance.Details" class="form-control" placeholder="Enter a details" rows="6"></textarea>
+                            <textarea (keyup.enter)="saveInsurance($event)" [(ngModel)]="tempInsurance.Details" class="form-control" placeholder="Enter a details" rows="6"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeInsurance($event) ">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveInsurance($event) ">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveInsurance($event) "><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Add/Edit Insurance -->
     <!-- Add/Edit Emergency Contacts -->
-    <div id="editEmergencyContactsModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editEmergencyContactsModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">{{isAddEmergencyContacts ? "Add" : "Edit"}} Emergency Contact</h4>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{isAddEmergencyContact ? "Add" : "Edit"}} Emergency Contact</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Name: </label>
+                        <div class="jumbotron" [hidden]="!loadingPeople">
+                            <div class="container text-center">
+                                <i class="fa fa-4x fa-cog fa-spin"></i>
+                                <h3>Please wait loading ....</h3>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <input [(ngModel)]="tempEmergencyContact.Name" type="text" class="form-control" placeholder="Enter a name">
-                        </div>
-                    </div>
-                    <div class="row top-buffer">
-                        <div class="col-md-2">
-                            <label class=" control-label" style="text-align:left">Phone: </label>
-                        </div>
-                        <div class="col-md-9">
-                            <input [(ngModel)]="tempEmergencyContact.Phone" type="text" class="form-control" placeholder="Enter a phone number">
+
+                        <label class="control-label col-lg-2" [hidden]="loadingPeople">Contact: </label>
+
+                        <div class="form-group col-md-10" [hidden]="loadingPeople">
+                            <input [(ngModel)]="selectedECName"
+                                   [typeahead]="peopleEC"
+                                   [typeaheadOptionsLimit]="7"
+                                   [typeaheadOptionField]="'Name'"
+                                   (typeaheadOnSelect)="selectEMCont($event)"
+                                   placeholder="Start by typing a name"
+                                   class="form-control">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEmergencyContacts($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveEmergencyContacts($event)">Save changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveEmergencyContacts($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Add/Edit Emergency Contacts -->
     <!-- Edit Sex -->
-    <div id="editSexModal" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editSexModal" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit sex</h4>
                 </div>
                 <div class="modal-body">
@@ -547,23 +576,23 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeEditSex($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveSexChange($event)">Save Changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveSexChange($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Edit Sex -->
     <!-- Edit Blood Type -->
-    <div id="editBloodType" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editBloodType" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog" style="width:350px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit blood type</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
-                        <div class="row dropdown clearfix">
+                        <div class="row dropdown clearfix" *ngIf="tempBT">
                             <strong class="col-xs-4" style="padding-top:7px">Blood type : </strong>
                             <button class="btn btn-default dropdown-toggle col-xs-7" type="button" id="btdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 {{tempBT | bt}}
@@ -584,18 +613,18 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeBloodType($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveBloodType($event)">Save Changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveBloodType($event)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Edit Blood Type -->
     <!-- Edit Height -->
-    <div id="editHeight" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editHeight" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog" style="width:350px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit height</h4>
                 </div>
                 <div class="modal-body">
@@ -607,92 +636,71 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" style="left: 34%;width: 58%;">
-                                <li (click)="changeHeightUnit($event, 0)"><a href="#">Pounds</a></li>
+                                <li (click)="changeHeightUnit($event, 0)"><a href="#">Feet/Inches</a></li>
                                 <li (click)="changeHeightUnit($event, 1)"><a href="#">Cm</a></li>
                             </ul>
                         </div>
                         <div class="row" [class.hidden]="heightUnit === 1">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">pounds: </label>
-                                    <div class="col-sm-8">
-                                        <input placeholder="Enter feet" type="number" class="form-control" #txtFeet [value]="heightFeet" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Inches: </label>
-                                    <div class="col-sm-9">
-                                        <input type="number" max="12" class="form-control" placeholder="Enter inches" #txtInches [value]="heightInches" />
-                                    </div>
-                                </div>
-                            </form>
+
+                            <label class="col-sm-3 control-label">Feet: </label>
+                            <div class="col-sm-8" style="margin-left:14px">
+                                <input placeholder="Enter feet" type="number" class="form-control" #txtFeet [value]="heightFeet" />
+                            </div>
+                            <br />
+                            <br />
+                            <label class="col-sm-3 control-label">Inches: </label>
+                            <div class="col-sm-8" style="margin-left:14px">
+                                <input (keyup.enter)="saveHeight($event, txtFeet.value, txtInches.value, txtCm.value)" type="number" max="12" class="form-control" placeholder="Enter inches" #txtInches [value]="heightInches" />
+                            </div>
+
                         </div>
                         <div class="row" [class.hidden]="heightUnit === 0">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Cm: </label>
-                                    <div class="col-sm-8">
-                                        <input placeholder="Enter Cm" type="number" class="form-control" #txtCm [value]="heightCm" />
-                                    </div>
-                                </div>
-                            </form>
+                            <strong class="col-sm-3 control-label">Cm: </strong>
+                            <div class="col-sm-8" style="margin-left: 14px;">
+                                <input (keyup.enter)="saveHeight($event, txtFeet.value, txtInches.value, txtCm.value)" placeholder="Enter Cm" type="number" class="form-control" #txtCm [value]="heightCm" />
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeHeight($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveHeight($event, txtFeet.value, txtInches.value, txtCm.value)">Save Changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveHeight($event, txtFeet.value, txtInches.value, txtCm.value)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Edit Height -->
     <!-- Edit Weight -->
-    <div id="editWeight" style="display:none" class="modal fade" tabindex="-1" role="dialog">
+    <div id="editWeight" style="display:none" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
         <div class="modal-dialog" style="width:350px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close hidden" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit weight</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="row dropdown clearfix bottom-buffer">
-                            <strong class="col-xs-4" style="padding-top:7px">Weight unit: </strong>
-                            <button class="btn btn-default dropdown-toggle col-xs-7" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <strong class="col-sm-2" style="padding-top:7px">Weight: </strong>
+
+                            <div class="col-sm-4">
+                                <input placeholder="Enter weight" type="number" class="form-control" #txtWeight [value]="tempWeightVal" />
+                            </div>
+
+                            <button style="margin-left: 14px;" class="btn btn-default dropdown-toggle col-sm-5" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 {{tempWeightUnit === 0 ? "Pounds" : "Kilograms"}}
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" style="left: 34%;width: 58%;">
+                            <ul class="dropdown-menu" style="left: 54%;width: 147px;min-width: 140px;">
                                 <li (click)="changeWeightUnit($event, 0)"><a href="#">Pounds</a></li>
                                 <li (click)="changeWeightUnit($event, 1)"><a href="#">Kilograms</a></li>
                             </ul>
-                        </div>
-                        <div class="row" [class.hidden]="tempWeightUnit === 1">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Pounds: </label>
-                                    <div class="col-sm-7">
-                                        <input placeholder="Enter pounds" type="number" class="form-control" #txtPounds [value]="tempWeightVal" />
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="row" [class.hidden]="tempWeightUnit === 0">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Kilograms: </label>
-                                    <div class="col-sm-7">
-                                        <input placeholder="Enter kilograms" type="number" class="form-control" #txtKg [value]="tempWeightVal" />
-                                    </div>
-                                </div>
-                            </form>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeWeight($event)">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveWeight($event, txtPounds.value, txtKg.value)">Save Changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveWeight($event, txtWeight.value)"><i class="fa fa-floppy-o"></i> Save</button>
                 </div>
             </div>
         </div>

@@ -27,7 +27,7 @@ export class FinanceSvc {
             Values: financial
         });
 
-        return this.http.post(this.apiUrl + "BankAccountApi/Add", body, this.options)
+        return this.http.post(this.apiUrl + "EntityBankAccountApi/Add", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -44,7 +44,7 @@ export class FinanceSvc {
             Values: financial
         });
 
-        return this.http.post(this.apiUrl + "BankAccountApi/Update", body, this.options)
+        return this.http.post(this.apiUrl + "EntityBankAccountApi/Update", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }
@@ -59,7 +59,7 @@ export class FinanceSvc {
             Key: { InstanceId: instId }
         });
 
-        return this.http.post(this.apiUrl + "BankAccountApi/Archive", body, this.options)
+        return this.http.post(this.apiUrl + "EntityBankAccountApi/Archive", body, this.options)
             .map(res => res.json())
             .catch(this.logAndPassOn);
     }

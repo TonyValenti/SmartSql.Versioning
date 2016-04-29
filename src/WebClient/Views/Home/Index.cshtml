@@ -14,7 +14,7 @@
     </environment>
 
     <environment names="Staging,Production">
-     
+
     </environment>
 }
 
@@ -56,19 +56,32 @@
 
         <script src="~/lib/jquery.min.js"></script>
         <script src="~/lib/bootstrap.min.js"></script>
+        <script src="~/lib/ng2-bootstrap.js"></script>
     </environment>
 
     <environment names="Staging,Production">
-      
-    </environment> 
+
+    </environment>
 
     <script>
+        //'node_modules/ng2-bootstrap': {
+        //    'defaultExtension': 'js'
+        //}
+
+        //,
+        //paths: {
+        //    'ng2-bootstrap/ng2-bootstrap': 'node_modules/ng2-bootstrap/ng2-bootstrap'
+        //}
+
         System.config({
             packages: {
                 app: {
                     format: 'register',
                     defaultExtension: 'js'
                 }
+            },
+            map: {
+                moment: 'lib/moment.js'
             }
         });
 

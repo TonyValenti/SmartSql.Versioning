@@ -1,4 +1,6 @@
-import { Component, Inject} from 'angular2/core';
+import { Component, Inject, AfterViewInit} from 'angular2/core';
+
+import { BaseComponent } from '../components/Base.component';
 import { ServerAPI} from '../services/ServerAPI.service';
 import { LikeSvc } from '../services/Like.service';
 import { SelectedPersonDirective} from '../directives/SelectedPerson.directive';
@@ -6,7 +8,7 @@ import { Person} from '../models/Person';
 import { RadioControlValueAccessor} from "../directives/radio_value_accessor";
 import { FORM_DIRECTIVES} from "angular2/common";
 import { Router, RouteParams } from 'angular2/router';
-
+import { ModalConfirmSvc} from '../common/ModalConfirmAll';
 
 @Component({
     selector: 'likes',
@@ -14,20 +16,24 @@ import { Router, RouteParams } from 'angular2/router';
     directives: [SelectedPersonDirective, FORM_DIRECTIVES, RadioControlValueAccessor],
     providers: [LikeSvc]
 })
-export class Likes {
+export class Likes extends BaseComponent implements AfterViewInit {
 
-    private selectedDude: Person;
-    private likesData;
-    private dislikesData;
+    private _selectedDude: Person;
+    private _likesData;
+    private _dislikesData;
 
     LikeCategory = {
+        Animal: 50,
         Beverage: 100,
         Book: 200,
         Food: 300,
         Game: 400,
         Hobby: 500,
+        Jewelry: 550,
         Movie: 600,
         Music: 700,
+        Place: 725,
+        Plant: 750,
         Show: 800,
         Sport: 900,
         Store: 1000,
@@ -37,7 +43,7 @@ export class Likes {
 
     likesProps = [];
 
-    editTypeOfLike;
+    editTypeOfLike: string;
     isEditLikes = true;
     likeIndex = 0;
 
@@ -45,9 +51,19 @@ export class Likes {
     areDislikesEmpty = false;
 
     addTypeLike;
+    origEditType: string;
     isAddLike = true;
 
-    constructor( @Inject(ServerAPI) private _serverAPI, private _likeSvc: LikeSvc, private _routeParams: RouteParams) {
+    inEditMode = false;
+
+    constructor(
+        @Inject(ServerAPI) private _serverAPI,
+        private _likeSvc: LikeSvc,
+        private _routeParams: RouteParams,
+        private _modalService: ModalConfirmSvc) {
+
+        super();
+
         let instanceId = this._routeParams.get('instanceId');
 
         if (!instanceId) {
@@ -58,6 +74,18 @@ export class Likes {
 
             let icon = '';
             switch (prop) {
+                case 'Animal':
+                    icon = 'fa-paw'
+                    break;
+                case 'Plant':
+                    icon = 'fa-leaf'
+                    break;
+                case 'Place':
+                    icon = 'fa-map-marker'
+                    break;
+                case 'Jewelry':
+                    icon = 'fa-diamond'
+                    break;
                 case 'Food':
                     icon = 'fa-cutlery'
                     break;
@@ -89,10 +117,10 @@ export class Likes {
                     icon = 'fa-gamepad'
                     break;
                 case 'Hobby':
-                    icon = 'fa-list'
+                    icon = 'fa-bicycle'
                     break;
                 case 'Other':
-                    icon = 'fa-hashtag'
+                    icon = 'fa-circle-o'
                     break;
             }
             this.likesProps.push({ prop: prop, icon: icon });
@@ -101,16 +129,20 @@ export class Likes {
         var self = this;
 
         _serverAPI.getPersonByInstanceId(instanceId).subscribe(p => {
-            self.selectedDude = p;
+            self._selectedDude = p;
 
             var l = {
+                Animal: [],
                 Beverage: [],
                 Book: [],
                 Food: [],
+                Jewelry: [],
                 Game: [],
                 Hobby: [],
                 Movie: [],
                 Music: [],
+                Place: [],
+                Plant: [],
                 Show: [],
                 Sport: [],
                 Store: [],
@@ -119,7 +151,11 @@ export class Likes {
             }
 
             for (var i = 0; i < p.likes.length; i++) {
+
                 switch (p.likes[i].category) {
+                    case 50:
+                        l.Animal.push(p.likes[i]);
+                        break;
                     case 100:
                         l.Beverage.push(p.likes[i]);
                         break;
@@ -132,6 +168,9 @@ export class Likes {
                     case 400:
                         l.Game.push(p.likes[i]);
                         break;
+                    case 550:
+                        l.Jewelry.push(p.likes[i]);
+                        break;
                     case 500:
                         l.Hobby.push(p.likes[i]);
                         break;
@@ -140,6 +179,12 @@ export class Likes {
                         break;
                     case 700:
                         l.Music.push(p.likes[i]);
+                        break;
+                    case 725:
+                        l.Place.push(p.likes[i]);
+                        break;
+                    case 750:
+                        l.Plant.push(p.likes[i]);
                         break;
                     case 800:
                         l.Show.push(p.likes[i]);
@@ -158,16 +203,20 @@ export class Likes {
                 }
             }
 
-            self.likesData = l;
+            self._likesData = l;
 
             var dl = {
+                Animal: [],
                 Beverage: [],
                 Book: [],
                 Food: [],
+                Jewelry: [],
                 Game: [],
                 Hobby: [],
                 Movie: [],
                 Music: [],
+                Place: [],
+                Plant: [],
                 Show: [],
                 Sport: [],
                 Store: [],
@@ -177,6 +226,9 @@ export class Likes {
 
             for (var i = 0; i < p.dislikes.length; i++) {
                 switch (p.dislikes[i].category) {
+                    case 50:
+                        dl.Animal.push(p.dislikes[i]);
+                        break;
                     case 100:
                         dl.Beverage.push(p.dislikes[i]);
                         break;
@@ -189,6 +241,9 @@ export class Likes {
                     case 400:
                         dl.Game.push(p.dislikes[i]);
                         break;
+                    case 550:
+                        dl.Jewelry.push(p.dislikes[i]);
+                        break;
                     case 500:
                         dl.Hobby.push(p.dislikes[i]);
                         break;
@@ -197,6 +252,12 @@ export class Likes {
                         break;
                     case 700:
                         dl.Music.push(p.dislikes[i]);
+                        break;
+                    case 725:
+                        dl.Place.push(p.dislikes[i]);
+                        break;
+                    case 750:
+                        dl.Plant.push(p.dislikes[i]);
                         break;
                     case 800:
                         dl.Show.push(p.dislikes[i]);
@@ -215,14 +276,17 @@ export class Likes {
                 }
             }
 
-            self.dislikesData = dl;
+            self._dislikesData = dl;
 
-
-            console.log(self.likesData);
-            console.log(self.dislikesData);
+            this.checkLikesEmpty();
+            this.checkDislikesEmpty();
 
             self.addTypeLike = this.likesProps[0].prop;
         }, error => alert(`Server error. Try again later`));
+    }
+
+    ngAfterViewInit() {
+        super.ngAfterViewInit();
     }
 
     /**
@@ -235,92 +299,50 @@ export class Likes {
     editLikes(event, editTypeOfLike, isEditLikesParam, i) {
         event.preventDefault();
 
+        this.inEditMode = true;
         this.likeIndex = i;
+        this.isAddLike = isEditLikesParam;
         this.isEditLikes = isEditLikesParam;
         this.editTypeOfLike = editTypeOfLike;
+        this.addTypeLike = editTypeOfLike;
+        this.origEditType = editTypeOfLike;
 
         setTimeout(function () {
-            $('#editLikes').modal('show');
+            $('#addLikesModal').modal('show');
         }, 50)
     }
 
     /**
-     * Update Like/Dislike
-     * @param event
-     * @param newValue
+     * Delete like or dislike
+     * @param $event
+     * @param typeOfLike
+     * @param isEditLikesParam
+     * @param index
      */
-    updateLike(event, newValue) {
-        event.preventDefault();
-
-        if (this.isEditLikes) {
-            this.likesData[this.editTypeOfLike][this.likeIndex].value = newValue;
-
-            this._likeSvc.updateLike(this.likesData[this.editTypeOfLike][this.likeIndex].instanceId,
-                {
-                    Status: 1,
-                    Category: this.LikeCategory[this.addTypeLike],
-                    Value: newValue
-                }
-            ).subscribe(result => {
-                console.log(result);
-                //this.saving = false;
-                $('#editLikes').modal('hide');
-            }, error => alert(`Server error. Try again later`));
-
-        } else {
-            this.dislikesData[this.editTypeOfLike][this.likeIndex].value = newValue;
-
-            this._likeSvc.updateLike(this.dislikesData[this.editTypeOfLike][this.likeIndex].instanceId,
-                {
-                    Status: 0,
-                    Category: this.LikeCategory[this.addTypeLike],
-                    Value: newValue
-                }
-            ).subscribe(result => {
-                console.log(result);
-                //this.saving = false;
-                $('#editLikes').modal('hide');
-            }, error => alert(`Server error. Try again later`));
-        }
-
-        $('#editLikes').modal('hide');
-    }
-
-    /**
-     * Close popup
-     * @param event
-     * @param txtLike
-     */
-    closeLikeModal(event, txtLike) {
-        event.preventDefault();
-
-        if (this.isEditLikes) {
-            txtLike.value = this.likesData[this.editTypeOfLike][this.likeIndex];
-        } else {
-            txtLike.value = this.dislikesData[this.editTypeOfLike][this.likeIndex];
-        }
-
-        $('#editLikes').modal('hide');
-    }
-
     deleteLikes($event, typeOfLike, isEditLikesParam, index) {
         event.preventDefault();
 
-        if (isEditLikesParam) {
-            this._likeSvc.archiveLike(this.likesData[typeOfLike][index].instanceId).subscribe(r => { console.log(r); }, error => alert(`Server error. Try again later`));
-            this.likesData[typeOfLike].splice(index, 1);
-            this.checkLikesEmpty();
+        let msg = `Do you want to delete ${typeOfLike}?`;
 
-        } else {
-            this._likeSvc.archiveLike(this.dislikesData[typeOfLike][index].instanceId).subscribe(r => { console.log(r); }, error => alert(`Server error. Try again later`));
-            this.dislikesData[typeOfLike].splice(index, 1);
-            this.checkDislikesEmpty();
-        }
+        this._modalService.activate(msg).then(responseOK => {
+            if (responseOK) {
+                if (isEditLikesParam) {
+                    this._likeSvc.archiveLike(this._likesData[typeOfLike][index].instanceId).subscribe(r => { console.log(r); }, error => alert(`Server error. Try again later`));
+                    this._likesData[typeOfLike].splice(index, 1);
+                    this.checkLikesEmpty();
+
+                } else {
+                    this._likeSvc.archiveLike(this._dislikesData[typeOfLike][index].instanceId).subscribe(r => { console.log(r); }, error => alert(`Server error. Try again later`));
+                    this._dislikesData[typeOfLike].splice(index, 1);
+                    this.checkDislikesEmpty();
+                }
+            }
+        });
     }
 
     checkLikesEmpty() {
-        for (let prop in this.likesData) {
-            if (this.likesData[prop].length > 0) {
+        for (let prop in this._likesData) {
+            if (this._likesData[prop].length > 0) {
                 this.areLikesEmpty = false;
                 return false;
             }
@@ -330,8 +352,8 @@ export class Likes {
     }
 
     checkDislikesEmpty() {
-        for (let prop in this.dislikesData) {
-            if (this.dislikesData[prop].length > 0) {
+        for (let prop in this._dislikesData) {
+            if (this._dislikesData[prop].length > 0) {
                 this.areDislikesEmpty = false;
                 return false;
             }
@@ -343,19 +365,37 @@ export class Likes {
     addLike($event, isLike) {
         event.preventDefault();
 
+        this.inEditMode = false;
         this.isAddLike = isLike;
+
         $('#addLikesModal').modal('show');
     }
 
-    changeAddTypeLike(event, likeProp) {
+    changeAddTypeLike(event, likeProp: string) {
         event.preventDefault();
+
+        //if (this.inEditMode) {
+        //    this.editTypeOfLike = likeProp;
+        //} else {
         this.addTypeLike = likeProp;
+        //};
     }
 
-    closeAddLike(event, txtNewLike) {
+    closeLike(event, txtLike) {
         event.preventDefault();
 
-        txtNewLike.value = '';
+        if (this.inEditMode) {
+            //EDIT
+            if (this.isEditLikes) {
+                txtLike.value = this._likesData[this.editTypeOfLike][this.likeIndex].value;
+            } else {
+                txtLike.value = this._dislikesData[this.editTypeOfLike][this.likeIndex].value;
+            }
+        } else {
+            //ADD NEW
+            txtLike.value = '';
+        }
+
         $('#addLikesModal').modal('hide');
     }
 
@@ -364,52 +404,105 @@ export class Likes {
      * @param event
      * @param txtNewLike
      */
-    saveNewLike(event, txtNewLike) {
+    saveLike(event, txtNewLike) {
         event.preventDefault();
 
-        if (this.isAddLike) {
-            // Add Like
-            this.likesData[this.addTypeLike].push({
-                status: 1,
-                category: this.LikeCategory[this.addTypeLike],
-                value: txtNewLike.value
-            });
+        var self = this;
+        var itemArr;
 
-            this._likeSvc.addLike(this.selectedDude.instanceId,
-                {
-                    Status: 1,
-                    Category: this.LikeCategory[this.addTypeLike],
-                    Value: txtNewLike.value
-                }
-            ).subscribe(result => {
-                console.log(result);
-                //this.saving = false;
-                $('#addLikesModal').modal('hide');
-            }, error => alert(`Server error. Try again later`));
+        if (this.inEditMode) {
+            this.inEditMode = false;
 
+            //Check if item transfered from likes to dislikes and viceversa
+            // or category changed
+            if (this.addTypeLike !== this.origEditType || this.isAddLike !== this.isEditLikes) {
+
+                itemArr = this[this.isEditLikes ? "_likesData" : "_dislikesData"][this.origEditType].splice(this.likeIndex, 1);
+                this[this.isAddLike ? "_likesData" : "_dislikesData"][this.addTypeLike].push(itemArr[0]);
+                this.likeIndex = this[this.isAddLike ? "_likesData" : "_dislikesData"][this.addTypeLike].length - 1
+            }
+
+            //EDIT
+            if (this.isAddLike) {
+
+                this._likesData[this.origEditType][this.likeIndex].value = txtNewLike.value;
+
+                this._likeSvc.updateLike(this._likesData[this.addTypeLike][this.likeIndex].instanceId,
+                    {
+                        Status: 1,
+                        Category: this.LikeCategory[this.addTypeLike],
+                        Value: txtNewLike.value
+                    }
+                ).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+
+                    $('#addLikesModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+
+            } else {
+
+                this._dislikesData[this.addTypeLike][this.likeIndex].value = txtNewLike.value;
+
+                this._likeSvc.updateLike(this._dislikesData[this.addTypeLike][this.likeIndex].instanceId,
+                    {
+                        Status: 0,
+                        Category: this.LikeCategory[this.addTypeLike],
+                        Value: txtNewLike.value
+                    }
+                ).subscribe(result => {
+                    console.log(result);
+                    //this.saving = false;
+
+                    $('#addLikesModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+
+            }
         } else {
-            //Add Dislike
-            this.dislikesData[this.addTypeLike].push({
-                status: 0,
-                category: this.LikeCategory[this.addTypeLike],
-                value: txtNewLike.value
-            })
+            //ADD NEW
+            if (this.isAddLike) {
+                // Add Like
+                this._likesData[this.addTypeLike].push({
+                    status: 1,
+                    category: this.LikeCategory[this.addTypeLike],
+                    value: txtNewLike.value
+                });
 
-            this._likeSvc.addLike(this.selectedDude.instanceId,
-                {
-                    Status: 0,
-                    Category: this.LikeCategory[this.addTypeLike],
-                    Value: txtNewLike.value
-                }
-            ).subscribe(result => {
-                console.log(result);
-                //this.saving = false;
-                $('#addLikesModal').modal('hide');
-            }, error => alert(`Server error. Try again later`));
+                this._likeSvc.addLike(this._selectedDude.instanceId,
+                    {
+                        Status: 1,
+                        Category: this.LikeCategory[this.addTypeLike],
+                        Value: txtNewLike.value
+                    }
+                ).subscribe(result => {
+                    self.checkLikesEmpty();
+                    //this.saving = false;
+                    $('#addLikesModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+
+            } else {
+                //Add Dislike
+                this._dislikesData[this.addTypeLike].push({
+                    status: 0,
+                    category: this.LikeCategory[this.addTypeLike],
+                    value: txtNewLike.value
+                })
+
+                this._likeSvc.addLike(this._selectedDude.instanceId,
+                    {
+                        Status: 0,
+                        Category: this.LikeCategory[this.addTypeLike],
+                        Value: txtNewLike.value
+                    }
+                ).subscribe(result => {
+                    self.checkDislikesEmpty();
+                    //this.saving = false;
+                    $('#addLikesModal').modal('hide');
+                }, error => alert(`Server error. Try again later`));
+            }
         }
 
         txtNewLike.value = '';
-
     }
 
     toggleLikeDislike(event) {
